@@ -18,7 +18,13 @@ import React, { useState } from "react";
 export default function Navbar() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   return (
-    <Box position={"fixed"} top={{ lg: "5dvh" }} left={0} width={"100dvw"}>
+    <Box
+      position={"fixed"}
+      top={{ lg: "5dvh" }}
+      left={0}
+      width={"100dvw"}
+      component={"nav"}
+    >
       <Container
         sx={{
           bgcolor: "white",
@@ -33,12 +39,14 @@ export default function Navbar() {
           direction={"row"}
           gap={2}
         >
-          <Image
-            alt="fichub-brand"
-            src="/fichub-nav-logo.svg"
-            width={148}
-            height={33}
-          />
+          <Link href={"/"}>
+            <Image
+              alt="fichub-brand"
+              src="/fichub-nav-logo.svg"
+              width={148}
+              height={33}
+            />
+          </Link>
           <Stack
             direction={{ md: "row" }}
             alignItems={{ md: "center" }}

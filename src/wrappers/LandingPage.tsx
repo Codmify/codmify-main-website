@@ -7,7 +7,9 @@ export default function LandingPage({ children }: { children: ReactNode }) {
   return (
     <Box position={"relative"}>
       <Navbar />
-      <Box minHeight={"90dvh"}>{children}</Box>
+      <Box component={"main"} minHeight={"90dvh"}>
+        {children}
+      </Box>
       <Footer />
     </Box>
   );

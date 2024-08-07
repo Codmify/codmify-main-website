@@ -12,11 +12,11 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <Box>
+    <Box component={"footer"}>
       <Container
         sx={{
           bgcolor: "#121279",
-          borderRadius: "30px 30px 0 0",
+          borderRadius: { lg: "30px 30px 0 0" },
           py: 5,
           px: { xs: 2, md: 4 },
         }}
@@ -108,16 +108,21 @@ export default function Footer() {
               <Typography
                 variant="body2"
                 component={"a"}
-                href={"mailto:decentjobtechskills@gmail.com"}
+                href={"mailto:fichubagency@gmail.com"}
               >
-                decentjobtechskills@gmail.com
+                fichubagency@gmail.com
               </Typography>
             </Stack>
           </Stack>
         </Stack>
 
         <Box borderTop={"1px solid white"} mt={3} pt={2}>
-          <Typography textAlign={"center"} color={"white"}>
+          <Typography
+            textAlign={"center"}
+            variant="caption"
+            display={"block"}
+            color={"white"}
+          >
             Copyright {new Date().getFullYear()} All rights reserved | FicHub.
           </Typography>
         </Box>
