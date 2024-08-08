@@ -24,6 +24,7 @@ export default function Navbar() {
       left={0}
       width={"100dvw"}
       component={"nav"}
+      zIndex={100}
     >
       <Container
         sx={{
