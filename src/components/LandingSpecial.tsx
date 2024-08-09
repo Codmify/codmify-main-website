@@ -1,6 +1,10 @@
+"use client";
+
 import LandingPage from "@/wrappers/LandingPage";
 import { Box, Container, Stack, Typography } from "@mui/material";
+import { usePathname } from "next/navigation";
 import React, { ReactNode } from "react";
+import OurTeam from "./our-team";
 
 type LayoutSpecProps = {
   title: string;
@@ -13,6 +17,8 @@ export default function LandingSpecial({
   subtitle,
   children,
 }: LayoutSpecProps) {
+  const pathname = usePathname();
+
   return (
     <LandingPage>
       <Box
@@ -44,14 +50,20 @@ export default function LandingSpecial({
       >
         <Box
           bgcolor={"white"}
-          minHeight={800}
+          minHeight={500}
           borderRadius={{ lg: "20px" }}
           py={{ xs: 4, md: 8 }}
           px={{ xs: 1, md: 4 }}
+          boxShadow={"0px 4px 4px 0px #0000001A;"}
         >
           {children}
         </Box>
       </Container>
+      {pathname.split("/")[1] === "about-us" && (
+        <Box py={5}>
+          <OurTeam />
+        </Box>
+      )}
     </LandingPage>
   );
 }
