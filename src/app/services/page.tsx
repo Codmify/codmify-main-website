@@ -7,8 +7,8 @@ import React from "react";
 export default function OurProjects() {
   return (
     <LandingSpecial
-      title="Our Projects"
-      subtitle="Explore our portfolio of innovative projects that showcase our expertise and creativity across various industries."
+      title="Our Services"
+      subtitle="From UI/UX design to web development, explore the range of services we offer to help bring your ideas to life."
     >
       <Stack
         direction={{ md: "row" }}
