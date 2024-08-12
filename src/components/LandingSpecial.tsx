@@ -48,6 +48,8 @@ export default function LandingSpecial({
           borderRadius={{ lg: "20px" }}
           py={{ xs: 4, md: 8 }}
           px={{ xs: 1, md: 4 }}
+          sx={{boxShadow: "0px 4px 4px #0000001A", mb: '4em'}}
+        
         >
           {children}
         </Box>

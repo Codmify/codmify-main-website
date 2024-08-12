@@ -1,5 +1,4 @@
 "use client";
-
 import { MenuIcon } from "@/lib/icons";
 import { navLinks } from "@/utils/nav-menus";
 import {
@@ -24,13 +23,14 @@ export default function Navbar() {
       left={0}
       width={"100dvw"}
       component={"nav"}
+      zIndex={2}
     >
       <Container
         sx={{
           bgcolor: "white",
           borderRadius: { lg: "10px" },
           p: { xs: 1, md: 3 },
-          boxShadow: "2px 2px 5px 5px rgba(0,0,0,0.05)",
+          boxShadow: "2px 2px 20px 1px rgba(0, 0, 0, 0.05)",
         }}
       >
         <Stack
@@ -43,7 +43,7 @@ export default function Navbar() {
             <Image
               alt="fichub-brand"
               src="/fichub-nav-logo.svg"
-              width={148}
+              width={146}
               height={33}
             />
           </Link>
