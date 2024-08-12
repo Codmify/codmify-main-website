@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
 import AlphaWrapper from "@/wrappers/Alpha";
 
 export const metadata: Metadata = {

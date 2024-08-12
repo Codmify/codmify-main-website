@@ -5,18 +5,15 @@ import {
   aboutUsMenu,
   servicesMenu,
   socials,
-  usefulFoot,
 } from "@/utils/nav-menus";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Footer() {
   return (
-    <Box component={"footer"}>
+    <Box component={"footer"} bgcolor={'#121279'} borderRadius={{lg: "30px 30px 0 0"}}>
       <Container
         sx={{
-          bgcolor: "#121279",
-          borderRadius: { lg: "30px 30px 0 0" },
           py: 5,
           px: { xs: 2, md: 4 },
         }}

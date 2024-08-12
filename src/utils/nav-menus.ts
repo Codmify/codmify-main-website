@@ -12,8 +12,8 @@ export const navLinks = [
     label: "Our Projects",
   },
   {
-    url: "/contact-us",
-    label: "Contact Us",
+    url: "/hire-us",
+    label: "Hire Us",
   },
 ];
 

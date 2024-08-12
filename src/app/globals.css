@@ -87,3 +87,44 @@ input[type="number"] {
 .MuiTimeline-positionRight {
   padding: 0;
 }
+
+.swiper-slide {
+  flex-shrink: inherit !important;
+}
+.swiper-wrapper {
+  padding-top: 45px;
+}
+.swiper-slide:nth-child(1) {
+  margin-left: 30px;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  display: flex;
+  background-color: #121279;
+  border: 1px solid #121279;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.swiper-button-next {
+  right: 0;
+}
+.swiper-button-prev::before,
+.swiper-button-next::before {
+  position: absolute;
+  display: block;
+  height: 24px;
+}
+.swiper-button-prev::before {
+  content: url(/prev.svg);
+}
+.swiper-button-next::before {
+  content: url(/next.svg);
+}
