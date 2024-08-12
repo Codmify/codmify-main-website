@@ -12,9 +12,12 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   const [isSideOpen, setIsSideOpen] = useState(false);
   return (
     <Box
@@ -23,7 +26,7 @@ export default function Navbar() {
       left={0}
       width={"100dvw"}
       component={"nav"}
-      zIndex={2}
+      zIndex={100}
     >
       <Container
         sx={{
@@ -76,8 +79,14 @@ export default function Navbar() {
             {navLinks.map((menu) => (
               <Typography
                 key={menu.url}
-                color={"#323F49"}
-                fontWeight={600}
+                color={
+                  pathname.split("/")[1] === menu.url.split("/")[1]
+                    ? "#121279"
+                    : "#323F49"
+                }
+                fontWeight={
+                  pathname.split("/")[1] === menu.url.split("/")[1] ? 700 : 600
+                }
                 component={Link}
                 href={menu.url}
               >
