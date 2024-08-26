@@ -128,3 +128,8 @@ input[type="number"] {
 .swiper-button-next::before {
   content: url(/next.svg);
 }
+
+li .active {
+  color: #000080;
+  font-weight: 600;
+}
