@@ -1,17 +1,17 @@
 "use client";
 
 import { Box, Container, Stack, Typography } from "@mui/material";
-import {
-  aboutUsMenu,
-  servicesMenu,
-  socials,
-} from "@/utils/nav-menus";
+import { aboutUsMenu, servicesMenu, socials } from "@/utils/nav-menus";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Footer() {
   return (
-    <Box component={"footer"} bgcolor={'#121279'} borderRadius={{lg: "30px 30px 0 0"}}>
+    <Box
+      component={"footer"}
+      bgcolor={"#121279"}
+      borderRadius={{ lg: "30px 30px 0 0" }}
+    >
       <Container
         sx={{
           py: 5,
@@ -105,9 +105,9 @@ export default function Footer() {
               <Typography
                 variant="body2"
                 component={"a"}
-                href={"mailto:fichubagency@gmail.com"}
+                href={"mailto:codmify@gmail.com"}
               >
-                fichubagency@gmail.com
+                codmify@gmail.com
               </Typography>
             </Stack>
           </Stack>
