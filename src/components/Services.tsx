@@ -39,17 +39,17 @@ const Services = () => {
                   </Box>
                   <Typography sx={styles.sTitle}>{item.title}</Typography>
                   <Typography sx={styles.sDesc}>{item.desc}</Typography>
-                  <Box sx={{mt: 'auto', display: 'flex'}}>
+                  <Box sx={{ mt: "auto", display: "flex" }}>
                     <Typography
                       component={Link}
-                      href={""}
+                      href={"/services"}
                       sx={styles.learnMore}
                     >
                       Learn more
-                       <GoArrowRight
-                          className="arrowRight"
-                          style={styles.learnMoreIcon}
-                        />
+                      <GoArrowRight
+                        className="arrowRight"
+                        style={styles.learnMoreIcon}
+                      />
                     </Typography>
                   </Box>
                 </Box>
@@ -57,9 +57,11 @@ const Services = () => {
             ))}
           </Grid>
           <Box sx={styles.btnWrap}>
-            <Button sx={styles.btn} endIcon={<GoArrowRight />}>
-              See more{" "}
-            </Button>
+            <Link href={"/services"}>
+              <Button sx={styles.btn} endIcon={<GoArrowRight />}>
+                See more{" "}
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Container>
@@ -73,7 +75,7 @@ const styles = {
     minHeight: "100vh",
     backgroundColor: "#fff",
     pt: "4em",
-    pb: '5em'
+    pb: "5em",
   },
   qWrap: {
     backgroundColor: "#121279",
@@ -219,7 +221,7 @@ const styles = {
   learnMoreIcon: {
     width: "20px",
     height: "20px",
-  color: "#121279",
+    color: "#121279",
     transition: "all .3s ease-out",
   },
 };
