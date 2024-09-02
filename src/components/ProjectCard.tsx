@@ -3,17 +3,25 @@ import Image from "next/image";
 import React from "react";
 import { GoArrowRight } from "react-icons/go";
 
-type direction = "row-reverse" | "row" 
+type direction = "row-reverse" | "row";
 interface Prop {
   title: string;
   desc: string;
   additionDesc: string;
   img: string;
+  url: string;
   reverse: direction;
 }
-const ProjectCard = ({ title, desc, additionDesc, img, reverse }: Prop) => {
+const ProjectCard = ({
+  title,
+  desc,
+  additionDesc,
+  img,
+  reverse,
+  url,
+}: Prop) => {
   return (
-    <Grid container spacing={4}   direction={reverse }>
+    <Grid container spacing={4} direction={reverse}>
       <Grid item lg={7} md={7} sm={7} xs={12}>
         <Box sx={styles.cardImg}>
           <Image src={img} alt={title} fill />
@@ -25,12 +33,14 @@ const ProjectCard = ({ title, desc, additionDesc, img, reverse }: Prop) => {
           <Typography style={styles.cardDesc}>{desc}</Typography>
           <Typography style={styles.cardDesc}>{additionDesc}</Typography>
           <Box sx={styles.cardBtnFlex}>
-            <Button sx={styles.btnFilled} endIcon={<GoArrowRight />}>
+            {/* <Button sx={styles.btnFilled} endIcon={<GoArrowRight />}>
               Hire Us
-            </Button>
-            <Button sx={styles.btnOutlined} endIcon={<GoArrowRight />}>
-              Learn more
-            </Button>
+            </Button> */}
+            <a href={url} target="_blank">
+              <Button sx={styles.btnOutlined} endIcon={<GoArrowRight />}>
+                Check it Out
+              </Button>
+            </a>
           </Box>
         </Box>
       </Grid>
@@ -54,10 +64,10 @@ const styles = {
   },
   cardImg: {
     width: "100%",
-    height: {lg: "100%", md: "100%", sm: "100%", xs: "370px"},
+    height: { lg: "100%", md: "100%", sm: "100%", xs: "370px" },
     position: "relative",
-    borderRadius: '10px',
-    overflow: "hidden"
+    borderRadius: "10px",
+    overflow: "hidden",
   },
   cardContent: {
     display: "flex",

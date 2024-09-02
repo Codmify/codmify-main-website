@@ -1,11 +1,5 @@
 export const servicesHolder = [
   {
-    title: "UI/UX Design",
-    content:
-      "We will help you create user-friendly and visually appealing interfaces for websites and mobile apps.We also conduct user research to understand the needs and wants of your target users, design wireframes and prototypes to test and iterate on your designs and implement your designs using the latest web development technologies.",
-    contrast: false,
-  },
-  {
     title: "Web development",
     content:
       "We will help you create user-friendly and visually appealing interfaces for websites and mobile apps.We also conduct user research to understand the needs and wants of your target users, design wireframes and prototypes to test and iterate on your designs and implement your designs using the latest web development technologies.",
@@ -15,13 +9,19 @@ export const servicesHolder = [
     title: "Project Management",
     content:
       "Our project management services ensure precision and efficiency in every project. We specialize in meticulous planning, resource allocation, and risk management, using industry best practices to guide projects from start to finish.Our team is skilled at navigating challenges and adapting plans to deliver high-quality results on time and within budget.",
-    contrast: true,
+    contrast: false,
+  },
+  {
+    title: "UI/UX Design",
+    content:
+      "We will help you create user-friendly and visually appealing interfaces for websites and mobile apps.We also conduct user research to understand the needs and wants of your target users, design wireframes and prototypes to test and iterate on your designs and implement your designs using the latest web development technologies.",
+    contrast: false,
   },
   {
     title: "Graphic design",
     content:
       "From logos and branding materials to marketing collateral and digital graphics, we ensure that every design element reflects your brand identity and vision. Our team of skilled designers works closely with you to understand your goals and bring your ideas to life, delivering visually stunning and memorable content that sets you apart from the competition.",
-    contrast: false,
+    contrast: true,
   },
   {
     title: "Software Development",
