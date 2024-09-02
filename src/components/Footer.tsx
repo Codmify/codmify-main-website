@@ -39,8 +39,8 @@ export default function Footer() {
             mb={{ xs: 2, md: 0 }}
           >
             <Image
-              alt="fichub-brand"
-              src="/fichub-nav-logo.svg"
+              alt="codmify-brand"
+              src="/codmify-nav-logo.svg"
               width={148}
               height={33}
             />

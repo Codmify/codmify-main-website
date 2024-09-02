@@ -3,6 +3,11 @@ import LandingSpecial from "@/components/LandingSpecial";
 import { Typography } from "@mui/material";
 import React from "react";
 import Conditions from "./conditions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions",
+};
 
 export default function AboutUs() {
   return (

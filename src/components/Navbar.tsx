@@ -44,8 +44,8 @@ export default function Navbar() {
         >
           <Link href={"/"}>
             <Image
-              alt="fichub-brand"
-              src="/fichub-nav-logo.svg"
+              alt="codmify-brand"
+              src="/codmify-nav-logo.svg"
               width={146}
               height={33}
             />
