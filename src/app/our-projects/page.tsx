@@ -2,7 +2,12 @@ import LandingSpecial from "@/components/LandingSpecial";
 import ProjectCard from "@/components/ProjectCard";
 import { ourProjects } from "@/constants/data";
 import { Stack } from "@mui/material";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Our Projects",
+};
 
 export default function OurProjects() {
   return (

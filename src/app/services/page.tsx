@@ -1,10 +1,15 @@
 import LandingSpecial from "@/components/LandingSpecial";
 import { servicesHolder } from "@/utils/services-holder";
 import { Button, Stack, Typography } from "@mui/material";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
 
-export default function OurProjects() {
+export const metadata: Metadata = {
+  title: "Services",
+};
+
+export default function Services() {
   return (
     <LandingSpecial
       title="Our Services"

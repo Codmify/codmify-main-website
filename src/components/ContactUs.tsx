@@ -25,7 +25,7 @@ const socials = [
 const CustomLabel = () => {
   return (
     <Typography sx={styles.customLabel}>
-      I agree to Fichub’s{" "}
+      I agree to Codmify’s{" "}
       <Typography sx={styles.subLabel} component={"span"}>
         terms and conditions
       </Typography>
