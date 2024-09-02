@@ -1,6 +1,11 @@
 import LandingSpecial from "@/components/LandingSpecial";
 import React from "react";
 import Content from "./content";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+};
 
 export default function AboutUs() {
   return (

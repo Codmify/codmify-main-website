@@ -6,8 +6,8 @@ export default function Content() {
   return (
     <Stack spacing={2}>
       <Typography>
-        Fichub is a platform that connects businesses with expert developers and
-        designers, and helps junior designers and techies find jobs and get
+        Codmify is a platform that connects businesses with expert developers
+        and designers, and helps junior designers and techies find jobs and get
         hired. We are committed to providing our clients with the best possible
         service, and we make it our mission to help junior techies reach their
         full potential.
@@ -55,14 +55,14 @@ export default function Content() {
         </Box>
       </Box>
       <Typography>
-        At Fichub, we believe that everyone has the potential to be a great
+        At Codmify, we believe that everyone has the potential to be a great
         developer or designer. We are committed to helping our clients find the
         best possible talent, and we are dedicated to helping junior designers
         and techies reach their full potential.
       </Typography>
       <Typography>
         If you are a business looking for expert developers or designers, or if
-        you are a junior designer or techie looking for a job, contact Fichub
+        you are a junior designer or techie looking for a job, contact Codmify
         today!
       </Typography>
       <Box py={2} />
