@@ -23,28 +23,28 @@ export const qualification: QualificationProps[] = [
 ];
 export const services: ServiceProps[] = [
   {
-    title: "UI/UX Design",
-    desc: "We will help you create user-friendly and visually appealing interfaces for websites and mobile apps...",
-    icon: LiaPenNibSolid,
-    url: "",
-  },
-  {
     title: "Web development",
     desc: "We use a variety of programming languages including HTML, CSS, Python, Java to develop scalable and secure websites...",
     icon: LiaPenNibSolid,
-    url: "",
+    url: "/services",
+  },
+  {
+    title: "UI/UX Design",
+    desc: "We will help you create user-friendly and visually appealing interfaces for websites and mobile apps...",
+    icon: LiaPenNibSolid,
+    url: "/services",
   },
   {
     title: "Project Management",
     desc: "We manage your projects with efficiency, ensuring timely delivery and clear communication...",
     icon: LiaPenNibSolid,
-    url: "",
+    url: "/services",
   },
   {
     title: "Graphic design",
     desc: "We create captivating visuals that elevate your brand and communicate your message...",
     icon: LiaPenNibSolid,
-    url: "",
+    url: "/services",
   },
 ];
 export const projects: ProjectProps[] = [
