@@ -1,6 +1,7 @@
-import { projects } from "@/constants/data";
+import { ourProjects, projects } from "@/constants/data";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { GoArrowRight } from "react-icons/go";
 
@@ -9,8 +10,8 @@ const Projects = () => {
     <Box sx={styles.wrapper}>
       <Container>
         <Typography sx={styles.pTitle}>Our Projects</Typography>
-        <Grid container spacing={4} justifyContent={"flex-start"} mt={"50px"}>
-          {projects.map((project) => (
+        <Grid container spacing={4} justifyContent={"center"} mt={"50px"}>
+          {ourProjects.map((project) => (
             <Grid key={project.title} item lg={4} md={4} sm={6} xs={12}>
               <Box sx={styles.pItem}>
                 <Box
@@ -19,16 +20,35 @@ const Projects = () => {
                   <Image src={project.image} fill alt="project" />
                 </Box>
                 <Typography sx={styles.pItemTitle}>{project.title}</Typography>
-                <Typography sx={styles.pItemDesc}>{project.desc}</Typography>
+                <Typography sx={styles.pItemDesc}>
+                  {project.desc.length > 90
+                    ? project.desc.substring(0, 90) + "..."
+                    : project.desc}
+                </Typography>
                 <Box mt={"auto"}>
-                  <Button sx={styles.viewBtn} endIcon={<GoArrowRight />}>
-                    View case study
-                  </Button>
+                  <a href={project.url} target="_blank">
+                    <Button sx={styles.viewBtn} endIcon={<GoArrowRight />}>
+                      View Project
+                    </Button>
+                  </a>
                 </Box>
               </Box>
             </Grid>
           ))}
         </Grid>
+        <Link
+          href={"/our-projects"}
+          style={{
+            textAlign: "center",
+            display: "block",
+            margin: "2rem auto 0",
+            width: "fit-content",
+          }}
+        >
+          <Button sx={styles.btn} endIcon={<GoArrowRight />}>
+            See more{" "}
+          </Button>
+        </Link>
       </Container>
     </Box>
   );
@@ -74,6 +94,25 @@ const styles = {
     fontWeight: 700,
     color: "#DFDFFA",
     px: "20px",
+    "&:hover": {
+      "& .MuiButton-icon": {
+        transition: "all .3s ease-in-out",
+        transform: "rotate(-30deg)",
+      },
+    },
+  },
+  btn: {
+    border: "2px solid #AAB9C5",
+    backgroundColor: "#121279",
+    borderRadius: "10px",
+    px: "25px",
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
+    fontSize: "16px",
+    fontWeight: 700,
+    color: "#FAFAFA",
+    transition: "all .3s linear",
     "&:hover": {
       "& .MuiButton-icon": {
         transition: "all .3s ease-in-out",
