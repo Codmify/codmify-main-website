@@ -3,8 +3,11 @@ import type { Metadata } from "next";
 import AlphaWrapper from "@/wrappers/Alpha";
 
 export const metadata: Metadata = {
-  title: "Fichub - The Home of Development",
-  description: "--- Insert a description here ---",
+  title: {
+    template: "%s | Codmify Hub",
+    default: "Codmify Hub",
+  },
+  description: "The Home of Development",
 };
 
 export default function RootLayout({
