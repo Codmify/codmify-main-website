@@ -53,6 +53,7 @@ export default function LandingSpecial({
           position="relative"
           minHeight={500}
           borderRadius={{ lg: "20px" }}
+          marginTop={"-25rem"}
           py={{ xs: 4, md: 8 }}
           px={{ xs: 1, md: 4 }}
           sx={{ boxShadow: "0px 4px 4px #0000001A", mb: "4em" }}

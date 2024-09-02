@@ -89,28 +89,18 @@ export const testimonials = [
 ];
 export const ourProjects = [
   {
-    title: "AgentVue",
-    desc: "The project aims to create an innovative desktop and mobile application focused on a unique illustration-based interface tailored for AI agents. Rather than a traditional website, this application will offer a dynamic sideview of an office building, providing users with a clear and intuitive visual representation of each agent's capabilities and functions.",
-    additionalDesc:
-      "This distinctive approach will enhance user engagement and simplify interactions with AI agents, making complex tasks more accessible and comprehensible.",
-    image: "/project1.png",
-    url: "",
+    title: "VAAD Media",
+    desc: "VAAD Media specializes in innovative outdoor advertising solutions, offering a wide range of services including out-of-home media planning, graphic design, and printing. The agency helps brands engage with their target audience through billboards, digital screens, and other formats, providing demographic and location data to optimize campaigns. With a focus on creative and unconventional marketing strategies, VAAD Media ensures that client messages stand out in crowded environments.",
+    additionalDesc: "",
+    image: "/vaad-media.png",
+    url: "https://www.vaad.com.ng/",
   },
   {
-    title: "FrameSync",
-    desc: "A Video Collaborative Platform, a dynamic solution designed to revolutionize the video production process. This innovative tool empowers individuals and teams to seamlessly review and provide feedback on video projects, ensuring the final product meets the highest standards of excellence.",
-    additionalDesc:
-      "At the heart of our platform is a robust feature set inspired by industry-leading platforms like frame.io. Tailored for professionals working with video editors, our platform facilitates a collaborative environment where every frame is meticulously examined and critiqued. ",
-    image: "/project2.png",
-    url: "",
-  },
-  {
-    title: "iSpeak",
-    desc: "iSpeak, a revolutionary app was designed to bridge the communication gap for individuals who face challenges in articulating complete sentences. iSpeak employs cutting-edge technology to not only capture speech, but also enhance its clarity and comprehension for listeners. With this innovative solution, anyone can now engage in meaningful conversations without the need to strain or maintain close proximity. ",
-    additionalDesc:
-      "Say goodbye to communication barriers and embrace a world where everyone's voice is heard loud and clear ",
-    image: "/project3.png",
-    url: "",
+    title: "Depane Topup",
+    desc: "Depane Topup is an online platform that allows users to easily recharge mobile phones. It offers a convenient and user-friendly interface, enabling quick transactions. The platform is designed for both individuals and businesses looking for a seamless way to manage their top-up and payment needs.",
+    additionalDesc: "",
+    image: "/depane-topup.png",
+    url: "https://depanetopup.com/",
   },
 ];
 export const servicesTitles = [
