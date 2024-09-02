@@ -11,27 +11,17 @@ export default function OurProjects() {
       subtitle="Explore our portfolio of innovative projects that showcase our expertise and creativity across various industries."
     >
       <Stack gap={"60px"}>
-        <ProjectCard
-          title={ourProjects[0].title}
-          additionDesc={ourProjects[0].additionalDesc}
-          desc={ourProjects[0].desc}
-          img={ourProjects[0].image}
-          reverse={"row"}
-        />
-        <ProjectCard
-          title={ourProjects[1].title}
-          additionDesc={ourProjects[1].additionalDesc}
-          desc={ourProjects[1].desc}
-          img={ourProjects[1].image}
-          reverse={"row-reverse"}
-        />
-        <ProjectCard
-          title={ourProjects[2].title}
-          additionDesc={ourProjects[2].additionalDesc}
-          desc={ourProjects[2].desc}
-          img={ourProjects[2].image}
-          reverse={"row"}
-        />
+        {ourProjects.map((item) => (
+          <ProjectCard
+            key={item.title}
+            title={item.title}
+            additionDesc={item.additionalDesc}
+            desc={item.desc}
+            img={item.image}
+            url={item.url}
+            reverse={"row"}
+          />
+        ))}
       </Stack>
     </LandingSpecial>
   );
