@@ -1,7 +1,7 @@
 import LandingSpecial from "@/components/LandingSpecial";
 import ProjectCard from "@/components/ProjectCard";
 import { ourProjects } from "@/constants/data";
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import { Metadata } from "next";
 import React from "react";
 
@@ -15,7 +15,7 @@ export default function OurProjects() {
       title="Our Projects"
       subtitle="Explore our portfolio of innovative projects that showcase our expertise and creativity across various industries."
     >
-      <Stack gap={"60px"}>
+      <Stack gap={"60px"} rowGap={2} divider={<Divider />} overflow={"hidden"}>
         {ourProjects.map((item) => (
           <ProjectCard
             key={item.title}

@@ -98,9 +98,9 @@ export default function Footer() {
               <Typography
                 variant="body2"
                 component={"a"}
-                href={"tel:+2349099446126"}
+                href={"tel:+2349031874139"}
               >
-                +234 909 944 6126
+                +234 903 187 4139
               </Typography>
               <Typography
                 variant="body2"
