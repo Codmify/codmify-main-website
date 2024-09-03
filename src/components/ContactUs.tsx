@@ -49,13 +49,13 @@ const ContactUs = () => {
                 <Box sx={styles.inlineFlex}>
                   <BiSolidPhoneCall style={styles.inlineIcon} />
                   <Typography style={styles.inlineText}>
-                    +234 909 944 6126
+                    +234 903 187 4139
                   </Typography>
                 </Box>
                 <Box sx={styles.inlineFlex}>
                   <IoMailSharp style={styles.inlineIcon} />
                   <Typography style={styles.inlineText}>
-                    decentjobtechskills@gmail.com
+                    codmify@gmail.com
                   </Typography>
                 </Box>
               </Stack>

@@ -58,7 +58,7 @@ export default Projects;
 
 const styles = {
   wrapper: {
-    minHeight: "100vh",
+    minHeight: 600,
     backgroundColor: "#121279",
     py: "4em",
   },
