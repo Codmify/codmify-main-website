@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
@@ -71,16 +65,20 @@ export default Hero;
 
 const styles = {
   wrapper: {
-    minHeight: "100vh",
     backgroundColor: "#121279",
-    paddingTop: {lg: "130px", md: '120px', sm: '80px'},
+    paddingTop: { lg: "130px", md: "120px", sm: "80px" },
   },
   container: {
+    minHeight: 600,
     display: "flex",
     justifyContent: "center",
-    alignItems: {lg: "flex-start", md: "flex-start", sm: "flex-start", xs: 'center'},
+    alignItems: {
+      lg: "flex-start",
+      md: "flex-start",
+      sm: "flex-start",
+      xs: "center",
+    },
     position: "relative",
-    minHeight: "100vh",
     paddingTop: "8em",
     backgroundImage: "url('/grid.png')",
     backgroundPosition: "center",
@@ -88,7 +86,7 @@ const styles = {
   },
   title: {
     textAlign: "center",
-    fontSize: {lg: "56px", md: "56px", sm: '45px', xs: '32px'},
+    fontSize: { lg: "56px", md: "56px", sm: "45px", xs: "32px" },
     fontWeight: 700,
     color: "#FAFAFA",
   },
@@ -119,7 +117,7 @@ const styles = {
   },
   tagWrap: {
     border: "2px solid #FFFFFF36",
-    display: { lg: "flex", md: "flex", sm: "flex", xs: "none" },
+    display: { lg: "flex", md: "flex", xs: "none" },
     justifyContent: "flex-start",
     alignItems: "center",
     width: "auto",
@@ -135,12 +133,12 @@ const styles = {
     transform: "rotate(21deg)",
     "&:nth-child(2)": {
       top: "auto",
-      bottom: {lg: "300px", md: "210px", sm: '200px', xs: '200px'},
+      bottom: { lg: "20%", md: "210px", sm: "200px", xs: "200px" },
       transform: "rotate(342deg)",
       left: "40px",
     },
-      "&:nth-child(4)": {
-      top: {lg: "100px", md: '45px', sm: '40px', xs: '40px'},
+    "&:nth-child(4)": {
+      top: { lg: "100px", md: "45px", sm: "40px", xs: "40px" },
       transform: "rotate(342deg)",
       right: "35px",
       left: "auto",
@@ -150,9 +148,8 @@ const styles = {
       transform: "rotate(23deg)",
       right: "35px",
       left: "auto",
-      bottom: {lg: "400px", md: '200px', sm: '200px', xs: '200px'},
+      bottom: { lg: "20%", md: "200px", sm: "200px", xs: "200px" },
     },
-  
   },
   iconWrap: {
     width: "17px",
