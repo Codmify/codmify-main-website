@@ -94,7 +94,7 @@ input[type="number"] {
 .swiper-wrapper {
   padding-top: 45px;
 }
-.swiper-slide:nth-child(1) {
+.swiper-slide:nth-of-type(1) {
   margin-left: 30px;
 }
 .swiper-button-prev,
