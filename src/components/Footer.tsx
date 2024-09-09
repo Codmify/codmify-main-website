@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { aboutUsMenu, servicesMenu, socials } from "@/utils/nav-menus";
+import { aboutUsMenu, socials } from "@/utils/nav-menus";
 import Link from "next/link";
 import Image from "next/image";
 import { servicesHolder } from "@/utils/services-holder";
