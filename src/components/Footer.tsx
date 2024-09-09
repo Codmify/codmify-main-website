@@ -4,6 +4,7 @@ import { Box, Container, Stack, Typography } from "@mui/material";
 import { aboutUsMenu, servicesMenu, socials } from "@/utils/nav-menus";
 import Link from "next/link";
 import Image from "next/image";
+import { servicesHolder } from "@/utils/services-holder";
 
 export default function Footer() {
   return (
@@ -19,8 +20,8 @@ export default function Footer() {
         }}
       >
         <Stack
-          direction={"row"}
-          gap={{ xs: 2, md: 4 }}
+          direction={{ sm: "row" }}
+          gap={4}
           justifyContent={"space-between"}
           flexWrap={"wrap"}
           sx={{
@@ -65,14 +66,14 @@ export default function Footer() {
           <Stack flex={{ xs: 1, lg: 0.5 }} spacing={1.5} className="alignEnd">
             <Typography variant="h6">Services</Typography>
             <Stack spacing={1}>
-              {servicesMenu.map((item, id) => (
+              {servicesHolder.map((item, id) => (
                 <Typography
                   variant="body2"
                   component={Link}
-                  href={item.url}
+                  href={"/services#" + item.reference}
                   key={id}
                 >
-                  {item.label}
+                  {item.title}
                 </Typography>
               ))}
             </Stack>
@@ -120,7 +121,8 @@ export default function Footer() {
             display={"block"}
             color={"white"}
           >
-            Copyright {new Date().getFullYear()} All rights reserved | FicHub.
+            Copyright {new Date().getFullYear()} All rights reserved |
+            CodmifyHub.
           </Typography>
         </Box>
       </Container>

@@ -16,12 +16,12 @@ export default function AboutUs() {
       subtitle="Get in touch with us for collaborations, inquiries, or to learn more about our services. We're here to assist you!"
     >
       <Typography>
-        These Terms and Conditions ("Terms") govern your use of the FIC Hub
+        These Terms and Conditions ("Terms") govern your use of the Codmify Hub
         website (the "Website") and any software solutions, products, or
-        services provided by FIC Hub ("FIC Hub," "we," or "us"). By accessing or
-        using the Website or any software solutions provided by FIC Hub, you
-        agree to be bound by these Terms. If you do not agree with these Terms,
-        please do not use our Website or services.
+        services provided by Codmify Hub ("Codmify Hub," "we," or "us"). By
+        accessing or using the Website or any software solutions provided by
+        Codmify Hub, you agree to be bound by these Terms. If you do not agree
+        with these Terms, please do not use our Website or services.
       </Typography>
       <Conditions />
     </LandingSpecial>

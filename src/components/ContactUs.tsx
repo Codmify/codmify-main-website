@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Container,
@@ -8,6 +10,7 @@ import {
   Stack,
   FormControlLabel,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
@@ -15,6 +18,9 @@ import { FaXTwitter } from "react-icons/fa6";
 import { GoArrowRight } from "react-icons/go";
 import { IoMailSharp } from "react-icons/io5";
 import Testimonials from "./Testimonials";
+import { ChangeEvent, FormEvent, useState } from "react";
+import Link from "next/link";
+import SnackbarComp, { useToast } from "./Toast";
 
 const socials = [
   { icon: FaInstagram },
@@ -26,13 +32,70 @@ const CustomLabel = () => {
   return (
     <Typography sx={styles.customLabel}>
       I agree to Codmify’s{" "}
-      <Typography sx={styles.subLabel} component={"span"}>
-        terms and conditions
-      </Typography>
+      <Link href={"/t-and-c"}>
+        <Typography sx={styles.subLabel} component={"span"}>
+          terms and conditions
+        </Typography>
+      </Link>
     </Typography>
   );
 };
+
+// Define types for form data
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
 const ContactUs = () => {
+  const [formData, setFormData] = useState<FormData>({
+      name: "",
+      email: "",
+      message: "",
+    }),
+    [loading, setLoading] = useState(false);
+  const { handleMessage, handleSnack, snackBarOpen, setSnackBarOpen } =
+    useToast();
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        handleMessage("success", result.message);
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        handleMessage("error", `Error: ${result.message}`);
+      }
+    } catch (error) {
+      handleMessage("error", "Failed to send email. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Box sx={styles.wrapper}>
       <Container sx={styles.container}>
@@ -69,49 +132,71 @@ const ContactUs = () => {
             </Box>
           </Grid>
           <Grid item lg={8} md={8} sm={6} xs={12}>
-            <Box sx={styles.cForm}>
+            <Box sx={styles.cForm} component={"form"} onSubmit={handleSubmit}>
               <Box width={"100%"}>
                 <Typography>Name</Typography>
                 <TextField
+                  disabled={loading}
+                  name="name"
                   size="medium"
-                  sx={styles.input}
-                  placeholder="E.g John Doe "
+                  onChange={handleChange}
+                  value={formData.name}
+                  placeholder="E.g John Doe"
                   fullWidth
+                  required
                 />
               </Box>
               <Box width={"100%"}>
                 <Typography>Email*</Typography>
                 <TextField
+                  disabled={loading}
+                  name="email"
                   size="medium"
-                  sx={styles.input}
+                  type="email"
+                  onChange={handleChange}
+                  value={formData.email}
                   placeholder="E.g johndoe@gmail.com"
                   fullWidth
+                  required
                 />
               </Box>
               <Box width={"100%"}>
                 <Typography>Message*</Typography>
                 <TextField
+                  disabled={loading}
+                  name="message"
                   size="medium"
-                  sx={styles.input}
+                  onChange={handleChange}
+                  value={formData.message}
                   placeholder="Write a Message here..."
                   fullWidth
                   multiline
                   rows={5}
+                  required
                 />
               </Box>
               <Box width={"100%"}>
                 <FormControlLabel
-                  control={<Checkbox />}
+                  required
+                  control={<Checkbox disabled={loading} required />}
                   label={<CustomLabel />}
                 />
               </Box>
               <Box width={"100%"}>
                 <Button
-                  endIcon={<GoArrowRight />}
-                  sx={styles.submitBtn}
+                  disabled={loading}
+                  variant="contained"
+                  type="submit"
+                  endIcon={
+                    loading ? (
+                      <CircularProgress color="info" size={20} />
+                    ) : (
+                      <GoArrowRight />
+                    )
+                  }
+                  sx={{ mt: 2 }}
                   fullWidth
                 >
-                  {" "}
                   Submit
                 </Button>
               </Box>
@@ -120,6 +205,13 @@ const ContactUs = () => {
         </Grid>
         <Testimonials />
       </Container>
+
+      <SnackbarComp
+        snackBarOpen={snackBarOpen}
+        setSnackBarOpen={setSnackBarOpen}
+        alert={handleSnack.alert}
+        message={handleSnack.message}
+      />
     </Box>
   );
 };

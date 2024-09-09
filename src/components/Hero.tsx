@@ -1,5 +1,6 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
@@ -34,9 +35,11 @@ const Hero = () => {
             </Typography>
           </Box>
           <Box sx={styles.btnWrap}>
-            <Button sx={styles.startBtn} size="large">
-              Get Started
-            </Button>
+            <Link href={"/hire-us"}>
+              <Button sx={styles.startBtn} size="large">
+                Get Started
+              </Button>
+            </Link>
           </Box>
         </Stack>
         <Box sx={styles.tagWrap}>
@@ -131,19 +134,19 @@ const styles = {
     top: { lg: "100px", md: "35px", sm: "30px", xs: "30px" },
     left: "30px",
     transform: "rotate(21deg)",
-    "&:nth-child(2)": {
+    "&:nth-of-type(2)": {
       top: "auto",
       bottom: { lg: "20%", md: "210px", sm: "200px", xs: "200px" },
       transform: "rotate(342deg)",
       left: "40px",
     },
-    "&:nth-child(4)": {
+    "&:nth-of-type(4)": {
       top: { lg: "100px", md: "45px", sm: "40px", xs: "40px" },
       transform: "rotate(342deg)",
       right: "35px",
       left: "auto",
     },
-    "&:nth-child(5)": {
+    "&:nth-of-type(5)": {
       top: "auto",
       transform: "rotate(23deg)",
       right: "35px",
