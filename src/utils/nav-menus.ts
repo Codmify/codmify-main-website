@@ -39,7 +39,7 @@ export const socials = [
 export const servicesMenu = [
   {
     label: "Software Development",
-    url: "",
+    url: "/services",
   },
   {
     label: "Design and Creativity",
@@ -56,13 +56,13 @@ export const aboutUsMenu = [
     label: "About Us",
     url: "",
   },
-  {
-    label: "Privacy Policies",
-    url: "",
-  },
+  // {
+  //   label: "Privacy Policies",
+  //   url: "",
+  // },
   {
     label: "Terms and Conditions",
-    url: "",
+    url: "/t-and-c",
   },
   {
     label: "Contact Us",
