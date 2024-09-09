@@ -97,7 +97,7 @@ const ContactUs = () => {
   };
 
   return (
-    <Box sx={styles.wrapper}>
+    <Box sx={styles.wrapper} id="contact-us">
       <Container sx={styles.container}>
         <Grid container>
           <Grid item lg={4} md={4} sm={6} xs={12}>

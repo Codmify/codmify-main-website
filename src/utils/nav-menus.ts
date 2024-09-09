@@ -36,25 +36,25 @@ export const socials = [
   },
 ];
 
-export const servicesMenu = [
-  {
-    label: "Software Development",
-    url: "/services",
-  },
-  {
-    label: "Design and Creativity",
-    url: "",
-  },
-  {
-    label: "Tutoring ",
-    url: "",
-  },
-];
+// export const servicesMenu = [
+//   {
+//     label: "Software Development",
+//     url: "/services",
+//   },
+//   {
+//     label: "Design and Creativity",
+//     url: "",
+//   },
+//   {
+//     label: "Tutoring ",
+//     url: "",
+//   },
+// ];
 
 export const aboutUsMenu = [
   {
     label: "About Us",
-    url: "",
+    url: "/about-us",
   },
   // {
   //   label: "Privacy Policies",
@@ -66,7 +66,7 @@ export const aboutUsMenu = [
   },
   {
     label: "Contact Us",
-    url: "",
+    url: "/#contact-us",
   },
 ];
 export const usefulFoot = [
