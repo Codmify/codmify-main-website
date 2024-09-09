@@ -23,6 +23,7 @@ export default function Services() {
       >
         {servicesHolder.map((service) => (
           <Stack
+            id={service.reference}
             key={service.title}
             width={{ md: "49%" }}
             bgcolor={service.contrast ? "#121279" : "#E7EBEF"}
