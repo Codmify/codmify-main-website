@@ -45,9 +45,9 @@ export default function Navbar() {
           <Link href={"/"}>
             <Image
               alt="codmify-brand"
-              src="/codmify-nav-logo.svg"
+              src="/brand/logo-2.png"
               width={146}
-              height={33}
+              height={28}
             />
           </Link>
           <Stack
