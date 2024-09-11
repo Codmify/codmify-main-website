@@ -45,9 +45,9 @@ export default function Navbar() {
           <Link href={"/"}>
             <Image
               alt="codmify-brand"
-              src="/codmify-nav-logo.svg"
+              src="/brand/logo-2.png"
               width={146}
-              height={33}
+              height={28}
             />
           </Link>
           <Stack
@@ -93,13 +93,15 @@ export default function Navbar() {
                 {menu.label}
               </Typography>
             ))}
-            <Button
-              size="large"
-              variant="contained"
-              sx={{ display: { xs: "inline-flex", md: "none" }, mt: 4 }}
-            >
-              Get Started
-            </Button>
+            <Link href={"/hire-us"}>
+              <Button
+                size="large"
+                variant="contained"
+                sx={{ display: { xs: "inline-flex", md: "none" }, mt: 4 }}
+              >
+                Get Started
+              </Button>
+            </Link>
           </Stack>
           <Stack
             alignItems={"center"}
@@ -113,13 +115,15 @@ export default function Navbar() {
             >
               <MenuIcon style={{ height: 45, color: "#121279" }} />
             </IconButton>
-            <Button
-              size="large"
-              variant="contained"
-              sx={{ display: { xs: "none", md: "inline-flex" } }}
-            >
-              Get Started
-            </Button>
+            <Link href={"/hire-us"}>
+              <Button
+                size="large"
+                variant="contained"
+                sx={{ display: { xs: "none", md: "inline-flex" } }}
+              >
+                Get Started
+              </Button>
+            </Link>
           </Stack>
         </Stack>
       </Container>
