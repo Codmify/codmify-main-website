@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     template: "%s | Codmify Hub",
     default: "Codmify Hub",
   },
+  icons: { icon: "/brand/favicon.png", apple: "/brand/favicon.png" },
   description: "The Home of Development",
 };
 
