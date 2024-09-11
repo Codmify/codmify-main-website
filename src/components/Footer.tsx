@@ -41,9 +41,9 @@ export default function Footer() {
           >
             <Image
               alt="codmify-brand"
-              src="/codmify-nav-logo.svg"
+              src="/brand/logo-1.png"
               width={148}
-              height={33}
+              height={28}
             />
             <Typography variant="body2" maxWidth={{ md: 300 }}>
               Moving with ICT global standards and building a workforce for
