@@ -22,9 +22,15 @@ const PageWrap = () => {
           <Typography sx={styles.subTitle}>Select Services:</Typography>
           <Button
             sx={styles.selectAllBtn}
-            onClick={() => setSelected(servicesTitles)}
+            onClick={() =>
+              setSelected(
+                selected.length === servicesTitles.length ? [] : servicesTitles
+              )
+            }
           >
-            Select all
+            {selected.length === servicesTitles.length
+              ? "Unselect all"
+              : "Select all"}
           </Button>
         </Box>
         <Box sx={styles.servicesWrap}>
