@@ -12,7 +12,7 @@ export const teams = [
     url: "https://www.linkedin.com/in/decryptus",
   },
   {
-    name: "Abdulmalik Ademola-Sholagbade",
+    name: "Abdulmalik Ademola",
     role: "Engineering & Development",
     img: "/teams/abdulmalik.png",
     url: "https://www.linkedin.com/in/harmal",
