@@ -1,5 +1,6 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const solutions = [
@@ -116,34 +117,36 @@ export default function Content() {
           </Box>
         </Box>
       </Stack>
-      <Box mt={'30px'}>
-      <Typography>
-        Codmify is designed to be your all-in-one solution for both talent and
-        digital services. With a commitment to quality and innovation, we’re
-        here to help your business thrive while supporting the next generation
-        of digital talent.
-      </Typography>
-      <Typography mt="15px">
-        Ready to elevate your business? Partner with Codmify and explore our
-        comprehensive digital solutions.
-      </Typography>
+      <Box mt={"30px"}>
+        <Typography>
+          Codmify is designed to be your all-in-one solution for both talent and
+          digital services. With a commitment to quality and innovation, we’re
+          here to help your business thrive while supporting the next generation
+          of digital talent.
+        </Typography>
+        <Typography mt="15px">
+          Ready to elevate your business? Partner with Codmify and explore our
+          comprehensive digital solutions.
+        </Typography>
       </Box>
       <Box py={2} />
-      <Button
-        size="large"
-        variant="contained"
-        endIcon={
-          <Image
-            src={"/contact-us-icon.svg"}
-            alt="contact-us-icon"
-            width={12}
-            height={14}
-          />
-        }
-        sx={{ width: "fit-content" }}
-      >
-        Contact Us
-      </Button>
+      <Link href={"/#contact-us"}>
+        <Button
+          size="large"
+          variant="contained"
+          endIcon={
+            <Image
+              src={"/contact-us-icon.svg"}
+              alt="contact-us-icon"
+              width={12}
+              height={14}
+            />
+          }
+          sx={{ width: "fit-content" }}
+        >
+          Contact Us
+        </Button>
+      </Link>
     </Stack>
   );
 }
