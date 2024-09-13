@@ -104,11 +104,11 @@ export const ourProjects = [
   },
 ];
 export const servicesTitles = [
-  "UI/UX DESIGN",
+  "UI/UX Design",
   "Project Management",
-  "WEBSITE DEVELOPMENT",
-  "GRAPHIC DESIGN",
-  "BRAND DESIGN",
+  "Website Development",
+  "Graphic Design",
+  "Brand Design",
   "Software Development",
-  "MARKETING",
+  "Marketing",
 ];
