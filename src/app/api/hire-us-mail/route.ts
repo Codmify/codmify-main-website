@@ -12,7 +12,9 @@ const mailjetClient = new Mailjet({
 interface ContactFormData {
   name: string;
   email: string;
-  message: string;
+  category: string;
+  companyName: string;
+  projectDescription: string;
 }
 
 // POST method to handle email sending
@@ -21,7 +23,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body: ContactFormData = await request.json();
 
     // Destructure the form data
-    const { name, email, message } = body;
+    const { name, email, category, companyName, projectDescription } = body;
 
     // Define Mailjet email request data to send to the company
     const mailjetRequestToCompany = {
@@ -29,7 +31,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         {
           From: {
             Email: process.env.COMPANY_EMAIL as string, // Your company email address
-            Name: "Website Contact Form",
+            Name: "Service Request Form",
           },
           To: [
             {
@@ -37,19 +39,25 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               Name: "Recipient",
             },
           ],
-          Subject: "New Contact Form Submission",
-          TextPart: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+          Subject: "New Service Request Received",
+          TextPart: `You have received a new service request.\nServices Requested: ${category}
+            \nName: ${name}
+            \nEmail: ${email}
+            \nCompany Name: ${companyName || "Not provided"}
+            \nProject Description: ${projectDescription}
+            \n\n
+            Please respond to the client as soon as possible.`,
         },
       ],
     };
 
-    // Define Mailjet email request data to send a confirmation to the user
+    // Define Mailjet email request data to send a confirmation to the user requesting a service
     const mailjetRequestToUser = {
       Messages: [
         {
           From: {
             Email: process.env.COMPANY_EMAIL as string, // Your company email address
-            Name: "Codmify Hub",
+            Name: "Codmify Hub", // Codmify Hub to appear as sender
           },
           To: [
             {
@@ -57,8 +65,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               Name: name, // User's name from the form
             },
           ],
-          Subject: "Thank you for contacting us!",
-          TextPart: `Hello ${name},\n\nThank you for reaching out to us! We have received your message and will get back to you shortly.\n\nBest regards,\nCodmify Hub`,
+          Subject: "Service Request Received - Thank You for Choosing Us!",
+          TextPart: `Hello ${name},\n\nThank you for requesting a service from us. We have received your request and our team is currently reviewing it. You can expect a response within the next 24-48 hours.\n\nIn the meantime, if you have any additional information or questions, feel free to reply to this email.\n\nBest regards,\nCodmify Hub\nCustomer Service Team`,
         },
       ],
     };
