@@ -130,7 +130,7 @@ export default function Content() {
         </Typography>
       </Box>
       <Box py={2} />
-      <Link href={"/#contact-us"}>
+      <Link href={"/#contact-us"} style={{ width: "fit-content" }}>
         <Button
           size="large"
           variant="contained"
