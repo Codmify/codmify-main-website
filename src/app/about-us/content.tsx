@@ -49,10 +49,6 @@ const services = [
     desc: "Develop compelling visuals, from logos to marketing materials.",
   },
   {
-    title: "Graphic Design",
-    desc: "Develop compelling visuals, from logos to marketing materials.",
-  },
-  {
     title: "Software Development",
     desc: "Build custom software solutions with our dedicated team and freelance talent.",
   },
