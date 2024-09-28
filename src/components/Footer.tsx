@@ -49,9 +49,9 @@ export default function Footer() {
               Moving with ICT global standards and building a workforce for
               tomorrow&lsquo;s challenge.
             </Typography>
-            <Stack pt={2} gap={2} direction={"row"} flexWrap={"wrap"}>
+            <Stack pt={2} gap={1} direction={"row"} flexWrap={"wrap"}>
               {socials.map((item, id) => (
-                <a href={item.url} key={id}>
+                <a href={item.url} target="_blank" key={id}>
                   <Box
                     component={"img"}
                     src={item.image}

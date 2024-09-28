@@ -21,13 +21,8 @@ import Testimonials from "./Testimonials";
 import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 import SnackbarComp, { useToast } from "./Toast";
+import { socials } from "@/utils/nav-menus";
 
-const socials = [
-  { icon: FaInstagram },
-  { icon: FaXTwitter },
-  { icon: FaFacebookF },
-  { icon: FaLinkedinIn },
-];
 const CustomLabel = () => {
   return (
     <Typography sx={styles.customLabel}>
@@ -122,13 +117,19 @@ const ContactUs = () => {
                   </Typography>
                 </Box>
               </Stack>
-              <Box sx={styles.socialIcons}>
-                {socials.map((item, index) => (
-                  <Box key={index} sx={styles.socialIcon}>
-                    <item.icon style={styles.socialSvg} />
-                  </Box>
+              <Stack gap={1} direction={"row"} flexWrap={"wrap"}>
+                {socials.map((item, id) => (
+                  <a href={item.url} target="_blank" key={id}>
+                    <Box
+                      component={"img"}
+                      src={item.image}
+                      width={38}
+                      height={38}
+                      borderRadius={"50%"}
+                    />
+                  </a>
                 ))}
-              </Box>
+              </Stack>
             </Box>
           </Grid>
           <Grid item lg={8} md={8} sm={6} xs={12}>

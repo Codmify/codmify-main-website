@@ -19,20 +19,28 @@ export const navLinks = [
 
 export const socials = [
   {
+    image: "/twitter.svg",
+    url: "https://x.com/codmify",
+  },
+  {
+    image: "/tiktok.svg",
+    url: "https://www.tiktok.com/@codmify",
+  },
+  {
+    image: "/yt.svg",
+    url: "https://www.youtube.com/@codmify",
+  },
+  {
     image: "/fb.svg",
-    url: "",
+    url: "https://www.facebook.com/profile.php?id=100067571077434&mibextid=LQQJ4d",
   },
   {
     image: "/insta.svg",
-    url: "",
-  },
-  {
-    image: "/twitter.svg",
-    url: "",
+    url: "https://www.instagram.com/codmify",
   },
   {
     image: "/linkedin.svg",
-    url: "",
+    url: "https://www.linkedin.com/company/codmify-hub/",
   },
 ];
 
