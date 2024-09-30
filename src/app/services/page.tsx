@@ -3,6 +3,7 @@ import { servicesHolder } from "@/utils/services-holder";
 import { Button, Stack, Typography } from "@mui/material";
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export const metadata: Metadata = {
@@ -52,21 +53,26 @@ export default function Services() {
             >
               {service.content}
             </Typography>
-            <Button
-              startIcon={
-                <Image
-                  src={
-                    service.contrast ? "/hire-alt-icon.svg" : "/hire-icon.svg"
-                  }
-                  alt="pen-icon"
-                  width={41}
-                  height={41}
-                />
-              }
-              sx={{ width: "fit-content" }}
-            >
-              Hire Us
-            </Button>
+            <Link href={"/hire-us"} style={{ width: "fit-content" }}>
+              <Button
+                startIcon={
+                  <Image
+                    src={
+                      service.contrast ? "/hire-alt-icon.svg" : "/hire-icon.svg"
+                    }
+                    alt="pen-icon"
+                    width={41}
+                    height={41}
+                  />
+                }
+                sx={{
+                  width: "fit-content",
+                  color: service.contrast ? "white" : "#121279",
+                }}
+              >
+                Hire Us
+              </Button>
+            </Link>
           </Stack>
         ))}
       </Stack>
