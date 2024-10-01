@@ -61,7 +61,7 @@ export default function OurTeam() {
                   >
                     {item.role}
                   </Typography>
-                </Box>
+                </Stack>
               </Box>
               <Box
                 component={"br"}
