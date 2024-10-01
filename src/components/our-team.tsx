@@ -41,7 +41,7 @@ export default function OurTeam() {
                     },
                   }}
                 >
-                  <a href={item.url} target="_blank">
+                  <a href={item.url} target="_blank" style={{width: "fit-content"}}>
                     <Typography
                       fontWeight={600}
                       textAlign={"center"}
