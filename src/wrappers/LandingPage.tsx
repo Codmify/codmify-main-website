@@ -29,7 +29,7 @@ export default function LandingPage({ children }: { children: ReactNode }) {
       <AnimatedModal
         isOpen={show}
         onClose={() => {
-          sessionStorage.getItem("welcome");
+          sessionStorage.setItem("welcome", "0");
           setShow(!show);
         }}
       />

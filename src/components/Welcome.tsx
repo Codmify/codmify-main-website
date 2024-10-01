@@ -3,7 +3,6 @@
 import React from "react";
 import { Modal, Box, Stack, Typography } from "@mui/material";
 import { motion } from "framer-motion";
-import Confetti from "./Confetti";
 
 interface AnimatedModalProps {
   isOpen: boolean;
@@ -44,8 +43,6 @@ const AnimatedModal: React.FC<AnimatedModalProps> = ({ isOpen, onClose }) => (
           width={"100%"}
         />
       </Stack>
-
-      <Confetti />
     </Box>
   </Modal>
 );
