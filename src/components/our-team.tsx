@@ -31,7 +31,8 @@ export default function OurTeam() {
                 key={id}
               >
                 <Image src={item.img} alt="team" width={293} height={257} />
-                <Box
+                <Stack
+                  alignItems={"center"}
                   bgcolor={"#2020DB"}
                   p={2}
                   sx={{
@@ -41,12 +42,13 @@ export default function OurTeam() {
                     },
                   }}
                 >
-                  <a href={item.url} target="_blank" style={{width: "fit-content"}}>
+                  <a href={item.url} target="_blank">
                     <Typography
                       fontWeight={600}
                       textAlign={"center"}
                       variant="body2"
                       color={"white"}
+                      sx={{width: "fit-content"}}
                     >
                       {item.name}
                     </Typography>
