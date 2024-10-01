@@ -4,14 +4,23 @@ import { useEffect, useState } from "react";
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
 
 function Confetti() {
-  const [run, setRun] = useState(true);
+  const [run, setRun] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setRun(false);
-    }, 10000);
+    // !sessionStorage.getItem("confetti") && setRun(true)
 
-    return () => clearTimeout(timer);
+    if (!sessionStorage.getItem("confetti")) {
+      setRun(true);
+
+      const timer = setTimeout(() => {
+        sessionStorage.setItem("confetti", "0");
+        setRun(false);
+      }, 15000);
+
+      return () => clearTimeout(timer);
+    } else {
+      setRun(false);
+    }
   }, []);
 
   return run ? <Fireworks autorun={{ speed: 2 }} /> : <></>;
