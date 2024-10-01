@@ -19,7 +19,7 @@ export const teams = [
   },
   {
     name: "Abiodun Olalude",
-    role: "Product Management",
+    role: "Project Management",
     img: "/teams/bayzwise.png",
     url: "https://www.linkedin.com/in/olalude-olatade-abiodun-01b81423a/",
   },
