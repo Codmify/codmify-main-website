@@ -13,6 +13,7 @@ interface ContactFormData {
   name: string;
   email: string;
   message: string;
+  phone: string;
 }
 
 // POST method to handle email sending
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body: ContactFormData = await request.json();
 
     // Destructure the form data
-    const { name, email, message } = body;
+    const { name, email, message, phone } = body;
 
     // Define Mailjet email request data to send to the company
     const mailjetRequestToCompany = {
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             },
           ],
           Subject: "New Contact Form Submission",
-          TextPart: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+          TextPart: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phone}\nMessage: ${message}`,
         },
       ],
     };
@@ -75,7 +76,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     // Return a success response
     return NextResponse.json({
-      message: "Emails sent successfully!",
+      message: "Message sent successfully!",
       data: { company: resultToCompany.body, user: resultToUser.body },
     });
   } catch (error: any) {
