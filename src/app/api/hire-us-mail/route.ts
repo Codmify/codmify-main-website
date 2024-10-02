@@ -12,6 +12,7 @@ const mailjetClient = new Mailjet({
 interface ContactFormData {
   name: string;
   email: string;
+  phone: string;
   category: string;
   companyName: string;
   projectDescription: string;
@@ -23,7 +24,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body: ContactFormData = await request.json();
 
     // Destructure the form data
-    const { name, email, category, companyName, projectDescription } = body;
+    const { name, email, phone, category, companyName, projectDescription } =
+      body;
 
     // Define Mailjet email request data to send to the company
     const mailjetRequestToCompany = {
@@ -43,6 +45,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           TextPart: `You have received a new service request.\nServices Requested: ${category}
             \nName: ${name}
             \nEmail: ${email}
+            \nPhone: ${phone}
             \nCompany Name: ${companyName || "Not provided"}
             \nProject Description: ${projectDescription}
             \n\n
