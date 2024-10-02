@@ -9,15 +9,15 @@ import { Box } from "@mui/material";
 import React, { ReactNode, useEffect, useState } from "react";
 
 export default function LandingPage({ children }: { children: ReactNode }) {
-  const [show, setShow] = useState(true);
+  // const [show, setShow] = useState(true);
 
-  useEffect(() => {
-    if (sessionStorage.getItem("welcome")) {
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (sessionStorage.getItem("welcome")) {
+  //     setShow(false);
+  //   } else {
+  //     setShow(true);
+  //   }
+  // }, []);
 
   return (
     <Box position={"relative"} sx={{ width: "100%" }}>
@@ -25,14 +25,14 @@ export default function LandingPage({ children }: { children: ReactNode }) {
       <Box component={"main"} minHeight={"90dvh"}>
         {children}
       </Box>
-      <Confetti />
-      <AnimatedModal
+      {/* <Confetti /> */}
+      {/* <AnimatedModal
         isOpen={show}
         onClose={() => {
           sessionStorage.setItem("welcome", "0");
           setShow(!show);
         }}
-      />
+      /> */}
       <WhatsappChat />
       <Footer />
     </Box>

@@ -6,6 +6,7 @@ import {
   Button,
   CircularProgress,
   Grid,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -21,6 +22,7 @@ const PageWrap = () => {
   const [formData, setFormData] = useState({
       name: "",
       email: "",
+      phone: "",
       companyName: "",
       projectDescription: "",
     }),
@@ -43,13 +45,13 @@ const PageWrap = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
     // Check if at least one service is selected
     if (selected.length === 0) {
       handleMessage("info", "Please select at least one service.");
       return;
     }
+    setLoading(true);
 
     try {
       const response = await fetch("/api/hire-us-mail", {
@@ -69,6 +71,7 @@ const PageWrap = () => {
         setFormData({
           name: "",
           email: "",
+          phone: "",
           companyName: "",
           projectDescription: "",
         });
@@ -165,12 +168,30 @@ const PageWrap = () => {
               <Typography>Email Address</Typography>
               <TextField
                 disabled={loading}
+                type="email"
                 size="medium"
                 sx={styles.input}
                 placeholder="E.g Johndeis@gmail.com"
                 fullWidth
                 name="email"
                 value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </Box>
+          </Grid>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
+            <Box>
+              <Typography>Phone Number</Typography>
+              <TextField
+                type="tel"
+                disabled={loading}
+                size="medium"
+                sx={styles.input}
+                placeholder="E.g 090xxx5667xxx"
+                fullWidth
+                name="phone"
+                value={formData.phone}
                 onChange={handleInputChange}
                 required
               />
@@ -191,7 +212,7 @@ const PageWrap = () => {
               />
             </Box>
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Grid item lg={8} md={8} sm={12} xs={12}>
             <Box>
               <Typography>Project Description</Typography>
               <TextField
@@ -209,22 +230,20 @@ const PageWrap = () => {
               />
             </Box>
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <Box>
-              <Button
-                disabled={loading}
-                sx={styles.selectAllBtn}
-                size="large"
-                type="submit"
-                endIcon={
-                  loading ? <CircularProgress color="info" size={20} /> : <></>
-                }
-              >
-                Submit
-              </Button>
-            </Box>
-          </Grid>
         </Grid>
+        <Stack pt={4} alignItems={"center"}>
+          <Button
+            disabled={loading}
+            sx={{ ...styles.selectAllBtn, width: 200 }}
+            size="large"
+            type="submit"
+            endIcon={
+              loading ? <CircularProgress color="info" size={20} /> : <></>
+            }
+          >
+            Submit
+          </Button>
+        </Stack>
       </Box>
 
       <SnackbarComp

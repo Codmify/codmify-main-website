@@ -13,8 +13,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { BiSolidPhoneCall } from "react-icons/bi";
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { GoArrowRight } from "react-icons/go";
 import { IoMailSharp } from "react-icons/io5";
 import Testimonials from "./Testimonials";
@@ -41,6 +39,7 @@ interface FormData {
   name: string;
   email: string;
   message: string;
+  phone: string;
 }
 
 const ContactUs = () => {
@@ -48,6 +47,7 @@ const ContactUs = () => {
       name: "",
       email: "",
       message: "",
+      phone: "",
     }),
     [loading, setLoading] = useState(false);
   const { handleMessage, handleSnack, snackBarOpen, setSnackBarOpen } =
@@ -80,6 +80,7 @@ const ContactUs = () => {
           name: "",
           email: "",
           message: "",
+          phone: "",
         });
       } else {
         handleMessage("error", `Error: ${result.message}`);
@@ -157,6 +158,20 @@ const ContactUs = () => {
                   onChange={handleChange}
                   value={formData.email}
                   placeholder="E.g johndoe@gmail.com"
+                  fullWidth
+                  required
+                />
+              </Box>
+              <Box width={"100%"}>
+                <Typography>Phone number</Typography>
+                <TextField
+                  disabled={loading}
+                  name="phone"
+                  size="medium"
+                  type="tel"
+                  onChange={handleChange}
+                  value={formData.phone}
+                  placeholder="E.g 090xxxx5666xx"
                   fullWidth
                   required
                 />
@@ -264,7 +279,7 @@ const styles = {
     justifyContent: "flex-start",
     alignItems: "flex-start",
     flexDirection: "column",
-    gap: "30px",
+    gap: "1rem",
     height: "100%",
     borderTopRightRadius: { lg: "10px", md: "10px", sm: "10px", xs: 0 },
     borderBottomRightRadius: "10px",
