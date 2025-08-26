@@ -89,17 +89,24 @@ export const testimonials = [
 ];
 export const ourProjects = [
   {
+    title: "Eklektos Apostolic Network",
+    desc: "Eklektos Apostolic Network is a dynamic Christian community dedicated to fostering spiritual growth and transformation through Christ-centered teaching and worship. With a mission to raise believers who are equipped to reveal Jesus in their daily lives, the network offers a welcoming space for people to connect, learn, and serve.",
+    additionalDesc: "",
+    image: "/projects/eklektos.png",
+    url: "https://www.eklektosapostolicnetwork.org/",
+  },
+  {
     title: "VAAD Media",
     desc: "VAAD Media specializes in innovative outdoor advertising solutions, offering a wide range of services including out-of-home media planning, graphic design, and printing. The agency helps brands engage with their target audience through billboards, digital screens, and other formats, providing demographic and location data to optimize campaigns. With a focus on creative and unconventional marketing strategies, VAAD Media ensures that client messages stand out in crowded environments.",
     additionalDesc: "",
-    image: "/vaad-media.png",
+    image: "/projects/vaad-media.png",
     url: "https://www.vaad.com.ng/",
   },
   {
     title: "Depane Topup",
     desc: "Depane Topup is an online platform that allows users to easily recharge mobile phones. It offers a convenient and user-friendly interface, enabling quick transactions. The platform is designed for both individuals and businesses looking for a seamless way to manage their top-up and payment needs.",
     additionalDesc: "",
-    image: "/depane-topup.png",
+    image: "/projects/depane-topup.png",
     url: "https://depanetopup.com/",
   },
 ];
