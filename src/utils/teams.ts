@@ -23,12 +23,12 @@ export const teams = [
     img: "/teams/bayzwise.png",
     url: "https://www.linkedin.com/in/olalude-olatade-abiodun-01b81423a/",
   },
-  {
-    name: "Khidir Alimi",
-    role: "Sales & Marketing",
-    img: "/teams/khidir.png",
-    url: "https://www.linkedin.com/in/khidir-abdulaleem-10391b1a9",
-  },
+  // {
+  //   name: "Khidir Alimi",
+  //   role: "Sales & Marketing",
+  //   img: "/teams/khidir.png",
+  //   url: "https://www.linkedin.com/in/khidir-abdulaleem-10391b1a9",
+  // },
 ];
 
 // Engineering & Development: Software Engineers, Frontend/Backend Developers, QA Engineers, DevOps Engineers.

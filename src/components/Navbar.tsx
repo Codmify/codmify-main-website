@@ -13,20 +13,48 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
 
   const [isSideOpen, setIsSideOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", controlNavbar);
+
+    return () => {
+      window.removeEventListener("scroll", controlNavbar);
+    };
+  }, [lastScrollY]);
   return (
     <Box
       position={"fixed"}
-      top={{ lg: "5dvh" }}
+      top={{ lg: "2dvh" }}
       left={0}
       width={"100dvw"}
       component={"nav"}
       zIndex={100}
+      sx={{
+        transform: isVisible ? "translateY(0)" : "translateY(-150%)",
+        transition: "transform 0.3s ease-in-out",
+      }}
     >
       <Container
         sx={{
@@ -77,21 +105,22 @@ export default function Navbar() {
             }}
           >
             {navLinks.map((menu) => (
-              <Typography
-                key={menu.url}
-                color={
-                  pathname.split("/")[1] === menu.url.split("/")[1]
-                    ? "#121279"
-                    : "#323F49"
-                }
-                fontWeight={
-                  pathname.split("/")[1] === menu.url.split("/")[1] ? 700 : 600
-                }
-                component={Link}
-                href={menu.url}
-              >
-                {menu.label}
-              </Typography>
+              <Link key={menu.url} href={menu.url}>
+                <Typography
+                  color={
+                    pathname.split("/")[1] === menu.url.split("/")[1]
+                      ? "#121279"
+                      : "#323F49"
+                  }
+                  fontWeight={
+                    pathname.split("/")[1] === menu.url.split("/")[1]
+                      ? 700
+                      : 600
+                  }
+                >
+                  {menu.label}
+                </Typography>
+              </Link>
             ))}
             <Link href={"/hire-us"}>
               <Button
@@ -107,7 +136,7 @@ export default function Navbar() {
             alignItems={"center"}
             justifyContent={"center"}
             direction={"row"}
-            gap={2}
+            gap={{ md: 2 }}
           >
             <IconButton
               sx={{ display: { xs: "inline-flex", md: "none" } }}
@@ -115,15 +144,15 @@ export default function Navbar() {
             >
               <MenuIcon style={{ height: 45, color: "#121279" }} />
             </IconButton>
-            <Link href={"/hire-us"}>
-              <Button
-                size="large"
-                variant="contained"
-                sx={{ display: { xs: "none", md: "inline-flex" } }}
-              >
+            <Stack
+              component={Link}
+              href={"/hire-us"}
+              sx={{ display: { xs: "none", md: "inline-flex" } }}
+            >
+              <Button size="large" variant="contained">
                 Get Started
               </Button>
-            </Link>
+            </Stack>
           </Stack>
         </Stack>
       </Container>

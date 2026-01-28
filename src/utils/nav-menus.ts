@@ -64,13 +64,17 @@ export const aboutUsMenu = [
     label: "About Us",
     url: "/about-us",
   },
-  // {
-  //   label: "Privacy Policies",
-  //   url: "",
-  // },
   {
     label: "Terms and Conditions",
-    url: "/t-and-c",
+    url: "/terms-and-conditions",
+  },
+  {
+    label: "Privacy Policy",
+    url: "/privacy-policy",
+  },
+  {
+    label: "Refund Policy",
+    url: "/refund-policy",
   },
   {
     label: "Contact Us",

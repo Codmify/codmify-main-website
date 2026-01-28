@@ -25,7 +25,7 @@ const CustomLabel = () => {
   return (
     <Typography sx={styles.customLabel}>
       I agree to Codmify’s{" "}
-      <Link href={"/t-and-c"}>
+      <Link href={"/terms-and-conditions"}>
         <Typography sx={styles.subLabel} component={"span"}>
           terms and conditions
         </Typography>
@@ -54,7 +54,7 @@ const ContactUs = () => {
     useToast();
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

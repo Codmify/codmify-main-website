@@ -11,7 +11,7 @@ const Projects = () => {
       <Container>
         <Typography sx={styles.pTitle}>Our Projects</Typography>
         <Grid container spacing={4} justifyContent={"center"} mt={"50px"}>
-          {ourProjects.map((project) => (
+          {ourProjects.slice(0, 3).map((project) => (
             <Grid key={project.title} item lg={4} md={4} sm={6} xs={12}>
               <Box sx={styles.pItem}>
                 <Box
@@ -19,7 +19,9 @@ const Projects = () => {
                 >
                   <Image src={project.image} fill alt="project" />
                 </Box>
-                <Typography sx={styles.pItemTitle}>{project.title}</Typography>
+                <Typography sx={styles.pItemTitle} lineHeight={1}>
+                  {project.title}
+                </Typography>
                 <Typography sx={styles.pItemDesc}>
                   {project.desc.length > 90
                     ? project.desc.substring(0, 90) + "..."
