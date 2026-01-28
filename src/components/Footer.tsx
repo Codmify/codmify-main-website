@@ -67,14 +67,9 @@ export default function Footer() {
             <Typography variant="h6">Services</Typography>
             <Stack spacing={1}>
               {servicesHolder.map((item, id) => (
-                <Typography
-                  variant="body2"
-                  component={Link}
-                  href={"/services#" + item.reference}
-                  key={id}
-                >
-                  {item.title}
-                </Typography>
+                <Link href={"/services#" + item.reference} key={id}>
+                  <Typography variant="body2">{item.title}</Typography>
+                </Link>
               ))}
             </Stack>
           </Stack>
@@ -82,14 +77,9 @@ export default function Footer() {
             <Typography variant="h6">About Us</Typography>
             <Stack spacing={1}>
               {aboutUsMenu.map((item, id) => (
-                <Typography
-                  variant="body2"
-                  component={Link}
-                  href={item.url}
-                  key={id}
-                >
-                  {item.label}
-                </Typography>
+                <Link href={item.url} key={id}>
+                  <Typography variant="body2">{item.label}</Typography>
+                </Link>
               ))}
             </Stack>
           </Stack>

@@ -3,6 +3,7 @@
 import Confetti from "@/components/Confetti";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import ScrollToTop from "@/components/ScrollToTop";
 import AnimatedModal from "@/components/Welcome";
 import WhatsappChat from "@/components/Whatsapp";
 import { Box } from "@mui/material";
@@ -33,6 +34,7 @@ export default function LandingPage({ children }: { children: ReactNode }) {
           setShow(!show);
         }}
       /> */}
+      <ScrollToTop />
       <WhatsappChat />
       <Footer />
     </Box>

@@ -89,6 +89,13 @@ export const testimonials = [
 ];
 export const ourProjects = [
   {
+    title: "750hrs Tracker",
+    desc: "750hrsTracker is a complete time tracking and property management solution designed specifically for real estate professionals. The platform enables users to manage properties, track time spent on tasks, analyze team performance, and grow their business. With powerful features including advanced analytics, team collaboration tools, smart scheduling with AI-powered insights, goal setting, and performance metrics, 750hrsTracker helps professionals increase productivity by up to 40% through real-time tracking and data-driven insights.",
+    additionalDesc: "",
+    image: "/projects/750hrstracker.png",
+    url: "https://750hrstracker.com/",
+  },
+  {
     title: "Eklektos Apostolic Network",
     desc: "Eklektos Apostolic Network is a dynamic Christian community dedicated to fostering spiritual growth and transformation through Christ-centered teaching and worship. With a mission to raise believers who are equipped to reveal Jesus in their daily lives, the network offers a welcoming space for people to connect, learn, and serve.",
     additionalDesc: "",
