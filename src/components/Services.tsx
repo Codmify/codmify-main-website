@@ -40,17 +40,15 @@ const Services = () => {
                   <Typography sx={styles.sTitle}>{item.title}</Typography>
                   <Typography sx={styles.sDesc}>{item.desc}</Typography>
                   <Box sx={{ mt: "auto", display: "flex" }}>
-                    <Typography
-                      component={Link}
-                      href={"/services"}
-                      sx={styles.learnMore}
-                    >
-                      Learn more
-                      <GoArrowRight
-                        className="arrowRight"
-                        style={styles.learnMoreIcon}
-                      />
-                    </Typography>
+                    <Link href="/services">
+                      <Typography sx={styles.learnMore}>
+                        Learn more
+                        <GoArrowRight
+                          className="arrowRight"
+                          style={styles.learnMoreIcon}
+                        />
+                      </Typography>
+                    </Link>
                   </Box>
                 </Box>
               </Grid>
