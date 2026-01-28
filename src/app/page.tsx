@@ -1,4 +1,5 @@
 import ContactUs from "@/components/ContactUs";
+import FAQ from "@/components/FAQ";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
 import Services from "@/components/Services";
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
       <Services />
       <Projects />
+      <FAQ />
       <ContactUs />
     </LandingPage>
   );
