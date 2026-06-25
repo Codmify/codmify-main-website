@@ -6,7 +6,7 @@ import { LiaPenNibSolid } from "react-icons/lia";
 
 export const qualification: QualificationProps[] = [
   {
-    years: "3+",
+    years: "5+",
     title: "projects Done",
     icon: IoBriefcaseOutline,
   },
@@ -88,6 +88,13 @@ export const testimonials = [
   },
 ];
 export const ourProjects = [
+  {
+    title: "Ekawe",
+    desc: "Ekawe is a premium academic marketplace that connects creators and readers with verified educational resources. The platform helps creators publish their work while giving learners and institutions a trusted place to discover academic materials.",
+    additionalDesc: "",
+    image: "/projects/ekawe.jpg",
+    url: "https://ekawe.app/",
+  },
   {
     title: "750hrs Tracker",
     desc: "750hrsTracker is a complete time tracking and property management solution designed specifically for real estate professionals. The platform enables users to manage properties, track time spent on tasks, analyze team performance, and grow their business. With powerful features including advanced analytics, team collaboration tools, smart scheduling with AI-powered insights, goal setting, and performance metrics, 750hrsTracker helps professionals increase productivity by up to 40% through real-time tracking and data-driven insights.",
