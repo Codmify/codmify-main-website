@@ -27,17 +27,16 @@ const Hero = () => {
         <Stack sx={styles.stackWrap}>
           <Box>
             <Typography sx={styles.title}>
-              Elevate Your Business with Expert IT Solutions
+              Professional Websites That Help Your Business Grow
             </Typography>
             <Typography sx={styles.desc}>
-              Delivering innovative and reliable IT services tailored to your
-              needs, all at a reasonable cost
+              Fast, secure and mobile-ready websites—now starting from ₦50,000.
             </Typography>
           </Box>
           <Box sx={styles.btnWrap}>
-            <Link href={"/hire-us"}>
+            <Link href={"/pricing"}>
               <Button sx={styles.startBtn} size="large">
-                Get Started
+                View Website Packages
               </Button>
             </Link>
           </Box>

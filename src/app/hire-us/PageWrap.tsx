@@ -1,342 +1,84 @@
 "use client";
-import LandingSpecial from "@/components/LandingSpecial";
-import { servicesTitles } from "@/constants/data";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+
+import LandingPage from "@/wrappers/LandingPage";
+import { servicesHolder } from "@/utils/services-holder";
+import { Box, Button, CircularProgress, Container, Grid, Stack, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { FiArrowRight, FiCheck, FiClock, FiMessageCircle, FiSend } from "react-icons/fi";
 import useHireUs from "./useHireUs";
-import { IoCheckmarkCircle } from "react-icons/io5";
 import SnackbarComp, { useToast } from "@/components/Toast";
 
-const PageWrap = () => {
+const servicesTitles = servicesHolder.map((service) => service.title);
+
+const inputStyle = {
+  "& .MuiOutlinedInput-root": { borderRadius: 2, bgcolor: "white", "& fieldset": { borderColor: "#D7E2EB" }, "&:hover fieldset": { borderColor: "#008DE5" }, "&.Mui-focused fieldset": { borderColor: "#121279 !important", borderWidth: 2 } },
+};
+
+export default function PageWrap() {
   const { selected, setSelected, handleClick } = useHireUs();
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", companyName: "", projectDescription: "" });
+  const [loading, setLoading] = useState(false);
+  const { handleMessage, handleSnack, snackBarOpen, setSnackBarOpen } = useToast();
 
-  // State for form inputs
-  const [formData, setFormData] = useState({
-      name: "",
-      email: "",
-      phone: "",
-      companyName: "",
-      projectDescription: "",
-    }),
-    [loading, setLoading] = useState(false);
-
-  const { handleMessage, handleSnack, snackBarOpen, setSnackBarOpen } =
-    useToast();
-
-  // Handle input change
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
   };
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Check if at least one service is selected
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     if (selected.length === 0) {
-      handleMessage("info", "Please select at least one service.");
+      handleMessage("info", "Please choose at least one service.");
       return;
     }
     setLoading(true);
-
     try {
-      const response = await fetch("/api/hire-us-mail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...formData, category: selected.join(", ") }),
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        handleMessage(
-          "success",
-          "Your service request has been sent successfully!"
-        );
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          companyName: "",
-          projectDescription: "",
-        });
-        setSelected([]); // Clear selected services
-      } else {
-        handleMessage(
-          "error",
-          "Failed to send your request. Please try again."
-        );
-      }
-    } catch (error) {
-      handleMessage("error", "Failed to send your request. Please try again.");
+      const response = await fetch("/api/hire-us-mail", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...formData, category: selected.join(", ") }) });
+      if (!response.ok) throw new Error("Request failed");
+      handleMessage("success", "Your project enquiry has been sent. We’ll be in touch soon!");
+      setFormData({ name: "", email: "", phone: "", companyName: "", projectDescription: "" });
+      setSelected([]);
+    } catch {
+      handleMessage("error", "We couldn’t send your enquiry. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <LandingSpecial
-      title="Hire Us"
-      subtitle="Get in touch with us for collaborations, inquiries, or to learn more about our services. We're here to assist you!"
-    >
-      <Box component="form" onSubmit={handleSubmit}>
-        <Typography sx={styles.pTitle}>
-          Let’s create amazing projects together{" "}
-        </Typography>
-        <Box sx={styles.headFlex}>
-          <Typography sx={styles.subTitle}>Select Services:</Typography>
-          <Button
-            disabled={loading}
-            sx={styles.selectAllBtn}
-            onClick={() =>
-              setSelected(
-                selected.length === servicesTitles.length ? [] : servicesTitles
-              )
-            }
-          >
-            {selected.length === servicesTitles.length
-              ? "Unselect all"
-              : "Select all"}
-          </Button>
-        </Box>
-        <Box sx={styles.servicesWrap}>
-          {servicesTitles.map((service) => (
-            <Box
-              key={service}
-              sx={{
-                ...styles.serviceBtn,
-                borderColor: selected.includes(service) ? "#121279" : "#CED7DE",
-              }}
-              onClick={() => handleClick(service)}
-            >
-              <Box
-                sx={{
-                  ...styles.selectedIconWrap,
-                  display: selected.includes(service) ? "block" : "none",
-                }}
-              >
-                <IoCheckmarkCircle style={styles.selectedIcon} />
-              </Box>
-              <Typography
-                sx={{
-                  ...styles.serviceBtnText,
-                  color: selected.includes(service) ? "#121279" : "#4A5E6D",
-                }}
-              >
-                {service}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
-        <Typography sx={styles.subTitle} mt="60px">
-          Your Details:
-        </Typography>
-        <Grid container spacing={3} mt="15px">
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <Box>
-              <Typography>Name</Typography>
-              <TextField
-                disabled={loading}
-                size="medium"
-                sx={styles.input}
-                placeholder="E.g John Doe "
-                fullWidth
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-              />
-            </Box>
-          </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <Box>
-              <Typography>Email Address</Typography>
-              <TextField
-                disabled={loading}
-                type="email"
-                size="medium"
-                sx={styles.input}
-                placeholder="E.g Johndeis@gmail.com"
-                fullWidth
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </Box>
-          </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <Box>
-              <Typography>Phone Number</Typography>
-              <TextField
-                type="tel"
-                disabled={loading}
-                size="medium"
-                sx={styles.input}
-                placeholder="E.g 090xxx5667xxx"
-                fullWidth
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                required
-              />
-            </Box>
-          </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <Box>
-              <Typography>Company name (optional)</Typography>
-              <TextField
-                disabled={loading}
-                size="medium"
-                sx={styles.input}
-                placeholder="E.g John Doe "
-                fullWidth
-                name="companyName"
-                value={formData.companyName}
-                onChange={handleInputChange}
-              />
-            </Box>
-          </Grid>
-          <Grid item lg={8} md={8} sm={12} xs={12}>
-            <Box>
-              <Typography>Project Description</Typography>
-              <TextField
-                disabled={loading}
-                size="medium"
-                sx={styles.input}
-                placeholder="Describe your project here...."
-                fullWidth
-                multiline
-                rows={5}
-                name="projectDescription"
-                value={formData.projectDescription}
-                onChange={handleInputChange}
-                required
-              />
-            </Box>
-          </Grid>
-        </Grid>
-        <Stack pt={4} alignItems={"center"}>
-          <Button
-            disabled={loading}
-            sx={{ ...styles.selectAllBtn, width: 200 }}
-            size="large"
-            type="submit"
-            endIcon={
-              loading ? <CircularProgress color="info" size={20} /> : <></>
-            }
-          >
-            Submit
-          </Button>
-        </Stack>
+    <LandingPage>
+      <Box pt={{ xs: 28, md: 19 }} pb={{ xs: 8, md: 11 }} sx={{ background: "#121279 url('/bg-dashed.png')", color: "white" }}>
+        <Container maxWidth="lg"><Grid container spacing={{ xs: 4, md: 8 }} alignItems="center">
+          <Grid item xs={12} md={7}><Stack spacing={2.5} maxWidth={680}>
+            <Typography color="#51C4FF" fontWeight={700} letterSpacing={1.2}>START A PROJECT</Typography>
+            <Typography component="h1" fontSize={{ xs: 38, md: 58 }} lineHeight={1.06} fontWeight={700}>Tell us what you want to build.</Typography>
+            <Typography fontSize={{ xs: 17, md: 19 }} color="rgba(255,255,255,.82)">Share a few details and our team will help you turn your idea into a clear, practical next step.</Typography>
+          </Stack></Grid>
+          <Grid item xs={12} md={5}><Stack p={3} spacing={2} border="1px solid rgba(255,255,255,.20)" borderRadius={4} bgcolor="rgba(255,255,255,.07)">
+            {["Clear recommendations tailored to your goals", "A straightforward delivery plan and timeline", "Response from our team within 1–2 business days"].map((item) => <Stack key={item} direction="row" spacing={1.25} alignItems="flex-start"><Box component={FiCheck} color="#51C4FF" fontSize={20} mt="2px" /><Typography>{item}</Typography></Stack>)}
+          </Stack></Grid>
+        </Grid></Container>
       </Box>
 
-      <SnackbarComp
-        snackBarOpen={snackBarOpen}
-        setSnackBarOpen={setSnackBarOpen}
-        alert={handleSnack.alert}
-        message={handleSnack.message}
-      />
-    </LandingSpecial>
+      <Box py={{ xs: 6, md: 10 }} sx={{ backgroundImage: "radial-gradient(circle at 10% 4%, rgba(0,141,229,.1), transparent 23rem), radial-gradient(circle at 95% 70%, rgba(18,18,121,.06), transparent 22rem)" }}>
+        <Container maxWidth="lg"><Box component="form" onSubmit={handleSubmit} maxWidth={1040} mx="auto">
+          <Stack spacing={1} mb={5}><Typography color="#008DE5" fontWeight={700} letterSpacing={1.2}>PROJECT ENQUIRY</Typography><Typography component="h2" fontSize={{ xs: 30, md: 42 }} color="#121279" fontWeight={700}>A few details to get started.</Typography><Typography color="#526573">Select the areas where you need support, then tell us a little about your project.</Typography></Stack>
+          <Stack p={{ xs: 2, md: 4 }} spacing={4} bgcolor="white" border="1px solid #E0E8EF" borderRadius={4} boxShadow="0 14px 36px rgba(18,18,121,.08)">
+            <Box><Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} gap={2}><Box><Typography variant="h6" color="#121279" fontWeight={700}>1. What can we help with?</Typography><Typography variant="body2" color="#526573">Choose one or more services.</Typography></Box><Button disabled={loading} onClick={() => setSelected(selected.length === servicesTitles.length ? [] : servicesTitles)} sx={{ color: "#121279", whiteSpace: "nowrap" }}>{selected.length === servicesTitles.length ? "Clear all" : "Select all"}</Button></Stack>
+              <Stack direction="row" flexWrap="wrap" gap={1.25}>{servicesHolder.map((service) => { const active = selected.includes(service.title); return <Button key={service.title} type="button" onClick={() => handleClick(service.title)} variant={active ? "contained" : "outlined"} disabled={loading} startIcon={active ? <FiCheck /> : undefined} sx={{ borderColor: active ? "#121279" : "#D7E2EB", bgcolor: active ? "#121279" : "white", color: active ? "white" : "#334957", px: 1.8, "&:hover": { borderColor: "#121279", bgcolor: active ? "#121279" : "#F1F6FA" } }}>{service.title}</Button>; })}</Stack>
+            </Box>
+            <Box><Typography variant="h6" color="#121279" fontWeight={700}>2. Tell us about your project</Typography><Typography variant="body2" color="#526573" mt={0.4} mb={2}>The more context you share, the better we can prepare.</Typography>
+              <Grid container spacing={2.5}>
+                {[{ label: "Your name", name: "name", placeholder: "e.g. John Doe", required: true }, { label: "Email address", name: "email", placeholder: "you@company.com", required: true, type: "email" }, { label: "Phone number", name: "phone", placeholder: "e.g. +234 800 000 0000", required: true, type: "tel" }, { label: "Company name", name: "companyName", placeholder: "Optional" }].map((field) => <Grid item xs={12} sm={6} key={field.name}><Typography component="label" htmlFor={field.name} variant="body2" fontWeight={700} color="#334957" mb={0.75} display="block">{field.label}</Typography><TextField id={field.name} name={field.name} type={field.type || "text"} value={formData[field.name as keyof typeof formData]} onChange={handleInputChange} disabled={loading} required={field.required} placeholder={field.placeholder} fullWidth sx={inputStyle} /></Grid>)}
+                <Grid item xs={12}><Typography component="label" htmlFor="projectDescription" variant="body2" fontWeight={700} color="#334957" mb={0.75} display="block">What would you like to build?</Typography><TextField id="projectDescription" name="projectDescription" value={formData.projectDescription} onChange={handleInputChange} disabled={loading} required placeholder="Tell us about your idea, audience, preferred timeline or anything else we should know." fullWidth multiline rows={5} sx={inputStyle} /></Grid>
+              </Grid>
+            </Box>
+            <Stack direction={{ xs: "column", sm: "row" }} alignItems={{ sm: "center" }} justifyContent="space-between" gap={2} pt={1} borderTop="1px solid #E7EDF2"><Stack direction="row" spacing={1} alignItems="center" color="#526573"><FiClock /><Typography variant="body2">We typically reply within 1–2 business days.</Typography></Stack><Button type="submit" disabled={loading} variant="contained" size="large" endIcon={loading ? <CircularProgress color="inherit" size={18} /> : <FiSend />} sx={{ px: 3 }}>Send project enquiry</Button></Stack>
+          </Stack>
+          <Stack direction={{ xs: "column", sm: "row" }} justifyContent="center" alignItems="center" spacing={1} mt={3} color="#526573"><FiMessageCircle color="#25D366" size={20} /><Typography variant="body2">Prefer a quick chat?</Typography><Button component="a" href="https://wa.me/2349031874139?text=Hello%20Codmify%20team%2C%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noreferrer" sx={{ color: "#121279", p: 0, minWidth: "auto" }}>Message us on WhatsApp <FiArrowRight style={{ marginLeft: 5 }} /></Button></Stack>
+        </Box></Container>
+      </Box>
+      <SnackbarComp snackBarOpen={snackBarOpen} setSnackBarOpen={setSnackBarOpen} alert={handleSnack.alert} message={handleSnack.message} />
+    </LandingPage>
   );
-};
-
-export default PageWrap;
-
-const styles = {
-  pTitle: {
-    fontSize: { lg: "36px", md: "36px", sm: "30px", xs: "28px" },
-    fontWeight: 700,
-    color: "#0A0A0B",
-    width: { lg: "470px", md: "470px", sm: "470px" },
-  },
-  headFlex: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: "30px",
-  },
-  subTitle: {
-    fontSize: "22px",
-    fontWeight: 400,
-    color: "#323F49",
-  },
-  selectAllBtn: {
-    backgroundColor: "#121279",
-    border: "2px solid #AAB9C5",
-    transition: "all 0.3s ease-in-out",
-    color: "#FAFAFA",
-    borderRadius: "10px",
-    "&:hover": {
-      backgroundColor: "#121279",
-      opacity: 0.7,
-    },
-    px: "30px",
-  },
-  servicesWrap: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    gap: "15px",
-    marginTop: "40px",
-  },
-  serviceBtn: {
-    border: "2px solid #CED7DE",
-    borderRadius: "7px",
-    padding: "10px",
-    cursor: "pointer",
-    position: "relative",
-  },
-  serviceBtnText: {
-    fontSize: "16px",
-    color: "#4A5E6D",
-    fontWeight: 400,
-  },
-  selectedIconWrap: {
-    display: "none",
-    position: "absolute",
-    top: "-11px",
-    right: "-11px",
-  },
-  selectedIcon: {
-    color: "#121279",
-    width: "25px",
-    height: "25px",
-  },
-  input: {
-    "& .MuiInputBase-root": {
-      padding: 0,
-      "& .MuiInputBase-inputMultiline": {
-        padding: "14px",
-      },
-    },
-    "& .MuiInputBase-input": {
-      border: "1px solid #CCCBCB",
-      borderRadius: "14px",
-      backgroundColor: "#FFFFFF",
-      "&::placeholder": { color: "#898989" },
-      "&:focus": {
-        border: "2px solid #121279",
-      },
-    },
-    "& .MuiOutlinedInput-notchedOutline": {
-      border: "none",
-    },
-  },
-};
+}

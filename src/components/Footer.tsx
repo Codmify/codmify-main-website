@@ -11,7 +11,7 @@ export default function Footer() {
     <Box
       component={"footer"}
       bgcolor={"#121279"}
-      borderRadius={{ lg: "30px 30px 0 0" }}
+      // borderRadius={{ lg: "30px 30px 0 0" }}
     >
       <Container
         sx={{
