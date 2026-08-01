@@ -1,5 +1,6 @@
 "use client";
 import { MenuIcon } from "@/lib/icons";
+import PromoBar from "@/components/PromoBar";
 import { navLinks } from "@/utils/nav-menus";
 import {
   Backdrop,
@@ -13,7 +14,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -37,16 +38,16 @@ export default function Navbar() {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", controlNavbar);
-
-    return () => {
-      window.removeEventListener("scroll", controlNavbar);
-    };
+    window.addEventListener("scroll", controlNavbar, { passive: true });
+    return () => window.removeEventListener("scroll", controlNavbar);
   }, [lastScrollY]);
+
   return (
-    <Box
+    <>
+      <PromoBar />
+      <Box
       position={"fixed"}
-      top={{ lg: "2dvh" }}
+      top={{ xs: "86px", sm: "52px", md: "44px" }}
       left={0}
       width={"100dvw"}
       component={"nav"}
@@ -59,7 +60,7 @@ export default function Navbar() {
       <Container
         sx={{
           bgcolor: "white",
-          borderRadius: { lg: "10px" },
+          borderRadius: { lg: "0 0 10px 10px" },
           p: { xs: 1, md: 3 },
           boxShadow: "2px 2px 20px 1px rgba(0, 0, 0, 0.05)",
         }}
@@ -162,6 +163,7 @@ export default function Navbar() {
         sx={{ zIndex: 97 }}
         onClick={() => setIsSideOpen(false)}
       />
-    </Box>
+      </Box>
+    </>
   );
 }

@@ -96,6 +96,20 @@ export const ourProjects = [
     url: "https://ekawe.app/",
   },
   {
+    title: "Favvii",
+    desc: "Favvii is a mobile marketplace that connects students with restaurants, brands, services, events and more in one convenient platform.",
+    additionalDesc: "The project includes customer and vendor apps, giving shoppers a seamless discovery experience while helping vendors manage orders, inventory and daily operations.",
+    image: "/projects/favvii-customer.png",
+    images: ["/projects/favvii-customer.png", "/projects/favvii-vendor.png"],
+    url: "https://play.google.com/store/apps/details?id=com.favvii&hl=en",
+    links: [
+      { label: "Customer · Android", url: "https://play.google.com/store/apps/details?id=com.favvii&hl=en" },
+      { label: "Customer · iOS", url: "https://apps.apple.com/ng/app/favvii/id6744430335" },
+      { label: "Vendor · Android", url: "https://play.google.com/store/apps/details?id=com.favvii.vendor" },
+      { label: "Vendor · iOS", url: "https://apps.apple.com/ca/app/favvii-vendor/id6744437376" },
+    ],
+  },
+  {
     title: "750hrs Tracker",
     desc: "750hrsTracker is a complete time tracking and property management solution designed specifically for real estate professionals. The platform enables users to manage properties, track time spent on tasks, analyze team performance, and grow their business. With powerful features including advanced analytics, team collaboration tools, smart scheduling with AI-powered insights, goal setting, and performance metrics, 750hrsTracker helps professionals increase productivity by up to 40% through real-time tracking and data-driven insights.",
     additionalDesc: "",

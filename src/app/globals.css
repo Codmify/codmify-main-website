@@ -129,6 +129,59 @@ input[type="number"] {
 .swiper-button-prev::before {
   content: url(/prev.svg);
 }
+
+.promo-bar {
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(105deg, #006fc2 0%, #009fec 35%, #0878cc 65%, #00a7ef 100%);
+  background-size: 240% 100%;
+  animation: promo-shimmer 6s ease-in-out infinite;
+}
+
+.promo-bar::before,
+.promo-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.promo-bar::before {
+  z-index: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, .85) 0 1px, transparent 1.8px), radial-gradient(circle, rgba(255, 255, 255, .6) 0 1px, transparent 1.5px);
+  background-size: 42px 42px, 64px 64px;
+  background-position: 0 0, 20px 18px;
+  opacity: .42;
+  animation: promo-sparkle 8s linear infinite;
+}
+
+.promo-bar::after {
+  z-index: 0;
+  background: linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, .30) 50%, transparent 68%);
+  transform: translateX(-120%);
+  animation: promo-glint 4.5s ease-in-out infinite;
+}
+
+@keyframes promo-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes promo-sparkle {
+  from { background-position: 0 0, 20px 18px; }
+  to { background-position: 84px 42px, -44px 82px; }
+}
+
+@keyframes promo-glint {
+  0%, 35% { transform: translateX(-120%); }
+  70%, 100% { transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-bar,
+  .promo-bar::before,
+  .promo-bar::after { animation: none; }
+}
 .swiper-button-next::before {
   content: url(/next.svg);
 }
