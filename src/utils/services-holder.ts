@@ -1,44 +1,64 @@
-export const servicesHolder = [
+export type Service = {
+  title: string;
+  reference: string;
+  content: string;
+  capabilities: string[];
+  accent: string;
+};
+
+export const servicesHolder: Service[] = [
   {
-    title: "Web development",
-    reference: "web-dev",
-    content:
-      "We will help you create user-friendly and visually appealing interfaces for websites and mobile apps.We also conduct user research to understand the needs and wants of your target users, design wireframes and prototypes to test and iterate on your designs and implement your designs using the latest web development technologies.",
-    contrast: true,
+    title: "Website Development",
+    reference: "website-development",
+    content: "Fast, responsive websites that present your business clearly and turn visits into enquiries.",
+    capabilities: ["Corporate websites", "E-commerce", "CMS & blogs"],
+    accent: "#008DE5",
   },
   {
-    title: "Project Management",
-    reference: "project-manage",
-    content:
-      "Our project management services ensure precision and efficiency in every project. We specialize in meticulous planning, resource allocation, and risk management, using industry best practices to guide projects from start to finish.Our team is skilled at navigating challenges and adapting plans to deliver high-quality results on time and within budget.",
-    contrast: false,
+    title: "Mobile App Development",
+    reference: "mobile-development",
+    content: "Useful iOS and Android apps designed around the everyday needs of your customers and team.",
+    capabilities: ["Android & iOS", "Customer portals", "App strategy"],
+    accent: "#6D5DFB",
   },
   {
-    title: "UI/UX Design",
-    reference: "uiux",
-    content:
-      "We will help you create user-friendly and visually appealing interfaces for websites and mobile apps.We also conduct user research to understand the needs and wants of your target users, design wireframes and prototypes to test and iterate on your designs and implement your designs using the latest web development technologies.",
-    contrast: false,
+    title: "Product Design",
+    reference: "product-design",
+    content: "Thoughtful product and brand experiences that make complex ideas simple, intuitive and memorable.",
+    capabilities: ["UI/UX design", "Design systems", "Prototypes"],
+    accent: "#E15C8E",
   },
   {
-    title: "Graphic design",
-    reference: "graphics-design",
-    content:
-      "From logos and branding materials to marketing collateral and digital graphics, we ensure that every design element reflects your brand identity and vision. Our team of skilled designers works closely with you to understand your goals and bring your ideas to life, delivering visually stunning and memorable content that sets you apart from the competition.",
-    contrast: true,
+    title: "AI Integration",
+    reference: "ai-integration",
+    content: "Practical AI tools that automate repetitive work, improve support and help your team make faster decisions.",
+    capabilities: ["AI assistants", "Workflow automation", "Knowledge search"],
+    accent: "#00A990",
   },
   {
-    title: "Software Development",
-    reference: "software-dev",
-    content:
-      "Our team of skilled developers and engineers specialize in crafting bespoke software solutions that are both robust and scalable. Whether you need custom applications, enterprise software, or cutting-edge mobile apps, we leverage the latest technologies and agile methodologies to deliver products that drive efficiency and innovation.",
-    contrast: false,
+    title: "Data Analytics",
+    reference: "data-analytics",
+    content: "Clear dashboards and reporting that turn your business data into confident, measurable action.",
+    capabilities: ["Live dashboards", "Reporting", "Data insights"],
+    accent: "#F28C28",
   },
   {
-    title: "Marketing",
-    reference: "marketing",
-    content:
-      "Stand out in a crowded marketplace with our dynamic marketing services. From crafting compelling digital campaigns and managing social media presence to strategic branding and content creation, we use data-driven insights and creative strategies to enhance your brand's visibility and engagement.",
-    contrast: true,
+    title: "Digital Marketing",
+    reference: "digital-marketing",
+    content: "Campaigns and content that put your brand in front of the right people and create meaningful growth.",
+    capabilities: ["Social media", "Content strategy", "Paid campaigns"],
+    accent: "#008DE5",
+  },
+  {
+    title: "Project Delivery",
+    reference: "project-delivery",
+    content: "Reliable planning, communication and delivery that keep your digital project moving from idea to launch.",
+    capabilities: ["Discovery", "Project management", "Ongoing support"],
+    accent: "#121279",
   },
 ];
+
+export const getServiceWhatsAppUrl = (service: Service) => {
+  const message = `Hello Codmify team,\n\nI would like to discuss your ${service.title} service.\n\nBusiness name: \nIndustry: \nWhat I need help with: \nPreferred timeline: \n\nPlease share the next steps. Thank you.`;
+  return `https://wa.me/2349031874139?text=${encodeURIComponent(message)}`;
+};

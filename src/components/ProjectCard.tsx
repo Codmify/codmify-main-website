@@ -1,125 +1,166 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import React from "react";
 import { GoArrowRight } from "react-icons/go";
 
-type direction = "row-reverse" | "row";
-interface Prop {
+type Direction = "row-reverse" | "row";
+type ProjectLink = { label: string; url: string };
+
+interface ProjectCardProps {
   title: string;
   desc: string;
   additionDesc: string;
   img: string;
   url: string;
-  reverse: direction;
+  reverse: Direction;
+  images?: string[];
+  links?: ProjectLink[];
 }
-const ProjectCard = ({
+
+export default function ProjectCard({
   title,
   desc,
   additionDesc,
   img,
   reverse,
   url,
-}: Prop) => {
+  images,
+  links,
+}: ProjectCardProps) {
   return (
-    <Grid container spacing={4} direction={reverse}>
-      <Grid item lg={7} md={7} sm={7} xs={12}>
-        <Box sx={styles.cardImg}>
-          <Image src={img} alt={title} fill />
-        </Box>
-      </Grid>
-      <Grid item lg={5} md={5} sm={5} xs={12}>
-        <Box sx={styles.cardContent}>
-          <Typography style={styles.cardTitle}>{title}</Typography>
-          <Typography style={styles.cardDesc}>{desc}</Typography>
-          <Typography style={styles.cardDesc}>{additionDesc}</Typography>
-          <Box sx={styles.cardBtnFlex}>
-            {/* <Button sx={styles.btnFilled} endIcon={<GoArrowRight />}>
-              Hire Us
-            </Button> */}
-            <a href={url} target="_blank">
-              <Button sx={styles.btnOutlined} endIcon={<GoArrowRight />}>
-                Check it Out
-              </Button>
-            </a>
+    <Box
+      p={{ xs: 2, md: 3.5 }}
+      border="1px solid #E0E8EF"
+      borderRadius={{ xs: 3, md: 4 }}
+      bgcolor="white"
+      boxShadow="0 12px 30px rgba(18,18,121,.06)"
+    >
+      <Grid
+        container
+        spacing={{ xs: 3, md: 5 }}
+        direction={reverse}
+        alignItems="center"
+      >
+        <Grid item lg={7} md={7} sm={7} xs={12}>
+          <Box sx={styles.cardImg}>
+            {images ? (
+              <Box sx={styles.appPreviews}>
+                {images.map((image, index) => (
+                  <Box key={image} sx={styles.appPreview}>
+                    <Image
+                      src={image}
+                      alt={`${title} app preview ${index + 1}`}
+                      fill
+                      style={{ objectFit: "contain" }}
+                    />
+                  </Box>
+                ))}
+              </Box>
+            ) : (
+              <Image
+                src={img}
+                alt={title}
+                fill
+                style={{ objectFit: "cover" }}
+              />
+            )}
           </Box>
-        </Box>
+        </Grid>
+        <Grid item lg={5} md={5} sm={5} xs={12}>
+          <Stack spacing={2}>
+            {/* <Typography
+              color="#008DE5"
+              fontWeight={700}
+              fontSize={12}
+              letterSpacing={1.2}
+            >
+              SELECTED PROJECT
+            </Typography> */}
+            <Typography
+              component="h3"
+              fontSize={{ xs: 28, md: 35 }}
+              lineHeight={1.1}
+              color="#121279"
+              fontWeight={700}
+            >
+              {title}
+            </Typography>
+            <Typography color="#526573" lineHeight={1.75}>
+              {desc}
+            </Typography>
+            {additionDesc && (
+              <Typography color="#526573" lineHeight={1.75}>
+                {additionDesc}
+              </Typography>
+            )}
+            <Stack direction="row" flexWrap="wrap" gap={1} pt={1}>
+              {links ? (
+                links.map((link) => (
+                  <Button
+                    component="a"
+                    href={link.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={link.url}
+                    variant="outlined"
+                    endIcon={<GoArrowRight />}
+                    sx={styles.btnOutlined}
+                  >
+                    {link.label}
+                  </Button>
+                ))
+              ) : (
+                <Button
+                  component="a"
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  variant="contained"
+                  endIcon={<GoArrowRight />}
+                  sx={{ width: "fit-content", px: 2.25 }}
+                >
+                  Visit project
+                </Button>
+              )}
+            </Stack>
+          </Stack>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
-};
+}
 
-export default ProjectCard;
 const styles = {
-  card: {
-    display: "flex",
-    justifyContent: {
-      lg: "space-between",
-      md: "space-between",
-      sm: "space-between",
-      xs: "flex-start",
-    },
-    alignItems: "flex-start",
-    flexDirection: { lg: "row", md: "row", sm: "row", xs: "column" },
-    gap: "25px",
-  },
   cardImg: {
     width: "100%",
-    height: { lg: "100%", md: "100%", sm: "100%", xs: "370px" },
+    height: { lg: 360, md: 330, sm: 300, xs: 280 },
     position: "relative",
-    borderRadius: "10px",
+    borderRadius: "16px",
     overflow: "hidden",
+    background: "#EAF3FA",
   },
-  cardContent: {
+  appPreviews: {
+    height: "100%",
     display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-  },
-  cardTitle: {
-    fontSize: "28px",
-    fontWeight: 700,
-    color: "#0A0A0B",
-  },
-  cardDesc: {
-    fontSize: "18px",
-    fontWeight: 400,
-    color: "#4D4D4D",
-  },
-  cardBtnFlex: {
-    display: "flex",
-    justifyContent: "flex-start",
     alignItems: "center",
-    gap: "18px",
+    justifyContent: "center",
+    gap: { xs: 1, md: 2 },
+    px: { xs: 2, md: 4 },
+    background: "linear-gradient(135deg, #58B9E1, #1C92C7)",
   },
-  btnFilled: {
-    backgroundColor: "#121279",
-    border: "2px solid #AAB9C5",
-    transition: "all 0.3s ease-in-out",
-    color: "#FAFAFA",
-    borderRadius: "10px",
-    "&:hover": {
-      backgroundColor: "#121279",
-      opacity: 0.7,
-      "& .MuiButton-icon": {
-        transition: "all .3s ease-in-out",
-        transform: "rotate(-30deg)",
-      },
-    },
-    px: "20px",
+  appPreview: {
+    height: "90%",
+    width: "45%",
+    position: "relative",
+    borderRadius: "14px",
+    overflow: "hidden",
+    boxShadow: "0 14px 25px rgba(0,0,0,.25)",
+    backgroundColor: "#58B9E1",
   },
   btnOutlined: {
-    backgroundColor: "#DFDFFA",
-    border: "2px solid #AAB9C5",
-    borderRadius: "10px",
-    transition: "all .3s ease-in-out",
+    width: "fit-content",
     color: "#121279",
-    "&:hover": {
-      backgroundColor: "#DFDFFA",
-      opacity: 0.7,
-      "& .MuiButton-icon": {
-        transition: "all .3s ease-in-out",
-        transform: "rotate(-30deg)",
-      },
-    },
-    px: "20px",
+    borderColor: "#BFCFDD",
+    px: 1.5,
+    "&:hover": { borderColor: "#121279", bgcolor: "#F2F7FB" },
   },
 };

@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 const useHireUs = () => {
-  const [selected, setSelected] = useState<String[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const handleClick = (value: string) => {
     setSelected((prevItems) => {
       const index = prevItems.indexOf(value);
