@@ -10,12 +10,14 @@ type LayoutSpecProps = {
   title: string;
   subtitle: string;
   children: ReactNode;
+  afterContent?: ReactNode;
 };
 
 export default function LandingSpecial({
   title,
   subtitle,
   children,
+  afterContent,
 }: LayoutSpecProps) {
   const pathname = usePathname();
 
@@ -66,6 +68,7 @@ export default function LandingSpecial({
           <OurTeam />
         </Box>
       )}
+      {afterContent}
     </LandingPage>
   );
 }

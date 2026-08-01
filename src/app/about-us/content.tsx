@@ -1,148 +1,35 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import Image from "next/image";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import { FiArrowRight, FiCheckCircle, FiCompass, FiHeart, FiZap } from "react-icons/fi";
 
-const solutions = [
-  {
-    title: "Extensive Talent Database",
-    desc: "Access a curated pool of qualified developers and designers tailored to your project needs.",
-  },
-  {
-    title: "Rigorous Screening and Vetting",
-    desc: "Our candidates undergo a thorough evaluation to ensure top-quality results.",
-  },
-  {
-    title: "Rigorous Screening and Vetting",
-    desc: "Our candidates undergo a thorough evaluation to ensure top-quality results.",
-  },
-  {
-    title: "Expert Digital Teams",
-    desc: " Beyond freelancers, our in-house professionals deliver end-to-end project execution.",
-  },
-  {
-    title: "Customized Recruitment",
-    desc: " Work with our expert recruiters to find specialists that align with your goals, timelines, and budget.",
-  },
-];
-const supports = [
-  {
-    title: "Exclusive Job Board",
-    desc: "Discover entry-level roles and internships to kickstart your career.",
-  },
-  {
-    title: "Vibrant Community",
-    desc: " Join our social media platforms for networking, learning, and mentorship.",
-  },
-  {
-    title: "Career Guidance",
-    desc: "Access tips and resources for crafting standout resumes, mastering interviews, and navigating the tech industry.",
-  },
-];
-const services = [
-  {
-    title: "UI/UX Design and Web Development",
-    desc: "Create visually stunning and user-friendly websites and apps.",
-  },
-  {
-    title: "Graphic Design",
-    desc: "Develop compelling visuals, from logos to marketing materials.",
-  },
-  {
-    title: "Software Development",
-    desc: "Build custom software solutions with our dedicated team and freelance talent.",
-  },
-  {
-    title: "Digital Marketing",
-    desc: "Implement data-driven strategies in SEO, social media, and content creation.",
-  },
+const values = [
+  { title: "Built around outcomes", description: "We focus on the business result first, then choose the right technology and design to achieve it.", icon: FiCompass, color: "#008DE5" },
+  { title: "Clear, collaborative delivery", description: "You get a thoughtful partner, practical advice and visibility from first conversation to launch.", icon: FiHeart, color: "#E15C8E" },
+  { title: "Quality that keeps moving", description: "We build useful digital products that are fast, maintainable and ready for what comes next.", icon: FiZap, color: "#00A990" },
 ];
 
 export default function Content() {
   return (
-    <Stack spacing={2}>
-      <Typography>
-        At Codmify, we’re more than just a talent marketplace—we are your
-        comprehensive digital solutions partner. Our platform seamlessly
-        connects businesses with top-tier developers, designers, and a network
-        of skilled professionals ready to bring your projects to life. From
-        software development to digital marketing, we have the expertise to
-        drive your success.
-      </Typography>
-      <Stack gap="30px">
-        <Box>
-          <Typography>
-            Navigating the talent landscape can be daunting. Codmify simplifies
-            this process by offering:
-          </Typography>
-          <Box component={"ul"} pl={3}>
-            {solutions.map((cnt) => (
-              <Typography component={"li"} key={cnt.title} sx={{ mt: "12px" }}>
-                <span style={{ fontWeight: 600 }}>{`${cnt.title}:`}</span>
-                {cnt.desc}
-              </Typography>
-            ))}
-          </Box>
-        </Box>
-        <Box>
-          <Typography>
-            We are committed to fostering the growth of junior talent. Our
-            support includes:
-          </Typography>
-          <Box component={"ul"} pl={3}>
-            {supports.map((cnt) => (
-              <Typography component={"li"} key={cnt.title} sx={{ mt: "12px" }}>
-                <span style={{ fontWeight: 600 }}>{`${cnt.title}:`}</span>
-                {cnt.desc}
-              </Typography>
-            ))}
-          </Box>
-        </Box>
-        <Box>
-          <Typography>
-            Codmify also offers direct access to a range of digital services
-            through our in-house experts:
-          </Typography>
-          <Box component={"ul"} pl={3}>
-            {services.map((cnt) => (
-              <Typography component={"li"} key={cnt.title} sx={{ mt: "12px" }}>
-                <span style={{ fontWeight: 600 }}>{`${cnt.title}:`}</span>
-                {cnt.desc}
-              </Typography>
-            ))}
-          </Box>
-        </Box>
-      </Stack>
-      <Box mt={"30px"}>
-        <Typography>
-          Codmify is designed to be your all-in-one solution for both talent and
-          digital services. With a commitment to quality and innovation, we’re
-          here to help your business thrive while supporting the next generation
-          of digital talent.
-        </Typography>
-        <Typography mt="15px">
-          Ready to elevate your business? Partner with Codmify and explore our
-          comprehensive digital solutions.
-        </Typography>
+    <>
+      <Box py={{ xs: 7, md: 11 }} sx={{ backgroundImage: "radial-gradient(circle at 5% 25%, rgba(0,141,229,.09), transparent 22rem)" }}>
+        <Container maxWidth="lg"><Stack spacing={2} maxWidth={760}>
+          <Typography color="#008DE5" fontWeight={700} letterSpacing={1.2}>WHO WE ARE</Typography>
+          <Typography component="h2" fontSize={{ xs: 31, md: 44 }} lineHeight={1.12} color="#121279" fontWeight={700}>A digital partner for businesses ready to do more online.</Typography>
+          <Typography color="#526573" fontSize={{ xs: 16, md: 18 }} lineHeight={1.8}>Codmify brings strategy, design and technology together to help ambitious organisations show up clearly, work more efficiently and grow with confidence. We make digital feel less complicated—and far more useful.</Typography>
+        </Stack>
+        <Grid container spacing={2.5} mt={{ xs: 3, md: 5 }}>
+          {["Practical strategy", "Human-centred design", "Reliable delivery"].map((item) => <Grid item xs={12} sm={4} key={item}><Stack direction="row" alignItems="center" spacing={1} p={2} border="1px solid #E0E8EF" borderRadius={3} bgcolor="white"><FiCheckCircle color="#008DE5" /><Typography fontWeight={700} color="#121279">{item}</Typography></Stack></Grid>)}
+        </Grid>
+        </Container>
       </Box>
-      <Box py={2} />
-      <Link href={"/#contact-us"} style={{ width: "fit-content" }}>
-        <Button
-          size="large"
-          variant="contained"
-          endIcon={
-            <Image
-              src={"/contact-us-icon.svg"}
-              alt="contact-us-icon"
-              width={12}
-              height={14}
-            />
-          }
-          sx={{ width: "fit-content" }}
-        >
-          Contact Us
-        </Button>
-      </Link>
-    </Stack>
+      <Box py={{ xs: 7, md: 10 }} bgcolor="#F1F7FC">
+        <Container maxWidth="lg">
+        <Typography color="#008DE5" fontWeight={700} letterSpacing={1.2}>WHAT GUIDES US</Typography>
+        <Typography component="h2" color="#121279" fontSize={{ xs: 29, md: 40 }} fontWeight={700} mt={1}>The way we work matters.</Typography>
+        <Grid container spacing={3} mt={2}>{values.map((value) => { const Icon = value.icon; return <Grid item xs={12} md={4} key={value.title}><Stack height="100%" p={3} spacing={2} bgcolor="white" borderRadius={4} border="1px solid #E0E8EF"><Box width={48} height={48} display="grid" sx={{ placeItems: "center", borderRadius: 3, bgcolor: `${value.color}15`, color: value.color }}><Icon size={24} /></Box><Typography variant="h6" color="#121279" fontWeight={700}>{value.title}</Typography><Typography color="#526573" lineHeight={1.7}>{value.description}</Typography></Stack></Grid>; })}</Grid>
+        </Container>
+      </Box>
+      <Box py={{ xs: 7, md: 10 }}><Container maxWidth="lg"><Grid container spacing={{ xs: 4, md: 8 }} alignItems="center"><Grid item xs={12} md={7}><Typography color="#008DE5" fontWeight={700} letterSpacing={1.2}>OUR PROMISE</Typography><Typography component="h2" color="#121279" fontSize={{ xs: 30, md: 42 }} lineHeight={1.15} fontWeight={700} mt={1}>Good digital work should make life easier.</Typography><Typography color="#526573" lineHeight={1.8} mt={2}>Whether we are launching a new website, designing a product, integrating AI or improving operations, we bring the same care: understand the real need, keep communication clear and deliver work that earns its place in your business.</Typography><Link href="/hire-us"><Button variant="contained" size="large" endIcon={<FiArrowRight />} sx={{ mt: 3, px: 3 }}>Start a project</Button></Link></Grid><Grid item xs={12} md={5}><Stack p={{ xs: 3, md: 4 }} spacing={2} borderRadius={4} bgcolor="#121279" color="white"><Typography fontSize={{ xs: 31, md: 42 }} lineHeight={1} fontWeight={700}>One team.<br />Many possibilities.</Typography><Typography color="rgba(255,255,255,.78)">From first ideas to stronger systems, we are here to help you make the next move count.</Typography></Stack></Grid></Grid></Container></Box>
+    </>
   );
 }
