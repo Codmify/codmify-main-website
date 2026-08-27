@@ -2,7 +2,6 @@ export type WebsitePackage = {
   name: string;
   audience: string;
   startingPrice: string;
-  actualPrice?: string;
   intro: string;
   features: string[];
   timeline?: string;
@@ -17,8 +16,7 @@ export const websitePackages: WebsitePackage[] = [
   {
     name: "Starter Website",
     audience: "New businesses, restaurants, fashion brands, salons, churches, schools and SMEs.",
-    startingPrice: "₦50,000",
-    actualPrice: "₦100,000",
+    startingPrice: "₦200,000",
     intro: "Everything you need to launch a polished online presence.",
     features: ["Up to 5 pages", "Mobile responsive", "Contact form", "WhatsApp integration", "Google Maps", "Basic SEO", "Domain setup", "SSL", "30 days support"],
     timeline: "2–5 working days",
@@ -28,8 +26,7 @@ export const websitePackages: WebsitePackage[] = [
   {
     name: "Business Website",
     audience: "Businesses ready to grow online.",
-    startingPrice: "₦125,000",
-    actualPrice: "₦250,000",
+    startingPrice: "₦350,000",
     intro: "A complete growth-ready website with the tools to keep it current.",
     features: ["CMS", "Blog", "Booking forms", "Team pages", "Portfolio", "Animations", "Google Analytics", "Performance optimization", "Email setup"],
     timeline: "1–2 weeks",
@@ -40,8 +37,7 @@ export const websitePackages: WebsitePackage[] = [
   {
     name: "E-commerce Store",
     audience: "Fashion, beauty, electronics, supermarkets and furniture businesses.",
-    startingPrice: "₦350,000",
-    actualPrice: "₦600,000",
+    startingPrice: "₦650,000",
     intro: "A store built to sell, manage orders and delight customers.",
     features: ["Unlimited products", "Online payments", "Delivery integration", "Inventory", "Coupons", "Admin dashboard", "Customer accounts", "Email notifications"],
     timeline: "2–3 weeks",
