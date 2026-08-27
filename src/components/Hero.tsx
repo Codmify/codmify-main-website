@@ -27,16 +27,16 @@ const Hero = () => {
         <Stack sx={styles.stackWrap}>
           <Box>
             <Typography sx={styles.title}>
-              Professional Websites That Help Your Business Grow
+              Get a Website That Works as Hard as You Do
             </Typography>
             <Typography sx={styles.desc}>
-              Fast, secure and mobile-ready websites, starting from ₦200,000.
+              Mobile-ready, WhatsApp-integrated, and built to be found on Google, delivered by a team that ships in days, not months.
             </Typography>
           </Box>
           <Box sx={styles.btnWrap}>
             <Link href={"/pricing"}>
               <Button sx={styles.startBtn} size="large">
-                View Website Packages
+                Start Your Website
               </Button>
             </Link>
           </Box>
