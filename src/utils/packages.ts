@@ -1,7 +1,8 @@
 export type WebsitePackage = {
   name: string;
   audience: string;
-  startingPrice: string;
+  startingPriceNGN?: number;
+  customQuote?: string;
   intro: string;
   features: string[];
   timeline?: string;
@@ -16,7 +17,7 @@ export const websitePackages: WebsitePackage[] = [
   {
     name: "Starter Website",
     audience: "New businesses, restaurants, fashion brands, salons, churches, schools and SMEs.",
-    startingPrice: "₦200,000",
+    startingPriceNGN: 200000,
     intro: "Everything you need to launch a polished online presence.",
     features: ["Up to 5 pages", "Mobile responsive", "Contact form", "WhatsApp integration", "Google Maps", "Basic SEO", "Domain setup", "SSL", "30 days support"],
     timeline: "2–5 working days",
@@ -26,7 +27,7 @@ export const websitePackages: WebsitePackage[] = [
   {
     name: "Business Website",
     audience: "Businesses ready to grow online.",
-    startingPrice: "₦350,000",
+    startingPriceNGN: 350000,
     intro: "A complete growth-ready website with the tools to keep it current.",
     features: ["CMS", "Blog", "Booking forms", "Team pages", "Portfolio", "Animations", "Google Analytics", "Performance optimization", "Email setup"],
     timeline: "1–2 weeks",
@@ -37,7 +38,7 @@ export const websitePackages: WebsitePackage[] = [
   {
     name: "E-commerce Store",
     audience: "Fashion, beauty, electronics, supermarkets and furniture businesses.",
-    startingPrice: "₦650,000",
+    startingPriceNGN: 650000,
     intro: "A store built to sell, manage orders and delight customers.",
     features: ["Unlimited products", "Online payments", "Delivery integration", "Inventory", "Coupons", "Admin dashboard", "Customer accounts", "Email notifications"],
     timeline: "2–3 weeks",
@@ -47,7 +48,7 @@ export const websitePackages: WebsitePackage[] = [
   {
     name: "Custom Business System",
     audience: "Schools, hospitals, churches, logistics, hotels and companies.",
-    startingPrice: "Discuss with the team",
+    customQuote: "Discuss with the team",
     intro: "A bespoke system designed around the way your organisation works.",
     features: ["Custom dashboards", "Roles & permissions", "Reports", "APIs", "Cloud deployment", "Documentation"],
     timeline: "Timeline scoped after discovery",
@@ -55,7 +56,9 @@ export const websitePackages: WebsitePackage[] = [
   },
 ];
 
-export const getPackageWhatsAppUrl = (pkg: WebsitePackage) => {
-  const message = `Hello Codmify team,\n\nI am interested in the ${pkg.name} package (${pkg.startingPrice}).\n\nBusiness name: \nIndustry: \nWhat I need help with: \nPreferred timeline: \n\nPlease share the next steps. Thank you.`;
+export const lowestStartingPriceNGN = Math.min(...websitePackages.map((pkg) => pkg.startingPriceNGN ?? Infinity));
+
+export const getPackageWhatsAppUrl = (pkg: WebsitePackage, displayPrice: string) => {
+  const message = `Hello Codmify team,\n\nI am interested in the ${pkg.name} package (${displayPrice}).\n\nBusiness name: \nIndustry: \nWhat I need help with: \nPreferred timeline: \n\nPlease share the next steps. Thank you.`;
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 };

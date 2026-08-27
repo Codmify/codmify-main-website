@@ -1,6 +1,7 @@
 "use client";
 
 import { customTheme } from "@/lib/theme";
+import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { ThemeProvider } from "@mui/material";
 import React, { ReactNode } from "react";
 // import { QueryClient, QueryClientProvider } from "react-query";
@@ -16,7 +17,7 @@ export default function AlphaWrapper({ children }: { children: ReactNode }) {
     //   <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={customTheme}>
       <NextTopLoader color="#000" showSpinner={false} />
-      {children}
+      <CurrencyProvider>{children}</CurrencyProvider>
     </ThemeProvider>
     //   </QueryClientProvider>
     // </Provider>
