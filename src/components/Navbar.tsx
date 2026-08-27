@@ -1,6 +1,5 @@
 "use client";
 import { MenuIcon } from "@/lib/icons";
-import PromoBar from "@/components/PromoBar";
 import { navLinks } from "@/utils/nav-menus";
 import {
   Backdrop,
@@ -44,10 +43,9 @@ export default function Navbar() {
 
   return (
     <>
-      <PromoBar />
       <Box
       position={"fixed"}
-      top={{ xs: "86px", sm: "52px", md: "44px" }}
+      top={0}
       left={0}
       width={"100dvw"}
       component={"nav"}
