@@ -10,7 +10,6 @@ export default function Packages({ compact = false }: PackagesProps) {
     <Box component="section" id="packages" py={{ xs: 7, md: 10 }} sx={{ backgroundColor: compact ? "#F4F7FA" : "#FAFCFF", backgroundImage: "radial-gradient(circle at 8% 25%, rgba(0, 141, 229, .10), transparent 23rem), radial-gradient(circle at 93% 75%, rgba(18, 18, 121, .08), transparent 22rem)" }}>
       <Container maxWidth="lg">
         <Stack alignItems="center" textAlign="center" spacing={1.5} mb={{ xs: 4, md: 6 }}>
-          <Chip label="LIMITED-TIME WEBSITE OFFER" color="primary" size="small" />
           <Typography variant="h3" fontWeight={700} color="#121279" fontSize={{ xs: 30, md: 42 }}>
             Smart websites from ₦50,000
           </Typography>
@@ -30,7 +29,6 @@ export default function Packages({ compact = false }: PackagesProps) {
                 <Box>
                   <Typography variant="caption" fontWeight={700} color="#4A5E6D">STARTING FROM</Typography>
                   <Typography fontSize={{ xs: 30, md: 34 }} lineHeight={1.15} fontWeight={700} color="#008DE5">{pkg.startingPrice}</Typography>
-                  {pkg.actualPrice && <Typography variant="caption" color="#4A5E6D">Regular price: <Box component="span" sx={{ textDecoration: "line-through" }}>{pkg.actualPrice}</Box></Typography>}
                 </Box>
                 <Typography variant="body2" color="#4A5E6D">{pkg.intro}</Typography>
                 <Stack spacing={1} flexGrow={1}>
