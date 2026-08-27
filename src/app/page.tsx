@@ -10,9 +10,9 @@ export default function Home() {
   return (
     <LandingPage>
       <Hero />
-      <Packages compact />
       <Services />
       <Projects />
+      <Packages compact />
       <FAQ />
       <ContactUs />
     </LandingPage>
