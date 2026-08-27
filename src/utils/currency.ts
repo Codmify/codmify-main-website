@@ -1,6 +1,6 @@
 export type Currency = "NGN" | "USD";
 
-// Manually updated approximate rate — not a live feed. Last checked 2026-08-27.
+// Manually updated approximate rate, not a live feed. Last checked 2026-08-27.
 export const NGN_PER_USD = 1550;
 
 export function formatPrice(amountNGN: number, currency: Currency): string {

@@ -30,7 +30,7 @@ const Hero = () => {
               Get a Website That Works as Hard as You Do
             </Typography>
             <Typography sx={styles.desc}>
-              Mobile-ready, WhatsApp-integrated, built to be found on Google—delivered by a team that ships in days, not months.
+              Mobile-ready, WhatsApp-integrated, and built to be found on Google, delivered by a team that ships in days, not months.
             </Typography>
           </Box>
           <Box sx={styles.btnWrap}>
