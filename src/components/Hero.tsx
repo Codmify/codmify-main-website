@@ -30,7 +30,7 @@ const Hero = () => {
               Professional Websites That Help Your Business Grow
             </Typography>
             <Typography sx={styles.desc}>
-              Fast, secure and mobile-ready websites—now starting from ₦50,000.
+              Fast, secure and mobile-ready websites, starting from ₦200,000.
             </Typography>
           </Box>
           <Box sx={styles.btnWrap}>

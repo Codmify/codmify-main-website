@@ -11,7 +11,7 @@ export default function Packages({ compact = false }: PackagesProps) {
       <Container maxWidth="lg">
         <Stack alignItems="center" textAlign="center" spacing={1.5} mb={{ xs: 4, md: 6 }}>
           <Typography variant="h3" fontWeight={700} color="#121279" fontSize={{ xs: 30, md: 42 }}>
-            Smart websites from ₦50,000
+            Smart websites from ₦200,000
           </Typography>
           <Typography color="#4A5E6D" maxWidth={650}>
             Choose a package that fits where your business is today. Every plan is built for speed, security and mobile visitors.
