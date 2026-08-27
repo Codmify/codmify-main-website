@@ -1,9 +1,16 @@
+"use client";
+
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { formatPrice } from "@/utils/currency";
+import { lowestStartingPriceNGN } from "@/utils/packages";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
+  const currency = useCurrency();
+
   return (
     <Box sx={styles.wrapper}>
       <Container maxWidth="lg" sx={styles.container}>
@@ -30,7 +37,7 @@ const Hero = () => {
               Professional Websites That Help Your Business Grow
             </Typography>
             <Typography sx={styles.desc}>
-              Fast, secure and mobile-ready websites, starting from ₦200,000.
+              Fast, secure and mobile-ready websites, starting from {formatPrice(lowestStartingPriceNGN, currency)}.
             </Typography>
           </Box>
           <Box sx={styles.btnWrap}>
