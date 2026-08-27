@@ -1,16 +1,9 @@
-"use client";
-
-import { useCurrency } from "@/contexts/CurrencyContext";
-import { formatPrice } from "@/utils/currency";
-import { lowestStartingPriceNGN } from "@/utils/packages";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
-  const currency = useCurrency();
-
   return (
     <Box sx={styles.wrapper}>
       <Container maxWidth="lg" sx={styles.container}>
@@ -34,16 +27,16 @@ const Hero = () => {
         <Stack sx={styles.stackWrap}>
           <Box>
             <Typography sx={styles.title}>
-              Professional Websites That Help Your Business Grow
+              Get a Website That Works as Hard as You Do
             </Typography>
             <Typography sx={styles.desc}>
-              Fast, secure and mobile-ready websites, starting from {formatPrice(lowestStartingPriceNGN, currency)}.
+              Mobile-ready, WhatsApp-integrated, built to be found on Google—delivered by a team that ships in days, not months.
             </Typography>
           </Box>
           <Box sx={styles.btnWrap}>
             <Link href={"/pricing"}>
               <Button sx={styles.startBtn} size="large">
-                View Website Packages
+                Start Your Website
               </Button>
             </Link>
           </Box>
