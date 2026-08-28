@@ -87,6 +87,7 @@ const ContactUs = () => {
         handleMessage("error", `Error: ${result.message}`);
       }
     } catch (error) {
+      console.error(error);
       handleMessage("error", "Failed to send email. Please try again later.");
     } finally {
       setLoading(false);

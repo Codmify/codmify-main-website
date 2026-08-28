@@ -7,9 +7,10 @@ function Confetti() {
   const [run, setRun] = useState(false);
 
   useEffect(() => {
-    // !sessionStorage.getItem("confetti") && setRun(true)
-
+    // sessionStorage is only readable client-side, so whether to run must be
+    // decided post-mount rather than during render.
     if (!sessionStorage.getItem("confetti")) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRun(true);
 
       const timer = setTimeout(() => {

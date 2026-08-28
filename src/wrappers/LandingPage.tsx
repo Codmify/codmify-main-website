@@ -1,25 +1,13 @@
 "use client";
 
-import Confetti from "@/components/Confetti";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
-import AnimatedModal from "@/components/Welcome";
 import WhatsappChat from "@/components/Whatsapp";
 import { Box } from "@mui/material";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 
 export default function LandingPage({ children }: { children: ReactNode }) {
-  // const [show, setShow] = useState(true);
-
-  // useEffect(() => {
-  //   if (sessionStorage.getItem("welcome")) {
-  //     setShow(false);
-  //   } else {
-  //     setShow(true);
-  //   }
-  // }, []);
-
   return (
     <Box
       sx={{
@@ -32,14 +20,6 @@ export default function LandingPage({ children }: { children: ReactNode }) {
       }}>
         {children}
       </Box>
-      {/* <Confetti /> */}
-      {/* <AnimatedModal
-        isOpen={show}
-        onClose={() => {
-          sessionStorage.setItem("welcome", "0");
-          setShow(!show);
-        }}
-      /> */}
       <ScrollToTop />
       <WhatsappChat />
       <Footer />

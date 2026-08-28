@@ -1,4 +1,4 @@
-import { ourProjects, projects } from "@/constants/data";
+import { ourProjects } from "@/constants/data";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";

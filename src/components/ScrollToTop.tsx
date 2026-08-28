@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Stack, Tooltip } from "@mui/material";
+import { Button, Stack, Tooltip } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { MdArrowUpward } from "react-icons/md";
 
