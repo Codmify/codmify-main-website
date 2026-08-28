@@ -1,0 +1,18 @@
+{
+  "hireUsCompany": {
+    "id": 8306177,
+    "name": "Codmify - New Service Request (Company)"
+  },
+  "hireUsUser": {
+    "id": 8306178,
+    "name": "Codmify - Service Request Received (User)"
+  },
+  "contactCompany": {
+    "id": 8306179,
+    "name": "Codmify - New Contact Form Submission (Company)"
+  },
+  "contactUser": {
+    "id": 8306180,
+    "name": "Codmify - Thanks for Contacting Us (User)"
+  }
+}
