@@ -34,7 +34,7 @@ export default function Packages({ compact = false }: PackagesProps) {
                     <Typography variant="body2" color="#4A5E6D" mt={1} minHeight={compact ? 64 : 78}>{pkg.audience}</Typography>
                   </Box>
                   <Box>
-                    <Typography variant="caption" fontWeight={700} color="#4A5E6D">STARTING FROM</Typography>
+                    {!pkg.customQuote && <Typography variant="caption" fontWeight={700} color="#4A5E6D">STARTING FROM</Typography>}
                     <Typography fontSize={{ xs: 30, md: 34 }} lineHeight={1.15} fontWeight={700} color="#008DE5">{displayPrice}</Typography>
                   </Box>
                   <Typography variant="body2" color="#4A5E6D">{pkg.intro}</Typography>
