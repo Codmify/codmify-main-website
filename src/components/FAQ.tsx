@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { MdExpandMore } from "react-icons/md";
+import Reveal from "./motion/Reveal";
 
 export default function FAQ() {
   const [expanded, setExpanded] = useState<string | false>(false);
@@ -24,6 +25,7 @@ export default function FAQ() {
   return (
     <Box component="section" py={8} bgcolor="#f9fafb">
       <Container maxWidth="lg">
+        <Reveal>
         <Stack spacing={2} mb={6} alignItems="center" textAlign="center">
           <Typography variant="h3" fontWeight={700}>
             Frequently Asked Questions
@@ -33,6 +35,8 @@ export default function FAQ() {
             asked questions.
           </Typography>
         </Stack>
+        </Reveal>
+        <Reveal delay={0.1}>
         <Stack spacing={2} maxWidth={900} mx="auto">
           {faqs.map((faq, index) => (
             <Accordion
@@ -80,6 +84,7 @@ export default function FAQ() {
             </Accordion>
           ))}
         </Stack>
+        </Reveal>
       </Container>
     </Box>
   );

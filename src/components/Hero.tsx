@@ -1,13 +1,24 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+"use client";
+
+import { Box, Button, Container, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { motion, useReducedMotion } from "framer-motion";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import HeroGlow from "./HeroGlow";
+
+const HeroScene3D = dynamic(() => import("./HeroScene3D"), { ssr: false });
 
 const Hero = () => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <Box sx={styles.wrapper}>
+      {isDesktop ? <HeroScene3D /> : <HeroGlow />}
       <Container maxWidth="lg" sx={styles.container}>
-        <Box sx={styles.tagWrap}>
+        <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.2 }}>
           <Box sx={styles.iconWrap}>
             <Image
               src={"/web-dev.svg"}
@@ -18,13 +29,13 @@ const Hero = () => {
           </Box>
           <Typography sx={styles.tagText}>Web development</Typography>
         </Box>
-        <Box sx={styles.tagWrap}>
+        <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.3 }}>
           <Box sx={styles.iconWrap}>
             <Image src={"/UI.svg"} alt="web-dev" objectFit="contain" fill />
           </Box>
           <Typography sx={styles.tagText}>UI/UX Design</Typography>
         </Box>
-        <Stack sx={styles.stackWrap}>
+        <Stack component={motion.div} sx={styles.stackWrap} initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: shouldReduceMotion ? 0 : 0.7, delay: shouldReduceMotion ? 0 : 0.1, ease: [0.22, 1, 0.36, 1] }}>
           <Box>
             <Typography sx={styles.title}>
               Get a Website That Works as Hard as You Do
@@ -41,7 +52,7 @@ const Hero = () => {
             </Link>
           </Box>
         </Stack>
-        <Box sx={styles.tagWrap}>
+        <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.4 }}>
           <Box sx={styles.iconWrap}>
             <Image
               src={"/marketing.svg"}
@@ -52,7 +63,7 @@ const Hero = () => {
           </Box>
           <Typography sx={styles.tagText}>Marketing</Typography>
         </Box>
-        <Box sx={styles.tagWrap}>
+        <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.5 }}>
           <Box sx={styles.iconWrap}>
             <Image src={"/PM.svg"} alt="web-dev" objectFit="contain" fill />
           </Box>
@@ -69,6 +80,8 @@ const styles = {
   wrapper: {
     backgroundColor: "#121279",
     paddingTop: { lg: "130px", md: "120px", sm: "80px" },
+    position: "relative",
+    overflow: "hidden",
   },
   container: {
     minHeight: 600,
