@@ -79,10 +79,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: "Message sent successfully!",
       data: { company: resultToCompany.body, user: resultToUser.body },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { message: "Failed to send emails.", error: error.message },
+      { message: "Failed to send emails.", error: message },
       { status: 500 }
     );
   }

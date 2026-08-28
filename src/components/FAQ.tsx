@@ -49,7 +49,7 @@ export default function FAQ() {
               color: "text.secondary",
               maxWidth: 600
             }}>
-            Got questions? We've got answers. Browse through our most commonly
+            Got questions? We&apos;ve got answers. Browse through our most commonly
             asked questions.
           </Typography>
         </Stack>
