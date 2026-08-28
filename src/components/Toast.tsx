@@ -1,11 +1,11 @@
 "use client"
 import { useState } from "react";
 import * as React from "react";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { Typography } from "@mui/material";
 
-const Alert: any = React.forwardRef(function Alert(props, ref: any) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
@@ -29,7 +29,7 @@ export default function SnackbarComp({
   alert,
   message,
 }: SnackbarProps) {
-  const handleClose = (_event: any, reason: any) => {
+  const handleClose = (_event: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
     if (reason === "clickaway") {
       return;
     }

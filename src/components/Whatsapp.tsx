@@ -36,26 +36,28 @@ export default function WhatsappChat() {
       <Tooltip title="Chat with us on whatsapp">
         <Stack
           component={Button}
-          position={"fixed"}
-          bottom={"2%"}
-          right={"2%"}
-          bgcolor={"#25D366"}
-          p={1}
-          minWidth={30}
-          width={45}
-          height={45}
           sx={{
+            position: "fixed",
+            bottom: "2%",
+            right: "2%",
+            bgcolor: "#25D366",
+            p: 1,
+            minWidth: 30,
+            width: 45,
+            height: 45,
+
             ":hover": {
               border: "1px solid #25D366 !important",
               color: "#25D366 !important",
               animation: "none",
             },
+
             ".icon :hover": {
               color: "#25D366 !important",
             },
-            animation: "scroll-down 4s infinite ease-out",
-          }}
-        >
+
+            animation: "scroll-down 4s infinite ease-out"
+          }}>
           <Box
             component={IcSharpWhatsapp}
             className="icon"

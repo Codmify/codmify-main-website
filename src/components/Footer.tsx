@@ -10,8 +10,9 @@ export default function Footer() {
   return (
     <Box
       component={"footer"}
-      bgcolor={"#121279"}
-      // borderRadius={{ lg: "30px 30px 0 0" }}
+      sx={{
+        bgcolor: "#121279"
+      }}
     >
       <Container
         sx={{
@@ -21,49 +22,62 @@ export default function Footer() {
       >
         <Stack
           direction={{ sm: "row" }}
-          gap={4}
-          justifyContent={"space-between"}
-          flexWrap={"wrap"}
           sx={{
+            gap: 4,
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+
             ".MuiTypography-root": {
               color: "white !important",
             },
+
             a: {
               width: "fit-content !important",
-            },
-          }}
-        >
+            }
+          }}>
           <Stack
-            flex={{ md: 1 }}
-            gap={2}
-            width={{ xs: "100%", md: "auto" }}
-            mb={{ xs: 2, md: 0 }}
-          >
+            sx={{
+              flex: { md: 1 },
+              gap: 2,
+              width: { xs: "100%", md: "auto" },
+              mb: { xs: 2, md: 0 }
+            }}>
             <Image
               alt="codmify-brand"
               src="/brand/logo-1.png"
               width={148}
               height={28}
             />
-            <Typography variant="body2" maxWidth={{ md: 300 }}>
+            <Typography variant="body2" sx={{
+              maxWidth: { md: 300 }
+            }}>
               Moving with ICT global standards and building a workforce for
               tomorrow&lsquo;s challenge.
             </Typography>
-            <Stack pt={2} gap={1} direction={"row"} flexWrap={"wrap"}>
+            <Stack
+              direction={"row"}
+              sx={{
+                pt: 2,
+                gap: 1,
+                flexWrap: "wrap"
+              }}>
               {socials.map((item, id) => (
                 <a href={item.url} target="_blank" key={id}>
                   <Box
                     component={"img"}
                     src={item.image}
-                    width={38}
-                    height={38}
-                    borderRadius={"50%"}
-                  />
+                    sx={{
+                      width: 38,
+                      height: 38,
+                      borderRadius: "50%"
+                    }} />
                 </a>
               ))}
             </Stack>
           </Stack>
-          <Stack flex={{ xs: 1, lg: 0.5 }} spacing={1.5} className="alignEnd">
+          <Stack spacing={1.5} className="alignEnd" sx={{
+            flex: { xs: 1, lg: 0.5 }
+          }}>
             <Typography variant="h6">Services</Typography>
             <Stack spacing={1}>
               {servicesHolder.map((item, id) => (
@@ -73,7 +87,9 @@ export default function Footer() {
               ))}
             </Stack>
           </Stack>
-          <Stack flex={{ xs: 1, lg: 0.5 }} spacing={1.5} className="alignEnd">
+          <Stack spacing={1.5} className="alignEnd" sx={{
+            flex: { xs: 1, lg: 0.5 }
+          }}>
             <Typography variant="h6">About Us</Typography>
             <Stack spacing={1}>
               {aboutUsMenu.map((item, id) => (
@@ -83,7 +99,9 @@ export default function Footer() {
               ))}
             </Stack>
           </Stack>
-          <Stack flex={{ xs: 1, lg: 0.5 }} spacing={1.5} className="alignEnd">
+          <Stack spacing={1.5} className="alignEnd" sx={{
+            flex: { xs: 1, lg: 0.5 }
+          }}>
             <Typography variant="h6">Contact Us</Typography>
             <Stack spacing={1}>
               <Typography
@@ -104,13 +122,19 @@ export default function Footer() {
           </Stack>
         </Stack>
 
-        <Box borderTop={"1px solid white"} mt={3} pt={2}>
+        <Box
+          sx={{
+            borderTop: "1px solid white",
+            mt: 3,
+            pt: 2
+          }}>
           <Typography
-            textAlign={"center"}
             variant="caption"
-            display={"block"}
             color={"white"}
-          >
+            sx={{
+              textAlign: "center",
+              display: "block"
+            }}>
             Copyright {new Date().getFullYear()} All rights reserved |
             CodmifyHub.
           </Typography>

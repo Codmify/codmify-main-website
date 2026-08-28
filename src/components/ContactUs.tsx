@@ -20,6 +20,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 import SnackbarComp, { useToast } from "./Toast";
 import { socials } from "@/utils/nav-menus";
+import Reveal from "./motion/Reveal";
 
 const CustomLabel = () => {
   return (
@@ -86,6 +87,7 @@ const ContactUs = () => {
         handleMessage("error", `Error: ${result.message}`);
       }
     } catch (error) {
+      console.error(error);
       handleMessage("error", "Failed to send email. Please try again later.");
     } finally {
       setLoading(false);
@@ -95,8 +97,15 @@ const ContactUs = () => {
   return (
     <Box sx={styles.wrapper} id="contact-us">
       <Container sx={styles.container}>
+        <Reveal>
         <Grid container>
-          <Grid item lg={4} md={4} sm={6} xs={12}>
+          <Grid
+            size={{
+              lg: 4,
+              md: 4,
+              sm: 6,
+              xs: 12
+            }}>
             <Box sx={styles.contactInfo}>
               <Box>
                 <Typography sx={styles.cTitle}>Contact Us</Typography>
@@ -104,7 +113,9 @@ const ContactUs = () => {
                   Feel free to send a message to us!
                 </Typography>
               </Box>
-              <Stack gap="20px">
+              <Stack sx={{
+                gap: "20px"
+              }}>
                 <Box sx={styles.inlineFlex}>
                   <BiSolidPhoneCall style={styles.inlineIcon} />
                   <Typography style={styles.inlineText}>
@@ -118,24 +129,38 @@ const ContactUs = () => {
                   </Typography>
                 </Box>
               </Stack>
-              <Stack gap={1} direction={"row"} flexWrap={"wrap"}>
+              <Stack
+                direction={"row"}
+                sx={{
+                  gap: 1,
+                  flexWrap: "wrap"
+                }}>
                 {socials.map((item, id) => (
                   <a href={item.url} target="_blank" key={id}>
                     <Box
                       component={"img"}
                       src={item.image}
-                      width={38}
-                      height={38}
-                      borderRadius={"50%"}
-                    />
+                      sx={{
+                        width: 38,
+                        height: 38,
+                        borderRadius: "50%"
+                      }} />
                   </a>
                 ))}
               </Stack>
             </Box>
           </Grid>
-          <Grid item lg={8} md={8} sm={6} xs={12}>
+          <Grid
+            size={{
+              lg: 8,
+              md: 8,
+              sm: 6,
+              xs: 12
+            }}>
             <Box sx={styles.cForm} component={"form"} onSubmit={handleSubmit}>
-              <Box width={"100%"}>
+              <Box sx={{
+                width: "100%"
+              }}>
                 <Typography>Name</Typography>
                 <TextField
                   disabled={loading}
@@ -148,7 +173,9 @@ const ContactUs = () => {
                   required
                 />
               </Box>
-              <Box width={"100%"}>
+              <Box sx={{
+                width: "100%"
+              }}>
                 <Typography>Email*</Typography>
                 <TextField
                   disabled={loading}
@@ -162,7 +189,9 @@ const ContactUs = () => {
                   required
                 />
               </Box>
-              <Box width={"100%"}>
+              <Box sx={{
+                width: "100%"
+              }}>
                 <Typography>Phone number</Typography>
                 <TextField
                   disabled={loading}
@@ -176,7 +205,9 @@ const ContactUs = () => {
                   required
                 />
               </Box>
-              <Box width={"100%"}>
+              <Box sx={{
+                width: "100%"
+              }}>
                 <Typography>Message*</Typography>
                 <TextField
                   disabled={loading}
@@ -191,14 +222,18 @@ const ContactUs = () => {
                   required
                 />
               </Box>
-              <Box width={"100%"}>
+              <Box sx={{
+                width: "100%"
+              }}>
                 <FormControlLabel
                   required
                   control={<Checkbox disabled={loading} required />}
                   label={<CustomLabel />}
                 />
               </Box>
-              <Box width={"100%"}>
+              <Box sx={{
+                width: "100%"
+              }}>
                 <Button
                   disabled={loading}
                   variant="contained"
@@ -219,6 +254,7 @@ const ContactUs = () => {
             </Box>
           </Grid>
         </Grid>
+        </Reveal>
         <Testimonials />
       </Container>
 

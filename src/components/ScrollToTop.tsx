@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Stack, Tooltip } from "@mui/material";
+import { Button, Stack, Tooltip } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { MdArrowUpward } from "react-icons/md";
 
@@ -34,15 +34,15 @@ export default function ScrollToTop() {
           <Stack
             component={Button}
             onClick={scrollToTop}
-            position={"fixed"}
-            bottom={"calc(2% + 70px)"}
-            right={"2%"}
-            bgcolor={"#121279"}
-            p={1}
-            minWidth={30}
-            width={45}
-            height={45}
             sx={{
+              position: "fixed",
+              bottom: "calc(2% + 70px)",
+              right: "2%",
+              bgcolor: "#121279",
+              p: 1,
+              minWidth: 30,
+              width: 45,
+              height: 45,
               borderRadius: "50%",
               display: "flex",
               alignItems: "center",
@@ -50,12 +50,12 @@ export default function ScrollToTop() {
               zIndex: 99,
               transition: "all 0.3s ease-in-out",
               animation: "scroll-down 4s infinite ease-out",
+
               ":hover": {
                 bgcolor: "#0F0E5F",
                 transform: "scale(1.1)",
-              },
-            }}
-          >
+              }
+            }}>
             <MdArrowUpward
               style={{
                 fontSize: "24px",

@@ -2,11 +2,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import Mailjet from "node-mailjet";
 
-// Create a Mailjet client instance with API credentials
-const mailjetClient = new Mailjet({
-  apiKey: process.env.MAILJET_API_KEY as string,
-  apiSecret: process.env.MAILJET_SECRET_KEY as string,
-});
+// Instantiated lazily, on first request, so a missing API key can't crash
+// the build - Mailjet's constructor throws synchronously without one, and
+// this module is evaluated during Next's build-time page-data collection
+// even though this route is dynamic.
+let mailjetClient: Mailjet | undefined;
+function getMailjetClient() {
+  if (!mailjetClient) {
+    mailjetClient = new Mailjet({
+      apiKey: process.env.MAILJET_API_KEY as string,
+      apiSecret: process.env.MAILJET_SECRET_KEY as string,
+    });
+  }
+  return mailjetClient;
+}
 
 // Define types for request body data
 interface ContactFormData {
@@ -75,12 +84,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     };
 
     // Send the email to the company using Mailjet
-    const resultToCompany = await mailjetClient
+    const resultToCompany = await getMailjetClient()
       .post("send", { version: "v3.1" })
       .request(mailjetRequestToCompany);
 
     // Send the confirmation email to the user
-    const resultToUser = await mailjetClient
+    const resultToUser = await getMailjetClient()
       .post("send", { version: "v3.1" })
       .request(mailjetRequestToUser);
 
@@ -89,10 +98,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: "Emails sent successfully!",
       data: { company: resultToCompany.body, user: resultToUser.body },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { message: "Failed to send emails.", error: error.message },
+      { message: "Failed to send emails.", error: message },
       { status: 500 }
     );
   }
