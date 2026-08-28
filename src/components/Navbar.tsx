@@ -44,17 +44,16 @@ export default function Navbar() {
   return (
     <>
       <Box
-      position={"fixed"}
-      top={0}
-      left={0}
-      width={"100dvw"}
-      component={"nav"}
-      zIndex={100}
-      sx={{
-        transform: isVisible ? "translateY(0)" : "translateY(-150%)",
-        transition: "transform 0.3s ease-in-out",
-      }}
-    >
+        component={"nav"}
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100dvw",
+          zIndex: 100,
+          transform: isVisible ? "translateY(0)" : "translateY(-150%)",
+          transition: "transform 0.3s ease-in-out"
+        }}>
       <Container
         sx={{
           bgcolor: "white",
@@ -64,11 +63,12 @@ export default function Navbar() {
         }}
       >
         <Stack
-          alignItems={"center"}
-          justifyContent={"space-between"}
           direction={"row"}
-          gap={2}
-        >
+          sx={{
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 2
+          }}>
           <Link href={"/"}>
             <Image
               alt="codmify-brand"
@@ -79,9 +79,9 @@ export default function Navbar() {
           </Link>
           <Stack
             direction={{ md: "row" }}
-            alignItems={{ md: "center" }}
-            gap={{ xs: 2, xl: 3 }}
             sx={{
+              alignItems: { md: "center" },
+              gap: { xs: 2, xl: 3 },
               position: { xs: "fixed", md: "static" },
               top: 0,
               right: 0,
@@ -92,17 +92,19 @@ export default function Navbar() {
               px: { xs: 2, md: 0 },
               pt: { xs: 6, md: 0 },
               pb: { xs: 4, md: 0 },
+
               transform: {
                 xs: `translateX(${isSideOpen ? 0 : 200}%)`,
                 md: "translateX(0%)",
               },
+
               transition: "all .5s",
+
               ".active .MuiTypography-root": {
                 fontWeight: "bold !important",
                 textDecoration: "underline",
-              },
-            }}
-          >
+              }
+            }}>
             {navLinks.map((menu) => (
               <Link key={menu.url} href={menu.url}>
                 <Typography
@@ -111,11 +113,11 @@ export default function Navbar() {
                       ? "#121279"
                       : "#323F49"
                   }
-                  fontWeight={
-                    pathname.split("/")[1] === menu.url.split("/")[1]
+                  sx={{
+                    fontWeight: pathname.split("/")[1] === menu.url.split("/")[1]
                       ? 700
                       : 600
-                  }
+                  }}
                 >
                   {menu.label}
                 </Typography>
@@ -132,11 +134,12 @@ export default function Navbar() {
             </Link>
           </Stack>
           <Stack
-            alignItems={"center"}
-            justifyContent={"center"}
             direction={"row"}
-            gap={{ md: 2 }}
-          >
+            sx={{
+              alignItems: "center",
+              justifyContent: "center",
+              gap: { md: 2 }
+            }}>
             <IconButton
               sx={{ display: { xs: "inline-flex", md: "none" } }}
               onClick={() => setIsSideOpen(!isSideOpen)}

@@ -21,9 +21,15 @@ export default function LandingPage({ children }: { children: ReactNode }) {
   // }, []);
 
   return (
-    <Box position={"relative"} sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        position: "relative",
+        width: "100%"
+      }}>
       <Navbar />
-      <Box component={"main"} minHeight={"90dvh"}>
+      <Box component={"main"} sx={{
+        minHeight: "90dvh"
+      }}>
         {children}
       </Box>
       {/* <Confetti /> */}

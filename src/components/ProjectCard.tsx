@@ -28,19 +28,28 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <Box
-      p={{ xs: 2, md: 3.5 }}
-      border="1px solid #E0E8EF"
-      borderRadius={{ xs: 3, md: 4 }}
-      bgcolor="white"
-      boxShadow="0 12px 30px rgba(18,18,121,.06)"
-    >
+      sx={{
+        p: { xs: 2, md: 3.5 },
+        border: "1px solid #E0E8EF",
+        borderRadius: { xs: 3, md: 4 },
+        bgcolor: "white",
+        boxShadow: "0 12px 30px rgba(18,18,121,.06)"
+      }}>
       <Grid
         container
         spacing={{ xs: 3, md: 5 }}
         direction={reverse}
-        alignItems="center"
+        sx={{
+          alignItems: "center"
+        }}
       >
-        <Grid item lg={7} md={7} sm={7} xs={12}>
+        <Grid
+          size={{
+            lg: 7,
+            md: 7,
+            sm: 7,
+            xs: 12
+          }}>
           <Box sx={styles.cardImg}>
             {images ? (
               <Box sx={styles.appPreviews}>
@@ -65,7 +74,13 @@ export default function ProjectCard({
             )}
           </Box>
         </Grid>
-        <Grid item lg={5} md={5} sm={5} xs={12}>
+        <Grid
+          size={{
+            lg: 5,
+            md: 5,
+            sm: 5,
+            xs: 12
+          }}>
           <Stack spacing={2}>
             {/* <Typography
               color="#008DE5"
@@ -77,22 +92,37 @@ export default function ProjectCard({
             </Typography> */}
             <Typography
               component="h3"
-              fontSize={{ xs: 28, md: 35 }}
-              lineHeight={1.1}
-              color="#121279"
-              fontWeight={700}
-            >
+              sx={{
+                fontSize: { xs: 28, md: 35 },
+                lineHeight: 1.1,
+                color: "#121279",
+                fontWeight: 700
+              }}>
               {title}
             </Typography>
-            <Typography color="#526573" lineHeight={1.75}>
+            <Typography
+              sx={{
+                color: "#526573",
+                lineHeight: 1.75
+              }}>
               {desc}
             </Typography>
             {additionDesc && (
-              <Typography color="#526573" lineHeight={1.75}>
+              <Typography
+                sx={{
+                  color: "#526573",
+                  lineHeight: 1.75
+                }}>
                 {additionDesc}
               </Typography>
             )}
-            <Stack direction="row" flexWrap="wrap" gap={1} pt={1}>
+            <Stack
+              direction="row"
+              sx={{
+                flexWrap: "wrap",
+                gap: 1,
+                pt: 1
+              }}>
               {links ? (
                 links.map((link) => (
                   <Button

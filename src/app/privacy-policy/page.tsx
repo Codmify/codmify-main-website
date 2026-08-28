@@ -17,7 +17,12 @@ export default function PrivacyPolicy() {
       title="Privacy Policy"
       subtitle="We respect your privacy and are committed to protecting your personal data. Learn how we collect, use, and safeguard your information."
     >
-      <Typography variant="body2" color="text.secondary" mb={2}>
+      <Typography
+        variant="body2"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         Last Updated: January 26, 2026
       </Typography>
       <PolicyLayout sections={privacyPolicy} />

@@ -23,21 +23,44 @@ export default function FAQ() {
     };
 
   return (
-    <Box component="section" py={8} bgcolor="#f9fafb">
+    <Box
+      component="section"
+      sx={{
+        py: 8,
+        bgcolor: "#f9fafb"
+      }}>
       <Container maxWidth="lg">
         <Reveal>
-        <Stack spacing={2} mb={6} alignItems="center" textAlign="center">
-          <Typography variant="h3" fontWeight={700}>
+        <Stack
+          spacing={2}
+          sx={{
+            mb: 6,
+            alignItems: "center",
+            textAlign: "center"
+          }}>
+          <Typography variant="h3" sx={{
+            fontWeight: 700
+          }}>
             Frequently Asked Questions
           </Typography>
-          <Typography variant="body1" color="text.secondary" maxWidth={600}>
+          <Typography
+            variant="body1"
+            sx={{
+              color: "text.secondary",
+              maxWidth: 600
+            }}>
             Got questions? We've got answers. Browse through our most commonly
             asked questions.
           </Typography>
         </Stack>
         </Reveal>
         <Reveal delay={0.1}>
-        <Stack spacing={2} maxWidth={900} mx="auto">
+        <Stack
+          spacing={2}
+          sx={{
+            maxWidth: 900,
+            mx: "auto"
+          }}>
           {faqs.map((faq, index) => (
             <Accordion
               key={index}
@@ -72,12 +95,20 @@ export default function FAQ() {
                   },
                 }}
               >
-                <Typography fontWeight={600} fontSize={18}>
+                <Typography
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: 18
+                  }}>
                   {faq.question}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography color="text.secondary" lineHeight={1.7}>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    lineHeight: 1.7
+                  }}>
                   {faq.answer}
                 </Typography>
               </AccordionDetails>
