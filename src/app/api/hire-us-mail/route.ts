@@ -2,6 +2,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import Mailjet from "node-mailjet";
 
+// Mailjet transactional template IDs (see provisioned templates in the
+// Mailjet dashboard: "Codmify - New Service Request (Company)" and
+// "Codmify - Service Request Received (User)").
+const COMPANY_TEMPLATE_ID = 8306177;
+const USER_TEMPLATE_ID = 8306178;
+
 // Instantiated lazily, on first request, so a missing API key can't crash
 // the build - Mailjet's constructor throws synchronously without one, and
 // this module is evaluated during Next's build-time page-data collection
@@ -50,15 +56,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               Name: "Recipient",
             },
           ],
+          TemplateID: COMPANY_TEMPLATE_ID,
+          TemplateLanguage: true,
           Subject: "New Service Request Received",
-          TextPart: `You have received a new service request.\nServices Requested: ${category}
-            \nName: ${name}
-            \nEmail: ${email}
-            \nPhone: ${phone}
-            \nCompany Name: ${companyName || "Not provided"}
-            \nProject Description: ${projectDescription}
-            \n\n
-            Please respond to the client as soon as possible.`,
+          Variables: {
+            category,
+            name,
+            email,
+            phone,
+            companyName: companyName || "Not provided",
+            projectDescription,
+          },
         },
       ],
     };
@@ -77,8 +85,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               Name: name, // User's name from the form
             },
           ],
+          TemplateID: USER_TEMPLATE_ID,
+          TemplateLanguage: true,
           Subject: "Service Request Received - Thank You for Choosing Us!",
-          TextPart: `Hello ${name},\n\nThank you for requesting a service from us. We have received your request and our team is currently reviewing it. You can expect a response within the next 24-48 hours.\n\nIn the meantime, if you have any additional information or questions, feel free to reply to this email.\n\nBest regards,\nCodmify Hub\nCustomer Service Team`,
+          Variables: { name },
         },
       ],
     };
