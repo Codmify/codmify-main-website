@@ -17,7 +17,12 @@ export default function RefundPolicy() {
       title="Refund Policy"
       subtitle="Learn about our refund policy for agency services, digital products, and marketplace transactions."
     >
-      <Typography variant="body2" color="text.secondary" mb={2}>
+      <Typography
+        variant="body2"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         Last Updated: January 26, 2026
       </Typography>
       <PolicyLayout sections={refundPolicy} />

@@ -9,7 +9,9 @@ import Image from "next/image";
 
 const Testimonials = () => {
   return (
-    <Box mt="4em">
+    <Box sx={{
+      mt: "4em"
+    }}>
       <Swiper
         spaceBetween={"30px"}
         slidesPerView={"auto"}
@@ -30,7 +32,9 @@ const Testimonials = () => {
                 <Box component={"span"} sx={styles.quote} />
                 {testimonial.desc}
               </Typography>
-              <Box mt="auto">
+              <Box sx={{
+                mt: "auto"
+              }}>
                 <Typography sx={styles.name}>{testimonial.name}</Typography>
                 <Typography sx={styles.role}>{testimonial.position}</Typography>
               </Box>

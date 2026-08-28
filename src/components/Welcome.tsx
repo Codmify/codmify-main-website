@@ -33,15 +33,18 @@ const AnimatedModal: React.FC<AnimatedModalProps> = ({ isOpen, onClose }) => (
       transition={{ duration: 1 }}
     >
       <Stack spacing={2}>
-        <Typography variant="h5" textAlign={"center"}>
+        <Typography variant="h5" sx={{
+          textAlign: "center"
+        }}>
           Codmify Hub is Live🎉
         </Typography>
         <Box
           component={"img"}
-          borderRadius={"8px"}
           src="/welcome.png"
-          width={"100%"}
-        />
+          sx={{
+            borderRadius: "8px",
+            width: "100%"
+          }} />
       </Stack>
     </Box>
   </Modal>

@@ -2,29 +2,40 @@ import { Box, Container, Stack, Typography, Grid, Button } from "@mui/material";
 import { qualification, services } from "@/constants/data";
 import { GoArrowRight } from "react-icons/go";
 import Link from "next/link";
+import Reveal from "./motion/Reveal";
 
 const Services = () => {
   return (
     <Box sx={styles.wrapper}>
       <Container>
-        <Stack sx={styles.qWrap}>
-          {qualification.map((item) => (
-            <Box key={item.title} sx={styles.qItem}>
-              <Box sx={styles.qIconBox}>
-                <item.icon style={styles.qIcon} />
+        <Reveal>
+          <Stack sx={styles.qWrap}>
+            {qualification.map((item) => (
+              <Box key={item.title} sx={styles.qItem}>
+                <Box sx={styles.qIconBox}>
+                  <item.icon style={styles.qIcon} />
+                </Box>
+                <Box>
+                  <Typography sx={styles.qYear}>{item.years}</Typography>
+                  <Typography sx={styles.qTitle}>{item.title}</Typography>
+                </Box>
               </Box>
-              <Box>
-                <Typography sx={styles.qYear}>{item.years}</Typography>
-                <Typography sx={styles.qTitle}>{item.title}</Typography>
-              </Box>
-            </Box>
-          ))}
-        </Stack>
+            ))}
+          </Stack>
+        </Reveal>
+        <Reveal delay={0.1}>
         <Box sx={styles.servicesBlock}>
           <Typography sx={styles.servicesBlockTitle}>Our Services</Typography>
           <Grid container spacing={2}>
             {services.map((item, index) => (
-              <Grid item lg={6} md={6} sm={6} xs={12} key={item.title}>
+              <Grid
+                key={item.title}
+                size={{
+                  lg: 6,
+                  md: 6,
+                  sm: 6,
+                  xs: 12
+                }}>
                 <Box sx={styles.sItem}>
                   <Box>
                     <Box
@@ -62,6 +73,7 @@ const Services = () => {
             </Link>
           </Box>
         </Box>
+        </Reveal>
       </Container>
     </Box>
   );
