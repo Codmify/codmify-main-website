@@ -23,6 +23,14 @@ function getMailjetClient() {
   return mailjetClient;
 }
 
+// The "From" address should live on a domain authenticated in Mailjet
+// (SPF/DKIM) - e.g. no-reply@codmify.com - not a gmail.com mailbox, since
+// a third-party sender can never pass DMARC alignment for a Gmail-hosted
+// domain and mail ends up in spam. Falls back to COMPANY_EMAIL until
+// MAIL_FROM_EMAIL is set, so this keeps working before the domain is
+// verified.
+const FROM_EMAIL = process.env.MAIL_FROM_EMAIL || (process.env.COMPANY_EMAIL as string);
+
 // Define types for request body data
 interface ContactFormData {
   name: string;
@@ -47,7 +55,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       Messages: [
         {
           From: {
-            Email: process.env.COMPANY_EMAIL as string, // Your company email address
+            Email: FROM_EMAIL,
             Name: "Service Request Form",
           },
           To: [
@@ -76,7 +84,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       Messages: [
         {
           From: {
-            Email: process.env.COMPANY_EMAIL as string, // Your company email address
+            Email: FROM_EMAIL,
             Name: "Codmify Hub", // Codmify Hub to appear as sender
           },
           To: [
