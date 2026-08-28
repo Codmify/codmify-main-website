@@ -4,15 +4,19 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { GoArrowRight } from "react-icons/go";
+import Reveal from "./motion/Reveal";
 
 const Projects = () => {
   return (
     <Box sx={styles.wrapper}>
       <Container>
-        <Typography sx={styles.pTitle}>Our Projects</Typography>
+        <Reveal>
+          <Typography sx={styles.pTitle}>Our Projects</Typography>
+        </Reveal>
         <Grid container spacing={4} justifyContent={"center"} mt={"50px"}>
-          {ourProjects.slice(0, 3).map((project) => (
+          {ourProjects.slice(0, 3).map((project, index) => (
             <Grid key={project.title} item lg={4} md={4} sm={6} xs={12}>
+              <Reveal delay={index * 0.1}>
               <Box sx={styles.pItem}>
                 <Box
                   sx={{ position: "relative", width: "100%", height: "200px" }}
@@ -35,6 +39,7 @@ const Projects = () => {
                   </a>
                 </Box>
               </Box>
+              </Reveal>
             </Grid>
           ))}
         </Grid>

@@ -20,6 +20,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 import SnackbarComp, { useToast } from "./Toast";
 import { socials } from "@/utils/nav-menus";
+import Reveal from "./motion/Reveal";
 
 const CustomLabel = () => {
   return (
@@ -95,6 +96,7 @@ const ContactUs = () => {
   return (
     <Box sx={styles.wrapper} id="contact-us">
       <Container sx={styles.container}>
+        <Reveal>
         <Grid container>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <Box sx={styles.contactInfo}>
@@ -219,6 +221,7 @@ const ContactUs = () => {
             </Box>
           </Grid>
         </Grid>
+        </Reveal>
         <Testimonials />
       </Container>
 
