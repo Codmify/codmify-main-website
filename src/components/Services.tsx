@@ -28,7 +28,14 @@ const Services = () => {
           <Typography sx={styles.servicesBlockTitle}>Our Services</Typography>
           <Grid container spacing={2}>
             {services.map((item, index) => (
-              <Grid item lg={6} md={6} sm={6} xs={12} key={item.title}>
+              <Grid
+                key={item.title}
+                size={{
+                  lg: 6,
+                  md: 6,
+                  sm: 6,
+                  xs: 12
+                }}>
                 <Box sx={styles.sItem}>
                   <Box>
                     <Box

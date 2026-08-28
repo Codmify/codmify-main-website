@@ -12,25 +12,27 @@ interface PolicyLayoutProps {
 export default function PolicyLayout({ sections }: PolicyLayoutProps) {
   return (
     <Stack
-      position={"relative"}
-      mt={4}
       direction={{ md: "row" }}
-      gap={{ md: 4, lg: 8 }}
-    >
+      sx={{
+        position: "relative",
+        mt: 4,
+        gap: { md: 4, lg: 8 }
+      }}>
       <Stack
         spacing={2}
-        display={{ xs: "none", md: "flex" }}
-        width={250}
         component={"ul"}
         sx={{
+          display: { xs: "none", md: "flex" },
+          width: 250,
+
           li: {
             listStyle: "none",
           },
+
           position: "sticky",
           top: 100,
-          height: "fit-content",
-        }}
-      >
+          height: "fit-content"
+        }}>
         {sections.map((item) => (
           <Typography
             key={item.key}
@@ -50,14 +52,25 @@ export default function PolicyLayout({ sections }: PolicyLayoutProps) {
           </Typography>
         ))}
       </Stack>
-      <Stack spacing={3} width={{ md: "calc(100% - 250px)" }}>
+      <Stack spacing={3} sx={{
+        width: { md: "calc(100% - 250px)" }
+      }}>
         {sections.map((item) => (
           <Element key={item.key} name={item.key}>
-            <Typography variant="h5" fontWeight={600} mb={1}>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 600,
+                mb: 1
+              }}>
               {item.title}
             </Typography>
             {item.content && (
-              <Typography mt={1} color="text.secondary">
+              <Typography
+                sx={{
+                  mt: 1,
+                  color: "text.secondary"
+                }}>
                 {item.content}
               </Typography>
             )}

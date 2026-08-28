@@ -17,7 +17,12 @@ export default function TermsAndConditions() {
       title="Terms and Conditions"
       subtitle="By accessing our website, engaging our agency services, or using any of our proprietary platforms, you agree to be bound by these Terms and Conditions."
     >
-      <Typography variant="body2" color="text.secondary" mb={2}>
+      <Typography
+        variant="body2"
+        sx={{
+          color: "text.secondary",
+          mb: 2
+        }}>
         Last Updated: January 26, 2026
       </Typography>
       <PolicyLayout sections={termsAndConditions} />
