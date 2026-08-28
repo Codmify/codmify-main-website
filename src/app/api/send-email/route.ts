@@ -2,6 +2,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import Mailjet from "node-mailjet";
 
+// Mailjet transactional template IDs (see provisioned templates in the
+// Mailjet dashboard: "Codmify - New Contact Form Submission (Company)" and
+// "Codmify - Thanks for Contacting Us (User)").
+const COMPANY_TEMPLATE_ID = 8306179;
+const USER_TEMPLATE_ID = 8306180;
+
 // Instantiated lazily, on first request, so a missing API key can't crash
 // the build - Mailjet's constructor throws synchronously without one, and
 // this module is evaluated during Next's build-time page-data collection
@@ -47,8 +53,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               Name: "Recipient",
             },
           ],
+          TemplateID: COMPANY_TEMPLATE_ID,
+          TemplateLanguage: true,
           Subject: "New Contact Form Submission",
-          TextPart: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phone}\nMessage: ${message}`,
+          Variables: { name, email, phone, message },
         },
       ],
     };
@@ -67,8 +75,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               Name: name, // User's name from the form
             },
           ],
+          TemplateID: USER_TEMPLATE_ID,
+          TemplateLanguage: true,
           Subject: "Thank you for contacting us!",
-          TextPart: `Hello ${name},\n\nThank you for reaching out to us! We have received your message and will get back to you shortly.\n\nBest regards,\nCodmify Hub`,
+          Variables: { name },
         },
       ],
     };
