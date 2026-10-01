@@ -1,19 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const sparks = [
-  { name: "Ideas", symbol: "✧", caption: "Every possibility starts with an idea." },
-  { name: "People", symbol: "✦", caption: "Great things happen when we build together." },
-  { name: "Possibilities", symbol: "✳", caption: "Here’s to everything we’ll create next." },
+const CityScene = dynamic(() => import("./AnniversaryCityScene"), { ssr: false, loading: () => <div className="city-scene-loading">Preparing your view of the city…</div> });
+const chapters = [
+  { label: "01 / THE CITY", title: "Big ideas. A city full of possibility.", text: "A little journey through a Lagos-inspired world. Scroll to visit our celebration." },
+  { label: "02 / A CLOSER LOOK", title: "There’s something to celebrate up here.", text: "Follow the skyline to our glass tower. A new chapter is taking shape." },
+  { label: "03 / OUR FLOOR", title: "Step inside the Codmify world.", text: "The people, ideas and collaborations behind two years of building together." },
+  { label: "04 / TWO YEARS TOGETHER", title: "Made possible by you.", text: "To our clients, team and partners: thank you. Here’s to everything we’ll build next." },
 ];
 
 export default function AnniversaryExperience({ onClose }: { onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
-  const stage = useRef<HTMLDivElement>(null);
-  const [collected, setCollected] = useState<number[]>([]);
-  const complete = collected.length === sparks.length;
+  const scroller = useRef<HTMLDivElement>(null);
+  const progress = useRef(0);
+  const [value, setValue] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const chapter = Math.min(3, Math.floor(value * 4));
 
   useEffect(() => {
     const element = dialog.current;
@@ -28,34 +33,41 @@ export default function AnniversaryExperience({ onClose }: { onClose: () => void
     };
   }, []);
 
-  const collect = (index: number) => setCollected(previous => previous.includes(index) ? previous : [...previous, index]);
+  const goTo = (next: number) => {
+    const element = scroller.current;
+    if (!element) return;
+    element.scrollTo({ top: next * (element.scrollHeight - element.clientHeight), behavior: "instant" });
+    progress.current = next;
+    setValue(next);
+  };
 
-  return <dialog ref={dialog} className="anniversary-experience" aria-labelledby="anniversary-experience-title" aria-describedby="anniversary-experience-description" onCancel={onClose} onClick={event => { if (event.target === dialog.current) onClose(); }}>
-    <div className={`anniversary-experience-card${complete ? " is-complete" : ""}`}>
-      <header className="experience-header"><span className="experience-wordmark">codmify<span> / TWO YEARS</span></span><button autoFocus className="experience-close" onClick={onClose} aria-label="Close anniversary celebration">×</button></header>
-      <div className="experience-content">
-        <div className="experience-copy">
-          <span className="experience-kicker"><i /> A LITTLE MOMENT TO CELEBRATE</span>
-          <h2 id="anniversary-experience-title">{complete ? <>The future is<br /><em>brighter together.</em></> : <>Two years.<br /><em>Infinite possibilities.</em></>}</h2>
-          <p id="anniversary-experience-description">{complete ? "You’ve lit up our next chapter. Thank you for being part of the Codmify story." : "Ideas. People. Possibilities. Three sparks that make us who we are. Bring them together to light up our next chapter."}</p>
-          <div className="experience-progress" aria-label={`${collected.length} of 3 sparks collected`}>{sparks.map((spark, index) => <button key={spark.name} className={collected.includes(index) ? "is-collected" : ""} disabled={collected.includes(index)} onClick={() => collect(index)} aria-label={`Collect ${spark.name} spark`}><span>{collected.includes(index) ? "✓" : `0${index + 1}`}</span>{spark.name}</button>)}</div>
-          <p className="experience-status" aria-live="polite">{complete ? "All three sparks connected. Here’s to what comes next." : collected.length ? sparks[collected[collected.length - 1]].caption : "Tap the floating sparks, or use the buttons above."}</p>
-          <div className="experience-actions">{complete ? <Link href="/our-projects" onClick={onClose} className="experience-primary">Explore what we build <span aria-hidden="true">↗</span></Link> : <button className="experience-primary" onClick={() => collect(sparks.findIndex((_, i) => !collected.includes(i)))}>Connect a spark <span aria-hidden="true">↗</span></button>}<button className="experience-skip" onClick={onClose}>{complete ? "Continue to website" : "Skip celebration"} <span aria-hidden="true">→</span></button></div>
-        </div>
-        <div ref={stage} className="experience-stage" onPointerMove={event => {
-          if (event.pointerType === "touch" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-          const rect = event.currentTarget.getBoundingClientRect();
-          stage.current?.style.setProperty("--tilt-x", `${-(event.clientY - rect.top - rect.height / 2) / rect.height * 12}deg`);
-          stage.current?.style.setProperty("--tilt-y", `${(event.clientX - rect.left - rect.width / 2) / rect.width * 18}deg`);
-        }} onPointerLeave={() => { stage.current?.style.setProperty("--tilt-x", "0deg"); stage.current?.style.setProperty("--tilt-y", "0deg"); }}>
-          <div className="experience-grid" aria-hidden="true" />
-          <div className="experience-planet" aria-hidden="true"><div className="experience-ring ring-one" /><div className="experience-ring ring-two" /><div className="experience-ring ring-three" /><div className="experience-core"><span>BUILDING TOGETHER</span><strong>2</strong><span>YEARS OF CODMIFY</span></div></div>
-          {sparks.map((spark, index) => <button key={spark.name} className={`experience-spark spark-${index}${collected.includes(index) ? " is-collected" : ""}`} onClick={() => collect(index)} disabled={collected.includes(index)} aria-label={`Connect ${spark.name} spark`}><span aria-hidden="true">{collected.includes(index) ? "✓" : spark.symbol}</span><small>{spark.name}</small></button>)}
-          <span className="experience-scene-label">{complete ? "NEXT CHAPTER / ACTIVATED" : "CONNECT THE SPARKS / 01—03"}</span>
-          {complete && <div className="experience-burst" aria-hidden="true">{Array.from({length: 16}, (_, i) => <i key={i} style={{ transform: `rotate(${i * 22.5}deg)` }}><span /></i>)}</div>}
+  return <dialog ref={dialog} className="city-tour-dialog" aria-labelledby="city-tour-title" aria-describedby="city-tour-description" onCancel={onClose}>
+    <div ref={scroller} className="city-tour-scroll" tabIndex={0} aria-label="Scroll to travel from the city skyline to the Codmify office" onScroll={event => {
+      const element = event.currentTarget;
+      const next = Math.max(0, Math.min(1, element.scrollTop / Math.max(1, element.scrollHeight - element.clientHeight)));
+      progress.current = next;
+      setValue(next);
+    }}>
+      <div className="city-tour-track">
+        <div className="city-tour-viewport">
+          <CityScene progress={progress} paused={paused} />
+          <div className="city-tour-vignette" aria-hidden="true" />
+          <header className="city-tour-header"><div className="city-tour-brand">codmify<span>ANNIVERSARY / 02</span></div><div className="city-tour-header-actions"><button onClick={() => setPaused(!paused)} aria-pressed={paused}>{paused ? "Resume motion" : "Pause motion"}</button><button autoFocus onClick={onClose} aria-label="Close city celebration" className="city-tour-close">×</button></div></header>
+          <div className="city-tour-location"><span aria-hidden="true">◉</span> LAGOS-INSPIRED WORLD · NIGERIA</div>
+          <div className="city-tour-caption">
+            <p className="city-tour-chapter">{chapters[chapter].label}</p>
+            <h2 id="city-tour-title">{chapters[chapter].title}</h2>
+            <p id="city-tour-description">{chapters[chapter].text}</p>
+            {chapter === 3 && <Link href="/about-us#our-journey" onClick={onClose} className="city-tour-story">Our anniversary story <span aria-hidden="true">↗</span></Link>}
+          </div>
+          <aside className="city-tour-note">An imagined office.<br />A very real celebration.</aside>
+          <footer className="city-tour-controls">
+            <div className="city-tour-progress"><label htmlFor="city-tour-progress">YOUR JOURNEY <span>{Math.round(value * 100)}%</span></label><input id="city-tour-progress" type="range" min="0" max="100" value={Math.round(value * 100)} onChange={event => goTo(Number(event.target.value) / 100)} aria-label="Zoom from the Lagos city to the Codmify office" /></div>
+            <div className="city-tour-navigation"><button onClick={onClose}>Skip tour</button>{chapter < 3 ? <button className="city-tour-next" onClick={() => goTo(Math.min(1, (chapter + 1) / 4 + .04))}>Move closer <span aria-hidden="true">↓</span></button> : <button className="city-tour-next" onClick={onClose}>Explore the website <span aria-hidden="true">→</span></button>}</div>
+          </footer>
+          <div className="city-tour-scroll-hint" aria-hidden="true">{chapter < 3 ? "SCROLL TO MOVE CLOSER ↓" : "WELCOME TO OUR CELEBRATION ✦"}</div>
         </div>
       </div>
-      <footer className="experience-footer"><span>OCTOBER 2026 · ANNIVERSARY EDITION</span><span>Made possible by you. <span aria-hidden="true">✦</span></span></footer>
     </div>
   </dialog>;
 }
