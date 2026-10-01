@@ -266,28 +266,71 @@ li .active {
 .anniversary-motion-paused i { animation-play-state: paused; }
 .anniversary-motion-control { position: fixed; bottom: 20px; left: 20px; z-index: 102; display: flex; align-items: center; gap: 8px; border: 1px solid #c7a65c80; border-radius: 24px; padding: 9px 13px; color: #f5dda3; background: #16164df0; cursor: pointer; font-size: 12px; box-shadow: 0 4px 15px #12127920; }
 .anniversary-motion-control:focus-visible, .anniversary-intro-close:focus-visible { outline: 3px solid #51c4ff; outline-offset: 3px; }
-.anniversary-intro { position: fixed; right: 26px; bottom: 96px; z-index: 103; width: 320px; padding: 22px 20px 25px; border: 1px solid #e8cb8970; border-radius: 24px; color: #fff; text-align: center; background: radial-gradient(ellipse at top, #34348e, #111142 80%); box-shadow: 0 20px 70px #08082d40; animation: anniversary-welcome 7.2s ease both; }
-.anniversary-intro-close { position: absolute; top: 8px; right: 10px; z-index: 2; width: 40px; height: 40px; background: transparent; border: 0; color: #f5dda3; font-size: 27px; cursor: pointer; }
-.anniversary-intro-stage { height: 210px; perspective: 750px; position: relative; display: grid; place-items: center; }
-.anniversary-intro-medal { width: 170px; height: 170px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #171744; border: 5px solid #f8e4af; background: linear-gradient(135deg, #fff0c2, #c7a65c 55%, #f5dda3); box-shadow: 1px 1px #a9863e, 2px 2px #a9863e, 3px 3px #a9863e, 4px 4px #a9863e, 5px 5px #a9863e, 6px 6px #a9863e, 8px 12px 30px #0005; animation: anniversary-medal-spin 6.5s cubic-bezier(.2,.7,.3,1) both; }
-.anniversary-intro-medal strong { font-size: 88px; line-height: 1.1; }
-.anniversary-intro-medal > span { font-size: 9px; letter-spacing: 2px; font-weight: 700; }
-.anniversary-intro-orbit { position: absolute; inset: 10px 35px; transform-style: preserve-3d; animation: anniversary-orbit 6s linear both; }
-.anniversary-intro-orbit span { position: absolute; color: #51c4ff; font-size: 30px; }
-.anniversary-intro-orbit span:nth-child(1) { top: 0; left: 15px; transform: translateZ(50px); }
-.anniversary-intro-orbit span:nth-child(2) { right: 0; top: 95px; color: #f5dda3; transform: translateZ(-45px); }
-.anniversary-intro-orbit span:nth-child(3) { bottom: 0; left: 30px; color: #efa3bd; transform: translateZ(30px); }
-.anniversary-intro > p { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-.anniversary-intro-thanks { font-size: 12px; color: #deddf3; }
-@keyframes anniversary-welcome { 0% { opacity: 0; transform: translateY(25px) scale(.85); } 8%, 90% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(15px) scale(.95); } }
-@keyframes anniversary-medal-spin { 0% { transform: rotateY(-230deg) rotateX(20deg) scale(.6); } 35% { transform: rotateY(25deg) rotateX(-12deg) scale(1.05); } 60% { transform: rotateY(-15deg) rotateX(8deg) translateY(-8px); } 100% { transform: rotateY(0) rotateX(0); } }
-@keyframes anniversary-orbit { from { transform: rotateZ(-40deg) rotateY(-30deg); } to { transform: rotateZ(320deg) rotateY(30deg); } }
 @media (max-width: 700px) {
   .anniversary-confetti i:nth-child(n+19) { display: none; }
-  .anniversary-intro { width: 280px; max-width: calc(100vw - 32px); right: 16px; bottom: 92px; padding: 14px 16px 20px; }
-  .anniversary-intro-stage { height: 190px; }
   .anniversary-motion-control { bottom: 16px; left: 12px; min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .anniversary-intro, .anniversary-motion-control, .anniversary-confetti { display: none; }
+  .anniversary-motion-control, .anniversary-confetti { display: none; }
+}
+
+.anniversary-replay { position: fixed; bottom: 20px; left: 150px; z-index: 102; min-height: 38px; padding: 9px 13px; border: 1px solid #c7a65c80; border-radius: 24px; background: #fff8e7f5; color: #171d38; font-size: 11px; cursor: pointer; }
+.anniversary-replay:focus-visible { outline: 3px solid #51c4ff; outline-offset: 3px; }
+@media (max-width: 700px) { .anniversary-replay { bottom: 16px; left: 140px; min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .anniversary-replay { display: none; } }
+
+/* Scroll-driven city-to-office anniversary film. */
+.city-tour-dialog { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; color: #fff; background: #cedee8; overflow: hidden; }
+.city-tour-dialog::backdrop { background: #0c1430; }
+.city-tour-scroll { height: 100%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.city-tour-scroll::-webkit-scrollbar { display: none; }
+.city-tour-track { height: 480dvh; position: relative; }
+.city-tour-viewport { height: 100dvh; position: sticky; top: 0; overflow: hidden; isolation: isolate; }
+.city-scene-canvas, .city-scene-loading { position: absolute; inset: 0; }
+.city-scene-canvas canvas { display: block; width: 100%; height: 100%; }
+.city-scene-loading, .city-scene-fallback { display: flex; align-items: center; justify-content: center; flex-direction: column; height: 100%; padding: 24px; background: linear-gradient(145deg, #a9c9d6, #344c64); color: #fff; text-align: center; }
+.city-scene-fallback { position: absolute; inset: 0; }
+.city-scene-fallback strong { font-size: clamp(24px, 4vw, 48px); max-width: 600px; }
+.city-scene-fallback p { max-width: 480px; line-height: 1.8; margin-top: 20px; }
+.city-tour-vignette { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, #101e3155, transparent 25%, transparent 40%, #08172cb0 85%, #08172ee0); }
+.city-tour-header { position: absolute; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 24px 40px; gap: 16px; }
+.city-tour-brand { font-size: 30px; font-weight: 700; letter-spacing: -1px; display: flex; align-items: center; gap: 20px; }
+.city-tour-brand span { font-size: 9px; font-weight: 400; letter-spacing: 2px; border-left: 1px solid #ffffff55; padding-left: 20px; }
+.city-tour-header-actions { display: flex; align-items: center; gap: 18px; }
+.city-tour-header-actions button, .city-tour-navigation button { border: 0; background: transparent; color: #fff; font-size: 12px; cursor: pointer; min-height: 44px; padding: 0 10px; }
+.city-tour-header-actions .city-tour-close { width: 44px; height: 44px; border: 1px solid #ffffff50; border-radius: 50%; background: #14283a50; font-size: 28px; }
+.city-tour-location { position: absolute; right: 40px; top: 108px; font-size: 9px; letter-spacing: 1.7px; padding: 12px 16px; border-radius: 24px; color: #fff; background: #0c233e60; border: 1px solid #ffffff25; }
+.city-tour-location > span { color: #e8cb89; margin-right: 6px; }
+.city-tour-caption { position: absolute; bottom: 146px; left: 40px; max-width: 550px; }
+.city-tour-chapter { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #edd49d; margin-bottom: 14px; }
+.city-tour-caption h2 { font-size: clamp(28px, 4vw, 52px); font-weight: 500; letter-spacing: -1.5px; line-height: 1.12; margin-bottom: 18px; text-shadow: 0 2px 30px #10213d70; }
+.city-tour-caption > p:last-of-type { font-size: 14px; line-height: 1.8; max-width: 430px; color: #e1e8ed; }
+.city-tour-story { display: inline-flex; align-items: center; gap: 30px; margin-top: 16px; color: #edd49d; font-size: 13px; font-weight: 700; }
+.city-tour-note { position: absolute; right: 40px; bottom: 154px; font-size: 11px; color: #d3dde6; line-height: 1.8; text-align: right; }
+.city-tour-controls { position: absolute; bottom: 36px; left: 40px; right: 40px; display: flex; align-items: center; gap: 40px; padding-top: 20px; border-top: 1px solid #ffffff30; }
+.city-tour-progress { flex: 1; max-width: 480px; }
+.city-tour-progress label { display: flex; justify-content: space-between; font-size: 9px; color: #c2d1dc; letter-spacing: 1.5px; margin-bottom: 10px; }
+.city-tour-progress input { width: 100%; accent-color: #e8cb89; height: 20px; cursor: pointer; }
+.city-tour-navigation { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+.city-tour-navigation .city-tour-next { color: #14213c; background: #edd49d; padding: 12px 22px; border-radius: 8px; font-weight: 700; display: flex; gap: 28px; align-items: center; }
+.city-tour-scroll-hint { position: absolute; top: 50%; right: 40px; font-size: 8px; letter-spacing: 2px; writing-mode: vertical-rl; opacity: .85; }
+.city-tour-dialog button:focus-visible, .city-tour-dialog a:focus-visible, .city-tour-dialog input:focus-visible { outline: 3px solid #51c4ff; outline-offset: 4px; }
+.city-tour-scroll:focus-visible { outline: 2px solid #51c4ff; outline-offset: -2px; }
+@media (max-width: 700px) {
+  .city-tour-header { padding: 16px 18px; }
+  .city-tour-brand { font-size: 24px; gap: 10px; }
+  .city-tour-brand span { font-size: 7px; letter-spacing: 1px; padding-left: 10px; }
+  .city-tour-header-actions { gap: 4px; }
+  .city-tour-header-actions button { font-size: 10px; }
+  .city-tour-location { top: 86px; right: 18px; font-size: 7px; padding: 9px 12px; letter-spacing: 1px; }
+  .city-tour-caption { left: 24px; right: 24px; bottom: 166px; }
+  .city-tour-caption h2 { font-size: 30px; max-width: 340px; letter-spacing: -.8px; margin-bottom: 12px; }
+  .city-tour-caption > p:last-of-type { font-size: 12px; line-height: 1.65; max-width: 310px; }
+  .city-tour-chapter { font-size: 8px; margin-bottom: 10px; }
+  .city-tour-note, .city-tour-scroll-hint { display: none; }
+  .city-tour-controls { bottom: max(20px, env(safe-area-inset-bottom)); left: 24px; right: 24px; flex-wrap: wrap; gap: 10px; padding-top: 12px; }
+  .city-tour-progress { flex: auto; width: 100%; }
+  .city-tour-navigation { width: 100%; justify-content: space-between; }
+  .city-tour-navigation button { font-size: 11px; }
+  .city-tour-navigation .city-tour-next { padding: 11px 16px; }
 }
