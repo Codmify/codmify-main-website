@@ -5,9 +5,11 @@ import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 
 // A stylised Lagos-inspired world, rather than a claim about a real office address.
-export default function AnniversaryCityScene({ progress, paused }: { progress: MutableRefObject<number>; paused: boolean }) {
+export default function AnniversaryCityScene({ progress, paused, onReady }: { progress: MutableRefObject<number>; paused: boolean; onReady?: () => void }) {
   const host = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(paused);
+  const readyRef = useRef(onReady);
+  useEffect(() => { readyRef.current = onReady; }, [onReady]);
   const [unavailable, setUnavailable] = useState(false);
   useEffect(() => { pausedRef.current = paused; }, [paused]);
 
@@ -203,7 +205,7 @@ export default function AnniversaryCityScene({ progress, paused }: { progress: M
     const positions=[new THREE.Vector3(78,104,108),new THREE.Vector3(38,65,64),new THREE.Vector3(17,39,34),new THREE.Vector3(5,28.1,13.8)];
     const targets=[new THREE.Vector3(0,8,0),new THREE.Vector3(0,23,0),new THREE.Vector3(0,26,0),new THREE.Vector3(0,25.8,-1.2)];
     const path=new THREE.CatmullRomCurve3(positions),lookPath=new THREE.CatmullRomCurve3(targets);
-    let frame=0,last=0,time=0,smooth=0,visible=!document.hidden;
+    let frame=0,last=0,time=0,smooth=0,visible=!document.hidden,reportedReady=false;
     const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
     const resize=()=>{const w=container.clientWidth,h=container.clientHeight;if(!w||!h)return;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();};
     const observer=new ResizeObserver(resize);observer.observe(container);resize();
@@ -226,6 +228,7 @@ export default function AnniversaryCityScene({ progress, paused }: { progress: M
       balloons.forEach((balloon,i)=>{balloon.position.y=2.8+Math.sin(time+i)*.08;});
       confetti.forEach((piece,i)=>{piece.position.y=.2+((i*.2-time*.45)%3+3)%3;piece.rotation.set(time+i,time*.7,i);});
       renderer.render(scene,camera);
+      if (!reportedReady) { reportedReady = true; readyRef.current?.(); }
       frame=visible?requestAnimationFrame(render):0;
     };
     const visibility=()=>{visible=!document.hidden;if(visible&&!frame){last=performance.now();frame=requestAnimationFrame(render);}};
