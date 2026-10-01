@@ -74,7 +74,7 @@ export default function AnniversaryExperience({ onClose }: { onClose: () => void
       <div className="city-tour-vignette" aria-hidden="true" />
       <header className="city-tour-header"><div className="city-tour-brand"><Image src="/brand/logo-1.png" width={146} height={28} alt="Codmify" /><span>ANNIVERSARY / 02</span></div><div className="city-tour-header-actions"><button autoFocus onClick={revealWebsite} disabled={leaving}>Skip intro <span aria-hidden="true">↗</span></button></div></header>
       <div className="city-tour-location"><span aria-hidden="true">◉</span> {chapter < 3 ? "LAGOS-INSPIRED WORLD · NIGERIA" : "CODMIFY · THE ANNIVERSARY MULTIVERSE"}</div>
-      <div className="city-tour-caption" key={chapter}>
+      <div className={`city-tour-caption${chapter === 3 ? " city-universe-caption" : ""}`} key={chapter}>
         <p className="city-tour-chapter">{chapters[chapter].label}</p>
         <h2 id="city-tour-title">{chapters[chapter].title}</h2>
         <p id="city-tour-description">{chapters[chapter].text}</p>

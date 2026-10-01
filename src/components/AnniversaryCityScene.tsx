@@ -302,8 +302,51 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       const ring=new THREE.Mesh(new THREE.TorusGeometry(16+i*.8,.09,8,80),new THREE.MeshBasicMaterial({color:i%2?0xe8cb89:0x75b9ef,transparent:true,opacity:.55}));
       ring.position.set(Math.sin(i)*3,Math.cos(i)*2,20-i*18);universe.add(ring);portals.push(ring);
     }
-    sign("codmify", "A UNIVERSE OF POSSIBILITIES", 16, 6, 0, 6, -72, universe);
-    sign("2 YEARS", "BUILT TOGETHER. BEYOND BOUNDARIES.", 21, 7, 0, -2, -72, universe);
+    // Separate orbital elements resolve into one typographic anniversary monument.
+    const statement = (text:string, width:number, height:number, color:string, logo=false) => {
+      const canvas=document.createElement("canvas");canvas.width=1536;canvas.height=256;
+      const ctx=canvas.getContext("2d")!;
+      ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";
+      ctx.font=`${text.length>25?44:text.length>12?62:120}px sans-serif`;
+      ctx.fillText(text,768,128);
+      const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;textures.push(texture);
+      if(logo){
+        const image=new window.Image();logoImages.push(image);
+        image.onload=()=>{
+          if(disposed)return;
+          ctx.clearRect(0,0,1536,256);
+          const width=1000,height=width*image.height/image.width;
+          ctx.drawImage(image,(1536-width)/2,(256-height)/2,width,height);texture.needsUpdate=true;
+        };
+        image.src="/brand/logo-1.png";
+      }
+      return new THREE.Mesh(new THREE.PlaneGeometry(width,height),new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,side:THREE.DoubleSide}));
+    };
+    const twoShape=new THREE.Shape();
+    twoShape.moveTo(-3,2);
+    twoShape.bezierCurveTo(-3,5.7,3.2,5.7,3.2,2.5);
+    twoShape.bezierCurveTo(3.2,.6,1.5,-.3,.2,-1.3);
+    twoShape.lineTo(-1.2,-2.7);twoShape.lineTo(3.1,-2.7);twoShape.lineTo(3.1,-4.1);
+    twoShape.lineTo(-3.1,-4.1);twoShape.lineTo(-3.1,-2.8);
+    twoShape.lineTo(-.7,-.5);twoShape.bezierCurveTo(.8,.8,1.7,1.5,1.7,2.5);
+    twoShape.bezierCurveTo(1.7,4.2,-1.5,4.2,-1.5,2);twoShape.closePath();
+    const sculptedTwo=new THREE.Mesh(new THREE.ExtrudeGeometry(twoShape,{depth:.65,bevelEnabled:true,bevelThickness:.14,bevelSize:.12,bevelSegments:4,steps:1,curveSegments:24}),new THREE.MeshStandardMaterial({color:0xe8cb89,metalness:.7,roughness:.25,emissive:0x665024,emissiveIntensity:.25}));
+    const assembly=[
+      {mesh:sculptedTwo,target:new THREE.Vector3(0,.1,-72),radius:27,phase:.4,start:.08,end:.7},
+      {mesh:statement("codmify",14,2.5,"#ffffff",true),target:new THREE.Vector3(0,9.5,-72),radius:33,phase:2.4,start:.12,end:.77},
+      {mesh:statement("CELEBRATING",13,1.5,"#e8cb89"),target:new THREE.Vector3(0,6.6,-72),radius:24,phase:4.2,start:.2,end:.82},
+      {mesh:statement("Y E A R S",10,1.8,"#ffffff"),target:new THREE.Vector3(0,-5.7,-72),radius:31,phase:3.2,start:.16,end:.78},
+      {mesh:statement("TOGETHER, WE BUILD WHAT’S NEXT.",24,1.4,"#e8cb89"),target:new THREE.Vector3(0,-8.2,-72),radius:37,phase:5.3,start:.28,end:.86},
+      {mesh:statement("Made possible by our people, clients and partners.",24,1.2,"#b8c9e7"),target:new THREE.Vector3(0,-10.1,-72),radius:30,phase:1.7,start:.34,end:.9},
+    ];
+    const assemblyOrbits:THREE.Mesh[]=[];
+    assembly.forEach((element,i)=>{
+      universe.add(element.mesh);
+      const orbit=new THREE.Mesh(new THREE.TorusGeometry(element.radius,.025,6,100),new THREE.MeshBasicMaterial({color:i%2?0xe8cb89:0x75b9ef,transparent:true,opacity:.18}));
+      orbit.position.set(0,0,-72);orbit.rotation.set(i*.35,i*.22,i*.65);universe.add(orbit);assemblyOrbits.push(orbit);
+    });
+    const goldLight=new THREE.DirectionalLight(0xffe3ab,3);goldLight.position.set(-10,15,-25);universe.add(goldLight);
+
     const worlds:THREE.Group[]=[];
     for(let i=0;i<6;i++){
       const world=new THREE.Group();
@@ -384,7 +427,19 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
         const travel=Math.max(0,Math.min(1,(smooth-.6)/.4));
         cosmicCamera.aspect=camera.aspect;cosmicCamera.fov=camera.aspect<.8?70:52;cosmicCamera.updateProjectionMatrix();
         cosmicCamera.position.set(Math.sin(travel*Math.PI)*2,Math.sin(travel*Math.PI)*3,48-travel*87);
-        cosmicCamera.lookAt(0,1,-72);
+        cosmicCamera.lookAt(0,0,-72);
+        const layoutScale=Math.min(1,camera.aspect/.62);
+        assembly.forEach((element,i)=>{
+          const converge=THREE.MathUtils.smoothstep(travel,element.start,element.end);
+          const angle=element.phase+travel*Math.PI*1.7;
+          const orbitPosition=new THREE.Vector3(Math.cos(angle)*element.radius,Math.sin(angle)*element.radius*.65,-72+Math.sin(angle+i)*14);
+          const destination=element.target.clone();destination.x*=layoutScale;destination.y*=layoutScale;
+          element.mesh.position.copy(orbitPosition.lerp(destination,converge));
+          element.mesh.rotation.set((1-converge)*Math.sin(angle)*.5,(1-converge)*Math.cos(angle)*.7,(1-converge)*Math.sin(angle+i)*.25);
+          element.mesh.scale.setScalar((.6+.4*converge)*layoutScale);
+          assemblyOrbits[i].rotation.z=element.phase+travel*1.4;
+          (assemblyOrbits[i].material as THREE.MeshBasicMaterial).opacity=.18*(1-converge)+.035;
+        });
         portals.forEach((ring,i)=>{ring.rotation.z=time*.09+i*.3;ring.rotation.y=Math.sin(time*.2+i)*.08;});
         worlds.forEach((world,i)=>{world.rotation.y=time*.15;world.rotation.z=Math.sin(time*.2+i)*.1;});
         renderer.render(universe,cosmicCamera);
