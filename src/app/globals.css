@@ -359,3 +359,8 @@ body[data-anniversary-reveal="true"] nav { animation: city-navigation-arrival 1.
 @media (prefers-reduced-motion: reduce) {
   .city-film, .city-film-leaving .city-tour-viewport, .city-film .city-tour-caption, body[data-anniversary-reveal="true"] main, body[data-anniversary-reveal="true"] nav { animation: none; transition: none; }
 }
+
+/* Visitor-controlled city → office → multiverse → website journey. */
+.city-film .city-tour-track { height: 680dvh; }
+.city-film .city-tour-viewport { position: sticky; top: 0; }
+.city-scene-canvas::after { content: ""; position: absolute; inset: 0; background: #090e27; opacity: var(--portal-darkness, 0); pointer-events: none; }

@@ -290,6 +290,35 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       scene.add(new THREE.Mesh(merged, mat));
     });
 
+    // A second world: luminous portals, orbiting planets and a branded milestone.
+    const universe = new THREE.Scene();
+    universe.background = new THREE.Color(0x090e27);
+    universe.fog = new THREE.Fog(0x090e27, 100, 240);
+    universe.add(new THREE.HemisphereLight(0x829ee8,0x191630,2));
+    const cosmicLight = new THREE.PointLight(0x68c9ff,180,140,1.5);
+    cosmicLight.position.set(0,10,-40);universe.add(cosmicLight);
+    const portals:THREE.Mesh[]=[];
+    for(let i=0;i<9;i++){
+      const ring=new THREE.Mesh(new THREE.TorusGeometry(16+i*.8,.09,8,80),new THREE.MeshBasicMaterial({color:i%2?0xe8cb89:0x75b9ef,transparent:true,opacity:.55}));
+      ring.position.set(Math.sin(i)*3,Math.cos(i)*2,20-i*18);universe.add(ring);portals.push(ring);
+    }
+    sign("codmify", "A UNIVERSE OF POSSIBILITIES", 16, 6, 0, 6, -72, universe);
+    sign("2 YEARS", "BUILT TOGETHER. BEYOND BOUNDARIES.", 21, 7, 0, -2, -72, universe);
+    const worlds:THREE.Group[]=[];
+    for(let i=0;i<6;i++){
+      const world=new THREE.Group();
+      sphere(world,2+i%3,0,0,0,[0x5985b4,0xad83ac,0xc4a466][i%3]);
+      const orbit=new THREE.Mesh(new THREE.TorusGeometry(4+i%3,.04,6,48),new THREE.MeshBasicMaterial({color:0xe8cb89,transparent:true,opacity:.45}));
+      orbit.rotation.x=1;world.add(orbit);
+      world.position.set((i%2?1:-1)*(17+i*2),Math.sin(i*3)*12,-20-i*20);
+      universe.add(world);worlds.push(world);
+    }
+    const galaxyPositions=new Float32Array(600*3);
+    for(let i=0;i<600;i++){galaxyPositions[i*3]=Math.sin(i*23)*95;galaxyPositions[i*3+1]=Math.cos(i*17)*65;galaxyPositions[i*3+2]=30-(i%180);}
+    const galaxyGeometry=new THREE.BufferGeometry();galaxyGeometry.setAttribute("position",new THREE.BufferAttribute(galaxyPositions,3));
+    universe.add(new THREE.Points(galaxyGeometry,new THREE.PointsMaterial({color:0xb8c9ff,size:.16,transparent:true,opacity:.85})));
+    const cosmicCamera=new THREE.PerspectiveCamera(52,1,.1,350);
+
     const positions=[new THREE.Vector3(78,104,108),new THREE.Vector3(38,65,64),new THREE.Vector3(17,39,34),new THREE.Vector3(5,28.1,13.8)];
     const targets=[new THREE.Vector3(0,8,0),new THREE.Vector3(0,23,0),new THREE.Vector3(0,26,0),new THREE.Vector3(0,25.8,-1.2)];
     const path=new THREE.CatmullRomCurve3(positions),lookPath=new THREE.CatmullRomCurve3(targets);
@@ -301,7 +330,10 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       const delta=Math.min((now-last)/1000,.05);last=now;
       if(!pausedRef.current&&!reduced.matches)time+=delta;
       smooth=reduced.matches?progress.current:THREE.MathUtils.damp(smooth,progress.current,5,delta);
-      camera.position.copy(path.getPoint(smooth));camera.lookAt(lookPath.getPoint(smooth));
+      camera.position.copy(path.getPoint(Math.min(1,smooth/.57)));camera.lookAt(lookPath.getPoint(Math.min(1,smooth/.57)));
+      // A brief dark portal passage joins the two worlds without a hard visible cut.
+      const passage=Math.max(0,1-Math.abs(smooth-.6)/.065);
+      container.style.setProperty("--portal-darkness", String(passage));
       // Widen the lens for portrait screens so the office stays in view.
       camera.fov=camera.aspect<.8?65:48;camera.updateProjectionMatrix();
       glassMaterial.opacity=.14*(1-THREE.MathUtils.smoothstep(smooth,.55,.85));
@@ -347,7 +379,16 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       });
       balloons.forEach((balloon,i)=>{balloon.position.y=2.8+Math.sin(time+i)*.08;});
       confetti.forEach((piece,i)=>{piece.position.y=.2+((i*.2-time*.45)%3+3)%3;piece.rotation.set(time+i,time*.7,i);});
-      renderer.render(scene,camera);
+      if(smooth<.6) renderer.render(scene,camera);
+      else {
+        const travel=Math.max(0,Math.min(1,(smooth-.6)/.4));
+        cosmicCamera.aspect=camera.aspect;cosmicCamera.fov=camera.aspect<.8?70:52;cosmicCamera.updateProjectionMatrix();
+        cosmicCamera.position.set(Math.sin(travel*Math.PI)*2,Math.sin(travel*Math.PI)*3,48-travel*87);
+        cosmicCamera.lookAt(0,1,-72);
+        portals.forEach((ring,i)=>{ring.rotation.z=time*.09+i*.3;ring.rotation.y=Math.sin(time*.2+i)*.08;});
+        worlds.forEach((world,i)=>{world.rotation.y=time*.15;world.rotation.z=Math.sin(time*.2+i)*.1;});
+        renderer.render(universe,cosmicCamera);
+      }
       if (!reportedReady) { reportedReady = true; readyRef.current?.(); }
       frame=visible?requestAnimationFrame(render):0;
     };
@@ -360,7 +401,8 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       disposed = true; logoImages.forEach(image => { image.onload = null; }); clearInterval(skyTimer);
       cancelAnimationFrame(frame);observer.disconnect();document.removeEventListener("visibilitychange",visibility);renderer.domElement.removeEventListener("webglcontextlost",lost);
       const geometries=new Set<THREE.BufferGeometry>(),allMaterials=new Set<THREE.Material>();
-      scene.traverse(object=>{if(object instanceof THREE.Mesh || object instanceof THREE.Points){geometries.add(object.geometry);(Array.isArray(object.material)?object.material:[object.material]).forEach(m=>allMaterials.add(m));}});
+      const disposeObject=(object:THREE.Object3D)=>{if(object instanceof THREE.Mesh || object instanceof THREE.Points){geometries.add(object.geometry);(Array.isArray(object.material)?object.material:[object.material]).forEach(m=>allMaterials.add(m));}};
+      scene.traverse(disposeObject);universe.traverse(disposeObject);
       geometries.forEach(g=>g.dispose());allMaterials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());renderer.dispose();renderer.domElement.remove();
     };
   },[progress]);

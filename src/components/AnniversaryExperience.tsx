@@ -9,11 +9,13 @@ const chapters = [
   { label: "LAGOS / A WORLD OF POSSIBILITY", title: "Every big idea starts somewhere.", text: "A city full of energy. A team with a shared ambition." },
   { label: "CODMIFY / OUR NEXT CHAPTER", title: "Come a little closer.", text: "Two years of bringing ideas to life, together." },
   { label: "TWO YEARS / MADE POSSIBLE BY YOU", title: "Welcome to our celebration.", text: "To our clients, team and partners: thank you. Here’s to everything we’ll build next." },
+  { label: "ANOTHER DIMENSION / INFINITE POSSIBILITIES", title: "Two years. A universe of possibilities.", text: "Beyond one city. Beyond one idea. Scroll through our next dimension—and into what comes next." },
 ];
 
 export default function AnniversaryExperience({ onClose }: { onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const progress = useRef(0);
+  const scroller = useRef<HTMLDivElement>(null);
   const close = useRef(onClose);
   const exiting = useRef(false);
   const exitTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -52,39 +54,35 @@ export default function AnniversaryExperience({ onClose }: { onClose: () => void
       const timeout = setTimeout(revealWebsite, 8000);
       return () => clearTimeout(timeout);
     }
-    let frame = 0, previous = performance.now(), elapsed = 0;
-    let currentChapter = 0;
-    const animate = (now: number) => {
-      if (exiting.current) return;
-      if (!document.hidden) elapsed += Math.min(now - previous, 80);
-      previous = now;
-      // A continuous flight, followed by a short moment in the office.
-      const fraction = Math.min(1, elapsed / 11000);
-      progress.current = fraction * fraction * (3 - 2 * fraction);
-      const nextChapter = fraction < .38 ? 0 : fraction < .76 ? 1 : 2;
-      if (nextChapter !== currentChapter) { currentChapter = nextChapter; setChapter(nextChapter); }
-      if (elapsed >= 13500) revealWebsite();
-      else frame = requestAnimationFrame(animate);
-    };
-    frame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frame);
+    // Once ready, only visitor scrolling advances the camera.
   }, [ready, revealWebsite]);
 
   const sceneReady = useCallback(() => setReady(true), []);
 
   return <dialog ref={dialog} className={`city-tour-dialog city-film${leaving ? " city-film-leaving" : ""}`} aria-labelledby="city-tour-title" aria-describedby="city-tour-description" onCancel={event => { event.preventDefault(); revealWebsite(); }}>
+    <div ref={scroller} className="city-tour-scroll" style={{ overflowY: ready ? "auto" : "hidden" }} tabIndex={0} aria-label="Scroll through the city, office celebration and anniversary universe" onScroll={event => {
+      if (!ready || exiting.current) return;
+      const element = event.currentTarget;
+      const value = Math.max(0, Math.min(1, element.scrollTop / Math.max(1, element.scrollHeight - element.clientHeight)));
+      progress.current = value;
+      setChapter(value < .2 ? 0 : value < .4 ? 1 : value < .6 ? 2 : 3);
+      if (value >= .998) revealWebsite();
+    }}>
+    <div className="city-tour-track">
     <div className="city-tour-viewport">
       <CityScene progress={progress} paused={false} onReady={sceneReady} />
       <div className="city-tour-vignette" aria-hidden="true" />
       <header className="city-tour-header"><div className="city-tour-brand"><Image src="/brand/logo-1.png" width={146} height={28} alt="Codmify" /><span>ANNIVERSARY / 02</span></div><div className="city-tour-header-actions"><button autoFocus onClick={revealWebsite} disabled={leaving}>Skip intro <span aria-hidden="true">↗</span></button></div></header>
-      <div className="city-tour-location"><span aria-hidden="true">◉</span> LAGOS-INSPIRED WORLD · NIGERIA</div>
+      <div className="city-tour-location"><span aria-hidden="true">◉</span> {chapter < 3 ? "LAGOS-INSPIRED WORLD · NIGERIA" : "CODMIFY · THE ANNIVERSARY MULTIVERSE"}</div>
       <div className="city-tour-caption" key={chapter}>
         <p className="city-tour-chapter">{chapters[chapter].label}</p>
         <h2 id="city-tour-title">{chapters[chapter].title}</h2>
         <p id="city-tour-description">{chapters[chapter].text}</p>
       </div>
       <aside className="city-tour-note">An imagined office.<br />A very real celebration.</aside>
-      <footer className="city-film-footer"><span>OCTOBER 2026 · TWO YEARS TOGETHER</span><span>{leaving ? "Welcome to Codmify" : "Your next chapter is just ahead"} <span aria-hidden="true">✦</span></span></footer>
+      <footer className="city-film-footer"><span>OCTOBER 2026 · TWO YEARS TOGETHER</span><span>{leaving ? "Welcome to Codmify" : "SCROLL TO CONTINUE ↓"} <span aria-hidden="true">✦</span></span></footer>
+    </div>
+    </div>
     </div>
   </dialog>;
 }
