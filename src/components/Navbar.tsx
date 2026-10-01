@@ -1,4 +1,5 @@
 "use client";
+import { AnniversaryBanner, AnniversaryBadge } from "./Anniversary";
 import { MenuIcon } from "@/lib/icons";
 import { navLinks } from "@/utils/nav-menus";
 import {
@@ -54,6 +55,7 @@ export default function Navbar() {
           transform: isVisible ? "translateY(0)" : "translateY(-150%)",
           transition: "transform 0.3s ease-in-out"
         }}>
+      <AnniversaryBanner />
       <Container
         sx={{
           bgcolor: "white",
@@ -69,13 +71,14 @@ export default function Navbar() {
             justifyContent: "space-between",
             gap: 2
           }}>
-          <Link href={"/"}>
+          <Link href={"/"} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
             <Image
               alt="codmify-brand"
               src="/brand/logo-2.png"
               width={146}
               height={28}
             />
+            <AnniversaryBadge />
           </Link>
           <Stack
             direction={{ md: "row" }}

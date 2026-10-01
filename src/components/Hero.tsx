@@ -5,11 +5,13 @@ import { motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
+import { useAnniversary } from "./Anniversary";
 import HeroGlow from "./HeroGlow";
 
 const HeroScene3D = dynamic(() => import("./HeroScene3D"), { ssr: false });
 
 const Hero = () => {
+  const anniversary = useAnniversary();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const shouldReduceMotion = useReducedMotion();
@@ -37,11 +39,12 @@ const Hero = () => {
         </Box>
         <Stack component={motion.div} sx={styles.stackWrap} initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: shouldReduceMotion ? 0 : 0.7, delay: shouldReduceMotion ? 0 : 0.1, ease: [0.22, 1, 0.36, 1] }}>
           <Box>
+            {anniversary && <p className="anniversary-hero-label">✦ CELEBRATING 2 YEARS OF CODMIFY ✦</p>}
             <Typography sx={styles.title}>
-              Get a Website That Works as Hard as You Do
+              {anniversary ? "Two years of ideas brought to life." : "Get a Website That Works as Hard as You Do"}
             </Typography>
             <Typography sx={styles.desc}>
-              Mobile-ready, WhatsApp-integrated, and built to be found on Google, delivered by a team that ships in days, not months.
+              {anniversary ? "Celebrating the clients, people and partnerships behind our journey—and everything we’ll build next." : "Mobile-ready, WhatsApp-integrated, and built to be found on Google, delivered by a team that ships in days, not months."}
             </Typography>
           </Box>
           <Box sx={styles.btnWrap}>
@@ -50,6 +53,7 @@ const Hero = () => {
                 Start Your Website
               </Button>
             </Link>
+            {anniversary && <Link className="anniversary-hero-link" href="/about-us#our-journey">Our journey ↗</Link>}
           </Box>
         </Stack>
         <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.4 }}>

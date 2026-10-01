@@ -1,5 +1,6 @@
 "use client";
 
+import { AnniversaryFooter } from "./Anniversary";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { aboutUsMenu, socials } from "@/utils/nav-menus";
 import Link from "next/link";
@@ -20,6 +21,7 @@ export default function Footer() {
           px: { xs: 2, md: 4 },
         }}
       >
+        <AnniversaryFooter />
         <Stack
           direction={{ sm: "row" }}
           sx={{
