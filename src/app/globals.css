@@ -151,3 +151,143 @@ li .active {
     transform: translateY(-10px);
   }
 }
+
+/* October anniversary styling is scoped to the scheduled campaign. */
+.anniversary-banner {
+  min-height: 40px;
+  padding: 9px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #e8cb89;
+  color: #16164d;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.anniversary-banner a { font-weight: 700; white-space: nowrap; }
+.anniversary-badge {
+  display: inline-flex;
+  gap: 5px;
+  padding: 5px 7px;
+  border: 1px solid #d8b767;
+  border-radius: 6px;
+  background: #fff8e7;
+  color: #655019;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .7px;
+  white-space: nowrap;
+}
+.anniversary-active main h2 { text-decoration-color: #e8cb89; }
+.anniversary-active .MuiButton-contained { box-shadow: 0 4px 16px #d8b76728; }
+.anniversary-hero-label {
+  width: fit-content;
+  margin: 0 auto 22px;
+  padding: 9px 14px;
+  color: #f5dda3;
+  border: 1px solid #e8cb8955;
+  border-radius: 30px;
+  background: #10105c80;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+.anniversary-active main > div:first-child { border-bottom: 2px solid #e8cb8960; }
+.anniversary-active .anniversary-hero-link { color: #f5dda3; font-size: 15px; font-weight: 700; margin-left: 24px; }
+.anniversary-story {
+  background: radial-gradient(ellipse at 10% 50%, #e8cb8920, transparent 55%), #fffdf8;
+  padding: 80px 24px;
+  scroll-margin-top: 170px;
+  border-bottom: 1px solid #e8cb8945;
+}
+.anniversary-story-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  align-items: center;
+  gap: 80px;
+}
+.anniversary-emblem {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid #c7a65c;
+  outline: 1px solid #e8cb8950;
+  outline-offset: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #f5dda3;
+  background: radial-gradient(circle at 30% 20%, #303095, #111150 75%);
+  box-shadow: 0 20px 60px #12127918;
+}
+.anniversary-emblem-top, .anniversary-emblem-bottom { font-size: 10px; letter-spacing: 2px; }
+.anniversary-emblem strong { font-size: 150px; line-height: 1.2; position: relative; font-weight: 700; }
+.anniversary-emblem strong span { position: absolute; font-size: 36px; top: 28px; right: -40px; color: #51c4ff; }
+.anniversary-eyebrow { color: #7b6124; font-size: 11px; font-weight: 700; letter-spacing: 1.8px; margin-bottom: 16px; }
+.anniversary-story-copy h2 { color: #121279; font-size: clamp(30px, 4vw, 46px); line-height: 1.15; margin-bottom: 24px; }
+.anniversary-story-copy > p:not(.anniversary-eyebrow) { color: #526573; font-size: 16px; line-height: 1.85; margin-bottom: 14px; }
+.anniversary-story-links { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 26px; }
+.anniversary-story-links a { color: #121279; font-weight: 700; font-size: 14px; border-bottom: 1px solid #c7a65c; padding-bottom: 6px; }
+.anniversary-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; color: #f5dda3; border-bottom: 1px solid #e8cb8950; padding-bottom: 24px; margin-bottom: 32px; }
+.anniversary-footer span:nth-child(2) { font-size: 20px; font-weight: 700; }
+.anniversary-footer span:last-child { margin-left: auto; color: #ffffffbb; font-size: 13px; }
+.anniversary-confetti { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+.anniversary-confetti i { position: absolute; top: -20px; width: 6px; height: 12px; opacity: 0; animation: anniversary-confetti-fall 3.5s ease-out 1 both; }
+@keyframes anniversary-confetti-fall { 0% { opacity: 0; translate: 0 -20px; } 10% { opacity: .8; } 75% { opacity: .6; } 100% { opacity: 0; translate: 50px 650px; rotate: 260deg; } }
+@media (max-width: 700px) {
+  .anniversary-banner { min-height: 48px; padding: 8px 12px; gap: 8px; font-size: 11px; }
+  .anniversary-banner-extra { display: none; }
+  .anniversary-badge { font-size: 8px; padding: 4px 5px; }
+  .anniversary-story { padding: 56px 24px; }
+  .anniversary-story-inner { grid-template-columns: 1fr; gap: 40px; }
+  .anniversary-emblem { width: 230px; margin: auto; }
+  .anniversary-emblem strong { font-size: 105px; }
+  .anniversary-emblem-top, .anniversary-emblem-bottom { font-size: 8px; letter-spacing: 1.2px; }
+  .anniversary-hero-label { font-size: 9px; letter-spacing: 1px; }
+  .anniversary-footer span:last-child { margin-left: 0; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .anniversary-confetti { display: none; }
+}
+
+/* Lightweight, continuous viewport confetti with a daily 3D welcome. */
+.anniversary-confetti { position: fixed; z-index: 101; contain: strict; }
+.anniversary-confetti i { top: -24px; width: 7px; height: 13px; opacity: .65; animation: anniversary-confetti-drift 16s linear infinite; will-change: transform; }
+@keyframes anniversary-confetti-drift {
+  0% { transform: translate3d(-20px, -30px, 0) rotateX(0) rotateZ(0); opacity: 0; }
+  8% { opacity: .65; }
+  35% { transform: translate3d(35px, 35vh, 0) rotateX(180deg) rotateZ(130deg); }
+  65% { transform: translate3d(-30px, 70vh, 0) rotateX(340deg) rotateZ(280deg); opacity: .6; }
+  100% { transform: translate3d(25px, 110vh, 0) rotateX(540deg) rotateZ(430deg); opacity: 0; }
+}
+.anniversary-motion-paused i { animation-play-state: paused; }
+.anniversary-motion-control { position: fixed; bottom: 20px; left: 20px; z-index: 102; display: flex; align-items: center; gap: 8px; border: 1px solid #c7a65c80; border-radius: 24px; padding: 9px 13px; color: #f5dda3; background: #16164df0; cursor: pointer; font-size: 12px; box-shadow: 0 4px 15px #12127920; }
+.anniversary-motion-control:focus-visible, .anniversary-intro-close:focus-visible { outline: 3px solid #51c4ff; outline-offset: 3px; }
+.anniversary-intro { position: fixed; right: 26px; bottom: 96px; z-index: 103; width: 320px; padding: 22px 20px 25px; border: 1px solid #e8cb8970; border-radius: 24px; color: #fff; text-align: center; background: radial-gradient(ellipse at top, #34348e, #111142 80%); box-shadow: 0 20px 70px #08082d40; animation: anniversary-welcome 7.2s ease both; }
+.anniversary-intro-close { position: absolute; top: 8px; right: 10px; z-index: 2; width: 40px; height: 40px; background: transparent; border: 0; color: #f5dda3; font-size: 27px; cursor: pointer; }
+.anniversary-intro-stage { height: 210px; perspective: 750px; position: relative; display: grid; place-items: center; }
+.anniversary-intro-medal { width: 170px; height: 170px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #171744; border: 5px solid #f8e4af; background: linear-gradient(135deg, #fff0c2, #c7a65c 55%, #f5dda3); box-shadow: 1px 1px #a9863e, 2px 2px #a9863e, 3px 3px #a9863e, 4px 4px #a9863e, 5px 5px #a9863e, 6px 6px #a9863e, 8px 12px 30px #0005; animation: anniversary-medal-spin 6.5s cubic-bezier(.2,.7,.3,1) both; }
+.anniversary-intro-medal strong { font-size: 88px; line-height: 1.1; }
+.anniversary-intro-medal > span { font-size: 9px; letter-spacing: 2px; font-weight: 700; }
+.anniversary-intro-orbit { position: absolute; inset: 10px 35px; transform-style: preserve-3d; animation: anniversary-orbit 6s linear both; }
+.anniversary-intro-orbit span { position: absolute; color: #51c4ff; font-size: 30px; }
+.anniversary-intro-orbit span:nth-child(1) { top: 0; left: 15px; transform: translateZ(50px); }
+.anniversary-intro-orbit span:nth-child(2) { right: 0; top: 95px; color: #f5dda3; transform: translateZ(-45px); }
+.anniversary-intro-orbit span:nth-child(3) { bottom: 0; left: 30px; color: #efa3bd; transform: translateZ(30px); }
+.anniversary-intro > p { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.anniversary-intro-thanks { font-size: 12px; color: #deddf3; }
+@keyframes anniversary-welcome { 0% { opacity: 0; transform: translateY(25px) scale(.85); } 8%, 90% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(15px) scale(.95); } }
+@keyframes anniversary-medal-spin { 0% { transform: rotateY(-230deg) rotateX(20deg) scale(.6); } 35% { transform: rotateY(25deg) rotateX(-12deg) scale(1.05); } 60% { transform: rotateY(-15deg) rotateX(8deg) translateY(-8px); } 100% { transform: rotateY(0) rotateX(0); } }
+@keyframes anniversary-orbit { from { transform: rotateZ(-40deg) rotateY(-30deg); } to { transform: rotateZ(320deg) rotateY(30deg); } }
+@media (max-width: 700px) {
+  .anniversary-confetti i:nth-child(n+19) { display: none; }
+  .anniversary-intro { width: 280px; max-width: calc(100vw - 32px); right: 16px; bottom: 92px; padding: 14px 16px 20px; }
+  .anniversary-intro-stage { height: 190px; }
+  .anniversary-motion-control { bottom: 16px; left: 12px; min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .anniversary-intro, .anniversary-motion-control, .anniversary-confetti { display: none; }
+}

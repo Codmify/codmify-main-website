@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { AnniversaryProvider, AnniversaryEffects } from "@/components/Anniversary";
 import AlphaWrapper from "@/wrappers/Alpha";
 
 export const metadata: Metadata = {
@@ -58,7 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <AlphaWrapper>{children}</AlphaWrapper>
+        <AnniversaryProvider><AlphaWrapper>{children}</AlphaWrapper><AnniversaryEffects /></AnniversaryProvider>
       </body>
     </html>
   );

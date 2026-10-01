@@ -1,3 +1,4 @@
+import { AnniversaryStory } from "@/components/Anniversary";
 import FAQ from "@/components/FAQ";
 import OurTeam from "@/components/our-team";
 import LandingPage from "@/wrappers/LandingPage";
@@ -41,6 +42,7 @@ export default function AboutUs() {
           maxWidth: 650
         }}>A thoughtful mix of strategy, design and technology—made practical for ambitious teams.</Typography></Stack></Container></Box>
       <Content />
+      <AnniversaryStory />
       <OurTeam />
       <FAQ />
     </LandingPage>
