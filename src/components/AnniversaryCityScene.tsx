@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type MutableRefObject } from "react";
 import * as THREE from "three";
+import { cityTime } from "@/lib/city-time";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 
 // A stylised Lagos-inspired world, rather than a claim about a real office address.
@@ -28,7 +29,8 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
     const scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0xcedee8, 130, 300);
     const camera = new THREE.PerspectiveCamera(48, 1, .1, 500);
-    scene.add(new THREE.HemisphereLight(0xe7f1ff, 0x837859, 2.4));
+    const ambient = new THREE.HemisphereLight(0xe7f1ff, 0x837859, 2.4);
+    scene.add(ambient);
     const sun = new THREE.DirectionalLight(0xffe0a6, 3.5);
     sun.position.set(-45, 85, 40);
     scene.add(sun);
@@ -54,6 +56,8 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       const mesh = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 8), material(color));
       mesh.position.set(x, y, z); parent.add(mesh); return mesh;
     };
+    let disposed = false;
+    const logoImages: HTMLImageElement[] = [];
     const textures: THREE.Texture[] = [];
     const sign = (text: string, subtitle: string, width: number, height: number, x: number, y: number, z: number, parent: THREE.Object3D = scene) => {
       const canvas = document.createElement("canvas"); canvas.width = 1024; canvas.height = 384;
@@ -63,6 +67,18 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.font = "bold 125px sans-serif"; ctx.fillText(text, 512, 180);
       ctx.fillStyle = "#e8cb89"; ctx.font = "36px sans-serif"; ctx.fillText(subtitle, 512, 275);
       const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace; textures.push(texture);
+      if (text === "codmify") {
+        const image = new window.Image();
+        logoImages.push(image);
+        image.onload = () => {
+          if (disposed) return;
+          ctx.fillStyle = "#121279"; ctx.fillRect(24, 24, 976, 190);
+          const logoWidth = 760, logoHeight = logoWidth * image.height / image.width;
+          ctx.drawImage(image, (1024 - logoWidth) / 2, 110 - logoHeight / 2, logoWidth, logoHeight);
+          texture.needsUpdate = true;
+        };
+        image.src = "/brand/logo-1.png";
+      }
       const mesh = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide }));
       mesh.position.set(x, y, z); parent.add(mesh); return mesh;
     };
@@ -80,7 +96,9 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
         box(scene, .14, .03, 2, i * 20 + 10, .09, j * 10, 0xefe2b8);
       }
     }
-    const buildingColors = [0xd9d0bc, 0xb3bec0, 0xe2bea5, 0x8a9caa, 0xcbd1c9];
+    const buildingColors = [0xdeb18b, 0x8db9ad, 0xd18b79, 0x98abc9, 0xe8ca7c, 0xb2a4c9, 0xe1d8c0, 0x77a1ac, 0xc89dba, 0x9aaf77, 0xcfb69c, 0x82a1ba];
+    const windowMaterial = material(0x647f90);
+    windowMaterial.emissive.setHex(0xffc976);
     for (let x = -4; x <= 4; x++) for (let z = -4; z <= 4; z++) {
       if (Math.abs(x) <= 1 && Math.abs(z) <= 1) continue;
       const seed = Math.abs(x * 37 + z * 83 + x * z * 19);
@@ -114,6 +132,76 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       for(const a of [-.9,.9])for(const b of [-1,1])sphere(car,.28,a,.4,b,0x222831);
       scene.add(car); cars.push({group:car,lane:i%2 ? 10 : -30,speed:3+i*.4,offset:i*19});
     }
+
+    // Instanced walkers animate on pavements, safely away from traffic lanes.
+    const pedestrianCount = window.innerWidth < 700 ? 24 : 40;
+    const walkers = {
+      bodies: new THREE.InstancedMesh(new THREE.BoxGeometry(.38,.55,.23),material(0xffffff),pedestrianCount),
+      heads: new THREE.InstancedMesh(new THREE.SphereGeometry(.16,8,6),material(0xffffff),pedestrianCount),
+      legs: new THREE.InstancedMesh(new THREE.BoxGeometry(.12,.5,.14),material(0x26354a),pedestrianCount*2),
+      arms: new THREE.InstancedMesh(new THREE.BoxGeometry(.1,.42,.13),material(0xffffff),pedestrianCount*2),
+    };
+    const streetOutfits=[0x547ea8,0xeac17e,0xb5776c,0x69a28c,0xbda3ce,0xf0e6d4];
+    Object.values(walkers).forEach(mesh=>{mesh.frustumCulled=false;mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);scene.add(mesh);});
+    for(let i=0;i<pedestrianCount;i++){
+      walkers.bodies.setColorAt(i,new THREE.Color(streetOutfits[i%6]));
+      walkers.heads.setColorAt(i,new THREE.Color([0x5d3627,0x85543b,0xa16c49][i%3]));
+      for(let j=0;j<2;j++)walkers.arms.setColorAt(i*2+j,new THREE.Color(streetOutfits[i%6]));
+    }
+    const walkerTransform=new THREE.Object3D();
+    const flock: {group: THREE.Group; left: THREE.Mesh; right: THREE.Mesh; phase: number}[]=[];
+    for(let i=0;i<12;i++){
+      const bird=new THREE.Group();
+      box(bird,.12,.1,.4,0,0,0,0x394b5c);
+      const wings=[-1,1].map(side=>{
+        const wing=box(bird,.75,.035,.25,side*.36,0,0,0x394b5c);
+        return wing;
+      });
+      scene.add(bird);flock.push({group:bird,left:wings[0],right:wings[1],phase:i*.7});
+    }
+    // Gentle particle bursts around the tower, without full-screen flashes.
+    const fireworkCount=window.innerWidth<700?3:4;
+    const fireworks=Array.from({length:fireworkCount},(_,i)=>{
+      const count=48,positions=new Float32Array(count*3);
+      const geometry=new THREE.BufferGeometry();geometry.setAttribute("position",new THREE.BufferAttribute(positions,3));
+      const mat=new THREE.PointsMaterial({color:[0xe8cb89,0x79d5f2,0xd5a7de,0xa5e6c1][i],size:.3,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending});
+      const particles=new THREE.Points(geometry,mat);
+      particles.position.set(i%2?17:-17,36+i*5,i<2?8:-14);
+      particles.frustumCulled=false;scene.add(particles);
+      return {particles,positions,mat,index:i};
+    });
+    const skyObjects=new THREE.Group();scene.add(skyObjects);
+    const moon=new THREE.Mesh(new THREE.SphereGeometry(3.5,16,12),new THREE.MeshBasicMaterial({color:0xffefd2}));
+    moon.position.set(-65,90,-95);skyObjects.add(moon);
+    const starPositions=new Float32Array(180*3);
+    for(let i=0;i<180;i++){starPositions[i*3]=Math.sin(i*39)*170;starPositions[i*3+1]=85+(i%17)*5;starPositions[i*3+2]=-100-Math.abs(Math.cos(i*13))*70;}
+    const starGeometry=new THREE.BufferGeometry();starGeometry.setAttribute("position",new THREE.BufferAttribute(starPositions,3));
+    const stars=new THREE.Points(starGeometry,new THREE.PointsMaterial({color:0xe8efff,size:.35,transparent:true,opacity:.7,depthWrite:false}));skyObjects.add(stars);
+    const skyPresets=[
+      {hour:0,color:0x101b3e,light:0xa4b8e5,intensity:.5,ambient:.7,exposure:1.05},
+      {hour:6,color:0xe8baa0,light:0xffcf99,intensity:2.2,ambient:1.9,exposure:1.2},
+      {hour:12,color:0xb9dcee,light:0xffefd4,intensity:3.5,ambient:2.4,exposure:1.25},
+      {hour:17,color:0xe7ac91,light:0xffbb84,intensity:2,ambient:1.6,exposure:1.15},
+      {hour:20,color:0x101b3e,light:0xa4b8e5,intensity:.5,ambient:.7,exposure:1.05},
+      {hour:24,color:0x101b3e,light:0xa4b8e5,intensity:.5,ambient:.7,exposure:1.05},
+    ];
+    const updateSky=()=>{
+      const {hour,night}=cityTime();
+      const index=skyPresets.findIndex((preset,i)=>i<skyPresets.length-1&&hour>=preset.hour&&hour<skyPresets[i+1].hour);
+      const a=skyPresets[Math.max(0,index)],b=skyPresets[Math.max(0,index)+1];
+      const blend=THREE.MathUtils.smoothstep(hour,a.hour,b.hour);
+      const sky=new THREE.Color(a.color).lerp(new THREE.Color(b.color),blend);
+      renderer.setClearColor(sky);(scene.fog as THREE.Fog).color.copy(sky);
+      sun.color.copy(new THREE.Color(a.light).lerp(new THREE.Color(b.light),blend));
+      sun.intensity=THREE.MathUtils.lerp(a.intensity,b.intensity,blend);
+      ambient.intensity=THREE.MathUtils.lerp(a.ambient,b.ambient,blend);
+      renderer.toneMappingExposure=THREE.MathUtils.lerp(a.exposure,b.exposure,blend);
+      sun.position.set(Math.cos(hour/24*Math.PI*2)*65,night?40:65,40);
+      windowMaterial.emissiveIntensity=night?.75:hour>=17?.35:0;
+      moon.visible=night;stars.visible=night;
+    };
+    updateSky();
+    const skyTimer=setInterval(updateSky,30_000);
 
     // Transparent office tower: structural ribs and individually visible floors.
     box(scene, 17, .4, 15, 0, .2, 0, 0xe7e6dc);
@@ -184,7 +272,7 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
     // Batch the static city by material, keeping mobile draw calls low.
     const batches = new Map<THREE.Material, THREE.Mesh[]>();
     scene.children.forEach(object => {
-      if (!(object instanceof THREE.Mesh) || object === glass || Array.isArray(object.material)) return;
+      if (!(object instanceof THREE.Mesh) || object instanceof THREE.InstancedMesh || object === glass || Array.isArray(object.material)) return;
       const list = batches.get(object.material) ?? [];
       list.push(object);
       batches.set(object.material, list);
@@ -218,6 +306,38 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       camera.fov=camera.aspect<.8?65:48;camera.updateProjectionMatrix();
       glassMaterial.opacity=.14*(1-THREE.MathUtils.smoothstep(smooth,.55,.85));
       cars.forEach(car=>{car.group.position.set(car.lane+1.5,.1,((time*car.speed+car.offset+100)%200)-100);});
+      for(let i=0;i<pedestrianCount;i++){
+        const direction=i%2?1:-1,x=[14,-26,34,-46][i%4];
+        const z=direction*(((time*(.8+i%3*.15)+i*13)%160)-80);
+        const stride=Math.sin(time*5+i),bounce=Math.abs(stride)*.035;
+        const place=(mesh:THREE.InstancedMesh,index:number,dx:number,y:number,rotation:number)=>{
+          walkerTransform.position.set(x+dx,y+bounce,z);walkerTransform.rotation.set(rotation,direction<0?Math.PI:0,0);walkerTransform.updateMatrix();mesh.setMatrixAt(index,walkerTransform.matrix);
+        };
+        place(walkers.bodies,i,0,.95,0);place(walkers.heads,i,0,1.4,0);
+        for(let side=0;side<2;side++){
+          const sign=side?1:-1;
+          place(walkers.legs,i*2+side,sign*.11,.43,stride*.45*sign);
+          place(walkers.arms,i*2+side,sign*.26,.96,-stride*.4*sign);
+        }
+      }
+      Object.values(walkers).forEach(mesh=>{mesh.instanceMatrix.needsUpdate=true;});
+      flock.forEach((bird,i)=>{
+        const angle=time*.1+bird.phase;
+        bird.group.position.set(Math.cos(angle)*(28+i*1.5),46+i%4*5+Math.sin(time+bird.phase),Math.sin(angle)*(28+i*1.5));
+        bird.group.rotation.y=-angle;bird.left.rotation.z=Math.sin(time*5+bird.phase)*.55;bird.right.rotation.z=-bird.left.rotation.z;
+      });
+      fireworks.forEach(firework=>{
+        const age=(time+firework.index*1.6)%7;
+        const expansion=Math.max(0,age-.8);
+        firework.mat.opacity=age<.8?0:Math.max(0,Math.min(1,expansion/.25))*Math.max(0,1-expansion/3.8);
+        for(let i=0;i<48;i++){
+          const y=1-2*(i+.5)/48,r=Math.sqrt(1-y*y),angle=i*2.39996;
+          firework.positions[i*3]=Math.cos(angle)*r*expansion*3;
+          firework.positions[i*3+1]=y*expansion*3-expansion*expansion*.45;
+          firework.positions[i*3+2]=Math.sin(angle)*r*expansion*3;
+        }
+        firework.particles.geometry.attributes.position.needsUpdate=true;
+      });
       people.forEach(p=>{
         const dance=Math.sin(time*3+p.phase);
         p.group.position.set(p.x+Math.sin(time*.65+p.phase)*.18,Math.max(0,dance)*.07,p.z+Math.cos(time*.65+p.phase)*.15);
@@ -237,9 +357,10 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
     renderer.domElement.addEventListener("webglcontextlost",lost);
     frame=requestAnimationFrame(render);
     return()=>{
+      disposed = true; logoImages.forEach(image => { image.onload = null; }); clearInterval(skyTimer);
       cancelAnimationFrame(frame);observer.disconnect();document.removeEventListener("visibilitychange",visibility);renderer.domElement.removeEventListener("webglcontextlost",lost);
       const geometries=new Set<THREE.BufferGeometry>(),allMaterials=new Set<THREE.Material>();
-      scene.traverse(object=>{if(object instanceof THREE.Mesh){geometries.add(object.geometry);(Array.isArray(object.material)?object.material:[object.material]).forEach(m=>allMaterials.add(m));}});
+      scene.traverse(object=>{if(object instanceof THREE.Mesh || object instanceof THREE.Points){geometries.add(object.geometry);(Array.isArray(object.material)?object.material:[object.material]).forEach(m=>allMaterials.add(m));}});
       geometries.forEach(g=>g.dispose());allMaterials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());renderer.dispose();renderer.domElement.remove();
     };
   },[progress]);

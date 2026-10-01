@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 const CityScene = dynamic(() => import("./AnniversaryCityScene"), { ssr: false, loading: () => <div className="city-scene-loading">Preparing your view of the city…</div> });
 const chapters = [
@@ -75,7 +76,7 @@ export default function AnniversaryExperience({ onClose }: { onClose: () => void
     <div className="city-tour-viewport">
       <CityScene progress={progress} paused={false} onReady={sceneReady} />
       <div className="city-tour-vignette" aria-hidden="true" />
-      <header className="city-tour-header"><div className="city-tour-brand">codmify<span>ANNIVERSARY / 02</span></div><div className="city-tour-header-actions"><button autoFocus onClick={revealWebsite} disabled={leaving}>Skip intro <span aria-hidden="true">↗</span></button></div></header>
+      <header className="city-tour-header"><div className="city-tour-brand"><Image src="/brand/logo-1.png" width={146} height={28} alt="Codmify" /><span>ANNIVERSARY / 02</span></div><div className="city-tour-header-actions"><button autoFocus onClick={revealWebsite} disabled={leaving}>Skip intro <span aria-hidden="true">↗</span></button></div></header>
       <div className="city-tour-location"><span aria-hidden="true">◉</span> LAGOS-INSPIRED WORLD · NIGERIA</div>
       <div className="city-tour-caption" key={chapter}>
         <p className="city-tour-chapter">{chapters[chapter].label}</p>
