@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
+import AnniversaryExperience from "./AnniversaryExperience";
 import { ANNIVERSARY_END, ANNIVERSARY_START, isAnniversaryActive } from "@/lib/anniversary";
 
 const AnniversaryContext = createContext(false);
@@ -83,7 +84,6 @@ export function AnniversaryEffects() {
   useEffect(() => {
     if (!active) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let finish: ReturnType<typeof setTimeout>;
     const check = () => {
       setReduced(motion.matches);
       setHidden(document.hidden);
@@ -100,8 +100,6 @@ export function AnniversaryEffects() {
         localStorage.setItem(VISIT_KEY, day);
       } catch { /* Storage can be disabled in private browsing. */ }
       setIntro(true);
-      clearTimeout(finish);
-      finish = setTimeout(() => setIntro(false), 7200);
     };
     const first = setTimeout(check, 0);
     const dailyCheck = setInterval(check, 60_000);
@@ -110,7 +108,6 @@ export function AnniversaryEffects() {
     motion.addEventListener("change", check);
     return () => {
       clearTimeout(first);
-      clearTimeout(finish);
       clearInterval(dailyCheck);
       document.removeEventListener("visibilitychange", check);
       window.removeEventListener("focus", check);
@@ -124,13 +121,7 @@ export function AnniversaryEffects() {
       {Array.from({ length: 32 }, (_, i) => <i key={i} style={{ left: `${(i * 17 + 3) % 100}%`, animationDelay: `${-i * .73}s`, animationDuration: `${12 + i % 9}s`, background: ["#DAB561", "#51C4FF", "#9583E8", "#EFA3BD"][i % 4], borderRadius: i % 3 === 0 ? "50%" : "1px" }} />)}
     </div>
     <button className="anniversary-motion-control" onClick={() => { setPaused(!paused); setIntro(false); }} aria-pressed={paused} aria-label={paused ? "Resume celebration animation" : "Pause celebration animation"}>{paused ? "▶" : "Ⅱ"}<span>Celebration</span></button>
-    {intro && !paused && <div className="anniversary-intro" role="region" aria-label="Codmify anniversary welcome">
-      <button className="anniversary-intro-close" onClick={() => setIntro(false)} aria-label="Dismiss anniversary welcome">×</button>
-      <div className="anniversary-intro-stage" aria-hidden="true">
-        <div className="anniversary-intro-orbit"><span>✦</span><span>✦</span><span>✦</span></div>
-        <div className="anniversary-intro-medal"><span>CODMIFY</span><strong>2</strong><span>YEARS TOGETHER</span></div>
-      </div>
-      <p>Two years. Endless possibilities.</p><span className="anniversary-intro-thanks">Thanks for being part of our story.</span>
-    </div>}
+    <button className="anniversary-replay" onClick={() => { setPaused(false); setIntro(true); }}>Play anniversary <span aria-hidden="true">✦</span></button>
+    {intro && !paused && <AnniversaryExperience onClose={() => setIntro(false)} />}
   </>;
 }
