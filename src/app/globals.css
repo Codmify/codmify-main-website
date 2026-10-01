@@ -334,3 +334,35 @@ li .active {
   .city-tour-navigation button { font-size: 11px; }
   .city-tour-navigation .city-tour-next { padding: 11px 16px; }
 }
+
+
+/* Continuous city film dissolves directly into the existing landing page. */
+.city-film .city-tour-caption { bottom: 110px; animation: city-caption-entrance .9s ease both; }
+.city-film .city-tour-note { bottom: 116px; }
+.city-film .city-tour-viewport { position: relative; }
+.city-film-footer { position: absolute; bottom: 32px; left: 40px; right: 40px; padding-top: 20px; border-top: 1px solid #ffffff30; display: flex; justify-content: space-between; gap: 16px; color: #d3dde6; font-size: 9px; letter-spacing: 1.2px; }
+.city-film-footer > span:last-child { color: #edd49d; letter-spacing: .3px; }
+.city-film { transition: opacity 1.1s ease; }
+.city-film::backdrop { background: transparent; }
+.city-film-leaving { opacity: 0; pointer-events: none; }
+.city-film-leaving .city-tour-viewport { animation: city-film-departure 1.1s cubic-bezier(.2,.7,.3,1) both; }
+body[data-anniversary-reveal="true"] main { animation: city-landing-arrival 1.1s cubic-bezier(.2,.7,.3,1) both; transform-origin: center top; }
+body[data-anniversary-reveal="true"] nav { animation: city-navigation-arrival 1.1s ease both; }
+@keyframes city-caption-entrance { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes city-film-departure { to { transform: scale(1.12); filter: blur(8px); } }
+@keyframes city-landing-arrival { from { opacity: .3; transform: translateY(28px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes city-navigation-arrival { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 700px) {
+  .city-film .city-tour-caption { bottom: 106px; }
+  .city-film-footer { bottom: max(24px, env(safe-area-inset-bottom)); left: 24px; right: 24px; flex-wrap: wrap; font-size: 8px; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .city-film, .city-film-leaving .city-tour-viewport, .city-film .city-tour-caption, body[data-anniversary-reveal="true"] main, body[data-anniversary-reveal="true"] nav { animation: none; transition: none; }
+}
+
+/* Visitor-controlled city → office → multiverse → website journey. */
+.city-film .city-tour-track { height: 680dvh; }
+.city-film .city-tour-viewport { position: sticky; top: 0; }
+.city-scene-canvas::after { content: ""; position: absolute; inset: 0; background: #090e27; opacity: var(--portal-darkness, 0); pointer-events: none; }
+.city-universe-caption h2, .city-universe-caption > p:last-of-type { display: none; }
+.city-film .city-universe-caption { bottom: 88px; }

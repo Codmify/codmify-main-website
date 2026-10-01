@@ -121,7 +121,7 @@ export function AnniversaryEffects() {
       {Array.from({ length: 32 }, (_, i) => <i key={i} style={{ left: `${(i * 17 + 3) % 100}%`, animationDelay: `${-i * .73}s`, animationDuration: `${12 + i % 9}s`, background: ["#DAB561", "#51C4FF", "#9583E8", "#EFA3BD"][i % 4], borderRadius: i % 3 === 0 ? "50%" : "1px" }} />)}
     </div>
     <button className="anniversary-motion-control" onClick={() => { setPaused(!paused); setIntro(false); }} aria-pressed={paused} aria-label={paused ? "Resume celebration animation" : "Pause celebration animation"}>{paused ? "▶" : "Ⅱ"}<span>Celebration</span></button>
-    <button className="anniversary-replay" onClick={() => { setPaused(false); setIntro(true); }}>Visit our office <span aria-hidden="true">✦</span></button>
+    <button className="anniversary-replay" onClick={() => { setPaused(false); setIntro(true); }}>Watch celebration <span aria-hidden="true">✦</span></button>
     {intro && !paused && <AnniversaryExperience onClose={() => setIntro(false)} />}
   </>;
 }
