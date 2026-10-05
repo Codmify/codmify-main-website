@@ -17,3 +17,9 @@ export interface ProjectProps {
   image: string;
   url: string;
 }
+
+export interface PortfolioProject extends ProjectProps {
+  additionalDesc: string;
+  images?: string[];
+  links?: { label: string; url: string }[];
+}

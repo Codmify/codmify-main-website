@@ -1,4 +1,4 @@
-import { ProjectProps, QualificationProps, ServiceProps } from "./types";
+import { PortfolioProject, ProjectProps, QualificationProps, ServiceProps } from "./types";
 import { IoBriefcaseOutline } from "react-icons/io5";
 import { GoPeople } from "react-icons/go";
 import { RxCalendar } from "react-icons/rx";
@@ -87,7 +87,7 @@ export const testimonials = [
     position: "Data Analyst",
   },
 ];
-export const ourProjects = [
+export const ourProjects: PortfolioProject[] = [
   {
     title: "Ekawe",
     desc: "Ekawe is a premium academic marketplace that connects creators and readers with verified educational resources. The platform helps creators publish their work while giving learners and institutions a trusted place to discover academic materials.",

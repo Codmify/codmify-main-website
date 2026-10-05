@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import type { JSX, SVGProps } from "react";
 
 export function MenuIcon(
   props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
