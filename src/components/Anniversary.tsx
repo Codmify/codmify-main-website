@@ -67,13 +67,6 @@ export function AnniversaryFooter() {
   return <div className="anniversary-footer"><span aria-hidden="true">✦</span><span>Two years in. So much more ahead.</span><span>Thank you for building with Codmify.</span></div>;
 }
 
-const visitedDays = new Set<string>();
-const VISIT_KEY = "codmify-anniversary-2026-visit";
-
-function lagosDay() {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Lagos", year: "numeric", month: "2-digit", day: "2-digit" }).format(Date.now());
-}
-
 export function AnniversaryEffects() {
   const active = useAnniversary();
   const [intro, setIntro] = useState(false);
@@ -91,15 +84,6 @@ export function AnniversaryEffects() {
         setIntro(false);
         return;
       }
-      const day = lagosDay();
-      if (visitedDays.has(day)) return;
-      // Memory fallback avoids replay on navigation if storage is unavailable.
-      visitedDays.add(day);
-      try {
-        if (localStorage.getItem(VISIT_KEY) === day) return;
-        localStorage.setItem(VISIT_KEY, day);
-      } catch { /* Storage can be disabled in private browsing. */ }
-      setIntro(true);
     };
     const first = setTimeout(check, 0);
     const dailyCheck = setInterval(check, 60_000);

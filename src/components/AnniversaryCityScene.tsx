@@ -6,7 +6,7 @@ import { cityTime } from "@/lib/city-time";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 
 // A stylised Lagos-inspired world, rather than a claim about a real office address.
-export default function AnniversaryCityScene({ progress, paused, onReady }: { progress: MutableRefObject<number>; paused: boolean; onReady?: () => void }) {
+export default function AnniversaryCityScene({ progress, paused, onReady, landing = false, celebrating = true }: { progress: MutableRefObject<number>; paused: boolean; onReady?: () => void; landing?: boolean; celebrating?: boolean }) {
   const host = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(paused);
   const readyRef = useRef(onReady);
@@ -166,6 +166,7 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       const geometry=new THREE.BufferGeometry();geometry.setAttribute("position",new THREE.BufferAttribute(positions,3));
       const mat=new THREE.PointsMaterial({color:[0xe8cb89,0x79d5f2,0xd5a7de,0xa5e6c1][i],size:.3,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending});
       const particles=new THREE.Points(geometry,mat);
+      particles.visible = !landing || celebrating;
       particles.position.set(i%2?17:-17,36+i*5,i<2?8:-14);
       particles.frustumCulled=false;scene.add(particles);
       return {particles,positions,mat,index:i};
@@ -211,7 +212,7 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
     for(const x of [-6,6])for(const z of [-5,5])box(scene,.18,48,.18,x,24,z,0xcbd6db,.7);
     for(let x=-4;x<=4;x+=2)box(scene,.055,48,.055,x,24,5.02,0xc2d2d9,.6);
     sign("codmify", "IDEAS · PEOPLE · POSSIBILITIES", 9, 3.4, 0, 45, 5.14);
-    sign("2 YEARS", "BUILDING TOGETHER · OCTOBER 2026", 8, 2.6, 0, 26.8, -4.8);
+    sign(celebrating ? "2 YEARS" : "codmify", celebrating ? "BUILDING TOGETHER · OCTOBER 2026" : "IDEAS BECOME REAL PRODUCTS", 8, 2.6, 0, 26.8, -4.8);
     // A green-white-green flag in the plaza.
     cylinder(scene,.07,8,-9,4,6,0xb6c3cb);
     for(let i=0;i<3;i++)box(scene,.6,1.2,.03,-8.7+i*.6,7,6,i===1?0xffffff:0x12885c);
@@ -229,21 +230,23 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       cylinder(office,.38,.1,x,.6,z+.8,0x283f62);
       cylinder(office,.05,.6,x,.3,z+.8,0x707d88);
     }
+    const partyDecor = new THREE.Group();office.add(partyDecor);
+    partyDecor.visible = !landing || celebrating;
     // Cake table, candles, bunting and celebratory balloons.
-    cylinder(office,.8,.12,0,1,-1.5,0xd3b58a);
-    cylinder(office,.12,1,0,.5,-1.5,0x626e7d);
-    cylinder(office,.46,.25,0,1.18,-1.5,0xf1e4cc);
-    cylinder(office,.32,.22,0,1.41,-1.5,0xdeb774);
-    for(const x of [-.13,.13]){cylinder(office,.035,.22,x,1.62,-1.5,0x121279);sphere(office,.04,x,1.76,-1.5,0xffb84f);}
+    cylinder(partyDecor,.8,.12,0,1,-1.5,0xd3b58a);
+    cylinder(partyDecor,.12,1,0,.5,-1.5,0x626e7d);
+    cylinder(partyDecor,.46,.25,0,1.18,-1.5,0xf1e4cc);
+    cylinder(partyDecor,.32,.22,0,1.41,-1.5,0xdeb774);
+    for(const x of [-.13,.13]){cylinder(partyDecor,.035,.22,x,1.62,-1.5,0x121279);sphere(partyDecor,.04,x,1.76,-1.5,0xffb84f);}
     for(let i=0;i<13;i++){
       const mesh=new THREE.Mesh(new THREE.ConeGeometry(.16,.38,3),material([0xe8cb89,0x51c4ff,0xbdb0e4][i%3]));
-      mesh.rotation.z=Math.PI;mesh.position.set(-5+i*.82,3.4-Math.sin(i/12*Math.PI)*.45,-3.5);office.add(mesh);
+      mesh.rotation.z=Math.PI;mesh.position.set(-5+i*.82,3.4-Math.sin(i/12*Math.PI)*.45,-3.5);partyDecor.add(mesh);
     }
     const balloons: THREE.Mesh[]=[];
     for(let i=0;i<8;i++){
       const x=i<4?-5.1:5.1,z=-3+(i%4)*1.8;
-      const balloon=sphere(office,.28,x,2.8,z,[0xe8cb89,0x51c4ff,0xada0de][i%3]);balloon.scale.y=1.25;balloons.push(balloon);
-      cylinder(office,.009,1.7,x,1.8,z,0xb3a487);
+      const balloon=sphere(partyDecor,.28,x,2.8,z,[0xe8cb89,0x51c4ff,0xada0de][i%3]);balloon.scale.y=1.25;balloons.push(balloon);
+      cylinder(partyDecor,.009,1.7,x,1.8,z,0xb3a487);
     }
     type Person = { group: THREE.Group; leftArm: THREE.Group; rightArm: THREE.Group; leftLeg: THREE.Mesh; rightLeg: THREE.Mesh; x: number; z: number; phase: number };
     const people:Person[]=[];
@@ -269,6 +272,10 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       confetti.push(piece);
     }
 
+    if (landing && !celebrating) {
+      balloons.forEach(balloon => { balloon.visible = false; });
+      confetti.forEach(piece => { piece.visible = false; });
+    }
     // Batch the static city by material, keeping mobile draw calls low.
     const batches = new Map<THREE.Material, THREE.Mesh[]>();
     scene.children.forEach(object => {
@@ -373,9 +380,12 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       const delta=Math.min((now-last)/1000,.05);last=now;
       if(!pausedRef.current&&!reduced.matches)time+=delta;
       smooth=reduced.matches?progress.current:THREE.MathUtils.damp(smooth,progress.current,5,delta);
-      camera.position.copy(path.getPoint(Math.min(1,smooth/.57)));camera.lookAt(lookPath.getPoint(Math.min(1,smooth/.57)));
+      camera.position.copy(path.getPoint(landing ? smooth : Math.min(1,smooth/.57)));camera.lookAt(lookPath.getPoint(landing ? smooth : Math.min(1,smooth/.57)));
       // A brief dark portal passage joins the two worlds without a hard visible cut.
-      const passage=Math.max(0,1-Math.abs(smooth-.6)/.065);
+      if (landing) {
+        const aim=lookPath.getPoint(smooth);aim.x+=smooth*3.5;camera.lookAt(aim);
+      }
+      const passage=landing ? 0 : Math.max(0,1-Math.abs(smooth-.6)/.065);
       container.style.setProperty("--portal-darkness", String(passage));
       // Widen the lens for portrait screens so the office stays in view.
       camera.fov=camera.aspect<.8?65:48;camera.updateProjectionMatrix();
@@ -417,12 +427,12 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
         const dance=Math.sin(time*3+p.phase);
         p.group.position.set(p.x+Math.sin(time*.65+p.phase)*.18,Math.max(0,dance)*.07,p.z+Math.cos(time*.65+p.phase)*.15);
         p.group.rotation.y=Math.atan2(-p.x,-p.z)+Math.sin(time+p.phase)*.16;
-        p.leftArm.rotation.z=-1.8-dance*.35;p.rightArm.rotation.z=1.8+dance*.35;
+        p.leftArm.rotation.z=celebrating ? -1.8-dance*.35 : -.2;p.rightArm.rotation.z=celebrating ? 1.8+dance*.35 : .2;
         p.leftLeg.rotation.x=dance*.18;p.rightLeg.rotation.x=-dance*.18;
       });
       balloons.forEach((balloon,i)=>{balloon.position.y=2.8+Math.sin(time+i)*.08;});
       confetti.forEach((piece,i)=>{piece.position.y=.2+((i*.2-time*.45)%3+3)%3;piece.rotation.set(time+i,time*.7,i);});
-      if(smooth<.6) renderer.render(scene,camera);
+      if(landing || smooth<.6) renderer.render(scene,camera);
       else {
         const travel=Math.max(0,Math.min(1,(smooth-.6)/.4));
         cosmicCamera.aspect=camera.aspect;cosmicCamera.fov=camera.aspect<.8?70:52;cosmicCamera.updateProjectionMatrix();
@@ -447,19 +457,21 @@ export default function AnniversaryCityScene({ progress, paused, onReady }: { pr
       if (!reportedReady) { reportedReady = true; readyRef.current?.(); }
       frame=visible?requestAnimationFrame(render):0;
     };
-    const visibility=()=>{visible=!document.hidden;if(visible&&!frame){last=performance.now();frame=requestAnimationFrame(render);}};
+    let inView=true;
+    const intersection=new IntersectionObserver(([entry])=>{inView=entry.isIntersecting;visibility();});intersection.observe(container);
+    const visibility=()=>{visible=!document.hidden&&inView;if(visible&&!frame){last=performance.now();frame=requestAnimationFrame(render);}};
     document.addEventListener("visibilitychange",visibility);
     const lost=(event:Event)=>{event.preventDefault();setUnavailable(true);cancelAnimationFrame(frame);};
     renderer.domElement.addEventListener("webglcontextlost",lost);
     frame=requestAnimationFrame(render);
     return()=>{
       disposed = true; logoImages.forEach(image => { image.onload = null; }); clearInterval(skyTimer);
-      cancelAnimationFrame(frame);observer.disconnect();document.removeEventListener("visibilitychange",visibility);renderer.domElement.removeEventListener("webglcontextlost",lost);
+      cancelAnimationFrame(frame);observer.disconnect();intersection.disconnect();document.removeEventListener("visibilitychange",visibility);renderer.domElement.removeEventListener("webglcontextlost",lost);
       const geometries=new Set<THREE.BufferGeometry>(),allMaterials=new Set<THREE.Material>();
       const disposeObject=(object:THREE.Object3D)=>{if(object instanceof THREE.Mesh || object instanceof THREE.Points){geometries.add(object.geometry);(Array.isArray(object.material)?object.material:[object.material]).forEach(m=>allMaterials.add(m));}};
       scene.traverse(disposeObject);universe.traverse(disposeObject);
       geometries.forEach(g=>g.dispose());allMaterials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());renderer.dispose();renderer.domElement.remove();
     };
-  },[progress]);
-  return <div ref={host} className="city-scene-canvas" role="img" aria-label="A stylised Lagos city, a transparent skyscraper, and the Codmify team celebrating on an office floor">{unavailable&&<div className="city-scene-fallback"><strong>Two years of building together.</strong><p>The Codmify team is celebrating. Your browser couldn’t display the 3D city, but you can still explore our anniversary story.</p></div>}</div>;
+  },[progress, landing, celebrating]);
+  return <div ref={host} className="city-scene-canvas" role="img" aria-label={landing ? "A Lagos-inspired city and the Codmify studio" : "A stylised Lagos city, a transparent skyscraper, and the Codmify team celebrating on an office floor"}>{unavailable&&<div className="city-scene-fallback"><strong>{landing ? "Your next big idea starts here." : "Two years of building together."}</strong><p>{landing ? "Explore Codmify’s services and work below." : "The Codmify team is celebrating. Your browser couldn’t display the 3D city, but you can still explore our anniversary story."}</p></div>}</div>;
 }
