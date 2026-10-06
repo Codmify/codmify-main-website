@@ -42,7 +42,7 @@ spacing:
 
 ## Status and scope
 
-This is the design specification for the proposed full landing-page revamp. It records direction and acceptance criteria; it does not establish that the revamp or its visual verification is complete. Exact timing, models and scene framing must be tuned in rendered previews.
+This is the design specification for the full landing-page revamp. The implementation now connects city, studio, services, projects, packages, FAQ and contact within one scroll-driven world. Rendered verification and performance measurement remain outstanding; exact timing, models and scene framing must be tuned in previews.
 
 The permanent landing page becomes a connected 3D story with real HTML content. Existing service, project, pricing, contact and legal routes remain accessible. Keep FAQs, packages, contact details and footer content discoverable in normal document flow.
 

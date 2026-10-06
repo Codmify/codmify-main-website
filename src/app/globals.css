@@ -410,3 +410,30 @@ body[data-anniversary-reveal="true"] nav { animation: city-navigation-arrival 1.
   .landing-world-atmosphere { background: linear-gradient(0deg,#07182efa 0%,#07182ecf 35%,#07182e20 80%); }
   .world-motion-toggle { top: 130px; right: 16px; font-size: 10px; }
 }
+
+/* Every remaining chapter lives within the connected world. */
+.world-work { min-height: 145dvh; background: linear-gradient(90deg,#07182ee0,transparent 80%); }
+.world-project-list { margin: 24px 0; }
+.world-project { display: flex; align-items: center; gap: 16px; padding: 20px 0; border-bottom: 1px solid #ffffff30; }
+.world-project img { width: 110px; height: 78px; border-radius: 8px; object-fit: contain; background: #fff; }
+.world-project > span:nth-child(2) { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.world-project strong { font-size: 15px; }
+.world-project > span:nth-child(2) > span { font-size: 12px; line-height: 1.6; color: #d1dce7; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.world-project > span:last-child { color: #88d6f3; }
+.world-rich { display: block; min-height: 150dvh; }
+.world-rich > .world-copy { margin-bottom: 56px; }
+.world-reading-surface { background: #fafafaf5; color: #10162f; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 80px #07182e35; }
+.world-reading-surface > section { background: transparent !important; background-image: none !important; }
+.world-questions { min-height: 140dvh; justify-content: flex-end; background: linear-gradient(90deg,transparent,#07182ee0); }
+.world-questions .world-copy { width: 600px; max-width: 600px; }
+.world-questions .world-reading-surface section { padding: 28px 12px; }
+.world-questions .world-reading-surface h3 { font-size: 22px; }
+.world-plans,.world-contact { background: linear-gradient(0deg,#07182ed9,transparent); }
+@media (max-width: 700px) {
+  .world-work { min-height: 150dvh; }
+  .world-rich { padding-top: 230px; }
+  .world-reading-surface { border-radius: 14px; }
+  .world-project img { width: 84px; height: 64px; }
+  .world-questions { min-height: 150dvh; padding-top: 250px; }
+  .world-questions .world-copy { width: 100%; }
+}

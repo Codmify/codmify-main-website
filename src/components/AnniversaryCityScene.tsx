@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type MutableRefObject } from "react";
 import * as THREE from "three";
+import { ourProjects } from "@/constants/data";
 import { cityTime } from "@/lib/city-time";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 
@@ -369,9 +370,64 @@ export default function AnniversaryCityScene({ progress, paused, onReady, landin
     universe.add(new THREE.Points(galaxyGeometry,new THREE.PointsMaterial({color:0xb8c9ff,size:.16,transparent:true,opacity:.85})));
     const cosmicCamera=new THREE.PerspectiveCamera(52,1,.1,350);
 
+    // Connected architectural rooms carry the rest of the permanent landing story.
+    if (landing) {
+      const room = (x:number, title:string, subtitle:string) => {
+        const group=new THREE.Group();group.position.set(x,60,0);scene.add(group);
+        cylinder(group,12,.5,0,0,0,0xced8db);
+        cylinder(group,10,.4,0,-.45,0,0x526681);
+        const rail=new THREE.Mesh(new THREE.TorusGeometry(11.5,.055,6,80),new THREE.MeshBasicMaterial({color:0x51c4ff}));rail.rotation.x=Math.PI/2;rail.position.y=.3;group.add(rail);
+        sign(title,subtitle,12,3.5,0,6,-6,group);
+        for(const side of [-1,1]){cylinder(group,.15,7,side*9,3.5,-5,0xadbccc);sphere(group,.6,side*9,7.2,-5,0xe8cb89);}
+        return group;
+      };
+      const gallery=room(80,"OUR WORK","IDEAS MADE REAL");
+      ourProjects.slice(0,3).forEach((project,i)=>{
+        const canvas=document.createElement("canvas");canvas.width=768;canvas.height=512;
+        const ctx=canvas.getContext("2d")!;ctx.fillStyle="#121279";ctx.fillRect(0,0,768,512);
+        ctx.fillStyle="#fff";ctx.textAlign="center";ctx.font="bold 48px sans-serif";ctx.fillText(project.title,384,256);
+        const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;textures.push(texture);
+        const image=new window.Image();logoImages.push(image);
+        image.onload=()=>{if(disposed)return;ctx.fillStyle="#121279";ctx.fillRect(0,0,768,512);const scale=Math.min(768/image.width,512/image.height);ctx.drawImage(image,(768-image.width*scale)/2,(512-image.height*scale)/2,image.width*scale,image.height*scale);texture.needsUpdate=true;};image.src=project.image;
+        const device=new THREE.Group();device.position.set((i-1)*6,3,-1);device.rotation.y=(1-i)*.14;gallery.add(device);
+        box(device,5.4,3.9,.25,0,0,0,0x202c44,.5);
+        const screen=new THREE.Mesh(new THREE.PlaneGeometry(5,3.4),new THREE.MeshBasicMaterial({map:texture}));screen.position.z=.14;device.add(screen);
+        cylinder(device,.14,1.2,0,-2.5,0,0x627b8f);box(device,2,.12,1,0,-3.1,0,0x627b8f);
+      });
+      const plans=room(150,"BUILD TO GROW","YOUR NEXT STEP STARTS HERE");
+      [3,5,7].forEach((height,i)=>{
+        const x=(i-1)*5;
+        box(plans,3,height,3,x,height/2,0,[0x658fae,0x85b6bb,0xd8b477][i],.35);
+        for(let floor=1;floor<height;floor++)box(plans,3.02,.08,3.02,x,floor,0,0xeaf6ff);
+        sphere(plans,.45,x,height+.7,0,0xe8cb89);
+      });
+      const library=room(220,"CLEAR ANSWERS","CONFIDENCE FOR THE JOURNEY");
+      for(const x of [-5,5]){
+        box(library,3.5,5,.6,x,2.5,-1,0x526480);
+        for(let shelf=1;shelf<=4;shelf++){
+          box(library,3.5,.12,1,x,shelf,-.5,0xd8b477);
+          for(let book=0;book<6;book++)box(library,.32,.65,.5,x-1.3+book*.48,shelf+.4,-.5,[0x75b9ef,0xe8cb89,0xb298cd][book%3]);
+        }
+      }
+      cylinder(library,2,.15,0,1.4,2,0xd8b477);cylinder(library,.2,1.4,0,.7,2,0x627b8f);
+      const reception=room(290,"codmify","LET’S BUILD YOUR NEXT CHAPTER");
+      box(reception,9,1.8,2,0,1,0,0x1a2450);box(reception,9.3,.12,2.3,0,1.95,0,0xd8b477);
+      sign("HELLO", "YOUR IDEA BELONGS HERE",4,1.4,0,1,1.05,reception);
+      for(const x of [-7,7]){
+        cylinder(reception,.7,1,x,.5,2,0xadbccc);
+        cylinder(reception,.09,3,x,2,2,0x89785e);
+        sphere(reception,1.1,x,3.2,2,0x53835b);
+      }
+      const connection=new THREE.CatmullRomCurve3([new THREE.Vector3(0,28,0),new THREE.Vector3(40,48,0),new THREE.Vector3(80,60,0),new THREE.Vector3(150,60,0),new THREE.Vector3(220,60,0),new THREE.Vector3(290,60,0)]);
+      scene.add(new THREE.Mesh(new THREE.TubeGeometry(connection,100,.08,5,false),new THREE.MeshBasicMaterial({color:0xe8cb89})));
+      // Keep the connected rooms visible beyond the city’s atmospheric horizon.
+      (scene.fog as THREE.Fog).far=500;
+    }
+
     const positions=[new THREE.Vector3(78,104,108),new THREE.Vector3(38,65,64),new THREE.Vector3(17,39,34),new THREE.Vector3(5,28.1,13.8)];
     const targets=[new THREE.Vector3(0,8,0),new THREE.Vector3(0,23,0),new THREE.Vector3(0,26,0),new THREE.Vector3(0,25.8,-1.2)];
-    const path=new THREE.CatmullRomCurve3(positions),lookPath=new THREE.CatmullRomCurve3(targets);
+    const path=new THREE.CatmullRomCurve3(landing ? [positions[0],positions[2],positions[3],new THREE.Vector3(87,66,22),new THREE.Vector3(157,66,23),new THREE.Vector3(227,65,21),new THREE.Vector3(297,65,21)] : positions);
+    const lookPath=new THREE.CatmullRomCurve3(landing ? [targets[0],targets[2],targets[3],new THREE.Vector3(76,63,0),new THREE.Vector3(146,63,0),new THREE.Vector3(224,63,0),new THREE.Vector3(286,63,0)] : targets);
     let frame=0,last=0,time=0,smooth=0,visible=!document.hidden,reportedReady=false;
     const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
     const resize=()=>{const w=container.clientWidth,h=container.clientHeight;if(!w||!h)return;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();};
@@ -383,7 +439,7 @@ export default function AnniversaryCityScene({ progress, paused, onReady, landin
       camera.position.copy(path.getPoint(landing ? smooth : Math.min(1,smooth/.57)));camera.lookAt(lookPath.getPoint(landing ? smooth : Math.min(1,smooth/.57)));
       // A brief dark portal passage joins the two worlds without a hard visible cut.
       if (landing) {
-        const aim=lookPath.getPoint(smooth);aim.x+=smooth*3.5;camera.lookAt(aim);
+        const aim=lookPath.getPoint(smooth);aim.x+=smooth<.34 ? smooth*8 : 0;camera.lookAt(aim);
       }
       const passage=landing ? 0 : Math.max(0,1-Math.abs(smooth-.6)/.065);
       container.style.setProperty("--portal-darkness", String(passage));
