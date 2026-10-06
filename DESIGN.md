@@ -1,6 +1,6 @@
 ---
-name: Codmify — An Idea Becomes a World
-description: A cinematic, scroll-driven landing page blending a Nigerian city, a working studio, real products and readable editorial content.
+name: Codmify — Inside the Building
+description: A scroll-driven architectural tour from reception through six floors, with centrally composed content and clickable room exhibits.
 colors:
   primary: "#121279"
   secondary: "#51C4FF"
@@ -42,60 +42,58 @@ spacing:
 
 ## Status and scope
 
-This is the design specification for the full landing-page revamp. The implementation now connects city, studio, services, projects, packages, FAQ and contact within one scroll-driven world. Rendered verification and performance measurement remain outstanding; exact timing, models and scene framing must be tuned in previews.
+This specification covers the complete landing-page revamp. The permanent journey now starts inside reception and connects seven content rooms across six floors. It supersedes the previous city-to-studio opening and side-by-side text layouts. Rendered verification and performance measurement remain outstanding; camera framing must be assessed in desktop and mobile previews.
 
-The permanent landing page becomes a connected 3D story with real HTML content. Existing service, project, pricing, contact and legal routes remain accessible. Keep FAQs, packages, contact details and footer content discoverable in normal document flow.
+The page retains real HTML content and native scrolling. Existing services, projects, pricing, FAQ, testimonials, contact controls and standalone routes remain accessible. The building is an imagined brand environment, not a claim about Codmify's physical business address.
 
 ## Concept
 
-**An idea becomes a world.** A visitor follows an idea through a Lagos-inspired city into Codmify's studio, sees how the team creates digital products, explores real work and arrives at an invitation to build something together.
+**Step inside Codmify.** Begin at the ground-floor reception. Visitors see a branded reception desk, seated guests, walking staff, plants, warm stone, timber and a glazed frontage. Scroll to the elevator, travel upstairs, explore one or two rooms, and repeat until the whole landing page has been covered.
 
-The visual character is polished architectural animation: expressive silhouettes, warm materials, restrained detail and convincing depth. Nigeria is expressed through the coastal setting, varied architecture, palms, yellow buses, pedestrians and street activity. The imagined office must not imply a real business address.
+The architecture has consistent floor heights, structural slabs, columns, window mullions, ceiling lighting and an open elevator shaft. Rounded furniture, planted corners, framed project exhibits and restrained metal details make the rooms feel inhabited. The visitor can start a project immediately from reception.
 
-The visitor should understand what Codmify offers from the opening screen and be able to start a project immediately.
+## Composition: content belongs to the room
 
-## Composition: one scene, one clear message
+Main content sits centrally in the page, composed as readable room displays rather than copy beside a separate 3D image. Furniture and staff occupy the surrounding space. The scene and content share warm materials, blue branding and gold details.
 
-3D imagery and text share a background, lighting palette and visual rhythm. Each chapter gets its own composition; there is no fixed text side or repeated mandatory split layout.
-
-- Use a twelve-column desktop composition with comfortable outer margins. Text usually occupies four or five columns; the main scene subject occupies the remaining area.
-- Alternate left, right, centred and sky placements when the subject and reading order justify it. Do not alternate mechanically.
-- Reserve quiet areas in camera framing for text. Buildings, moving people, particles and bright lights must not cross reading areas or controls.
-- Blend the scene into text through subtle gradients or atmospheric haze. If contrast cannot be guaranteed, use an intentional solid reading surface.
-- Use one dominant headline, a short supporting paragraph and one primary action per chapter. A secondary action is optional.
-- Keep body copy around 35–60 characters per line. Limit display headlines to roughly two or three lines.
-- Use large, deliberate typography. Decorative labels must not carry information essential to understanding the page.
-- Avoid making every section a bordered card or putting all copy in translucent panels.
+- Centre headlines, supporting copy and primary actions; give services and project details a readable internal alignment.
+- Keep essential copy in semantic HTML. Canvas signs use the actual logo and active portfolio assets, but do not replace accessible text or controls.
+- Use quiet, light reading surfaces so daylight, evening and night cannot reduce text contrast.
+- Let wide package and contact surfaces use the space they need. Reuse their existing interactive components.
+- Reserve visible space around the content for reception guests, studio desks and room architecture. Avoid bright lights or walking paths behind controls.
+- Use large typography and approximately 35–60 characters per body-copy line. Decorative floor labels supplement real headings.
+- Provide HTML links equivalent to clickable 3D exhibits and elevator destinations.
 
 ## Storyboard
 
-| Chapter | 3D direction | Text composition | Content and action |
-| --- | --- | --- | --- |
-| City opening | An elevated view of a coastal Nigerian city. The Codmify tower becomes the focal point as scrolling moves the camera closer. | Headline in quiet sky space, usually upper left or centre; tower offset below. | “Your next big idea starts here.” Explain that Codmify designs and builds websites and digital products. Primary: Start a project. Secondary: Explore our work. |
-| The studio | Enter the transparent tower and settle beside the team workspace. | Copy beside an open workspace area, switching sides where needed. | “One team. From idea to launch.” Introduce services using verified current offerings and links to /services. |
-| Ideas become products | A sketch becomes a structured interface, then a finished website or app. | A short centred transition followed by readable copy opposite the assembling interface. | Explain the actual process: understand, design, build, launch. Show outcomes rather than technical implementation details. |
-| Our work | Real project screenshots appear in restrained 3D device frames or architectural displays. | Project description beside each device; layouts vary with its silhouette. | Use active portfolio entries and actual assets. Provide descriptive project links and /our-projects. Favvii remains excluded. |
-| Built together | The camera settles into a welcoming collaboration space. Optional subtle connections converge into a shared structure. | A calm editorial layout with real quotes or concrete delivery principles. | Establish trust using approved facts. Do not invent client quotes, metrics, awards or timelines. |
-| Your next chapter | The journey resolves into a studio desk, doorway or other composed invitation. Camera motion settles. | Prominent heading and CTA; pricing and contact continue in normal page sections. | “Let's build your next chapter.” Link to /hire-us and /pricing. Retain FAQs, contact and footer. |
+| Floor / room         | 3D direction                                                                                                                     | Page content and actions                                                                                               |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| G / Reception        | Enter inside the building at eye level. Branded reception, couches, seated visitors and walking staff surround the reading area. | Hero heading and business introduction; Start a project, Explore our work and an upstairs link.                        |
+| 01 / Studio          | Exit the elevator into a furnished workspace with desks and monitors.                                                            | Team introduction and Meet Codmify.                                                                                    |
+| 01 / Capabilities    | Walk across the same floor into the adjacent room; do not take the elevator between these rooms.                                 | All current service links. Selected 3D service displays are clickable.                                                 |
+| 02 / Project gallery | Take the elevator to framed exhibits using actual project images.                                                                | Current portfolio previews, project destinations and View all projects. Favvii remains excluded.                       |
+| 03 / Planning        | Arrive beside timber presentation plinths and planning displays.                                                                 | Existing packages, pricing, currency selection and WhatsApp actions.                                                   |
+| 04 / Answer library  | Bookshelves and lounge seating form a quieter room.                                                                              | Existing FAQ accordions and their full answers.                                                                        |
+| 05 / Meeting floor   | End in a collaboration room with a meeting table and invitation display.                                                         | Project-start action, existing contact form, contact details and testimonials. Footer remains in normal document flow. |
 
-All chapter copy above is proposed direction, not approved business claims.
+Room links in the floor directory work independently of the 3D renderer. In-world clicks navigate to existing destinations. Camera transitions follow scroll and reverse when the visitor scrolls backwards.
 
 ## October anniversary interlude
 
-The two-year celebration is a seasonal chapter within the story, not a blocking game or a second mandatory tour layered over the new landing page.
+The permanent building tour includes October-only reception signage and balloons. The existing multiverse celebration remains available through explicit replay; it does not automatically interrupt the permanent tour.
 
 During October 2026, the office celebration can lead into the multiverse: independent orbital elements converge into the real Codmify logo, CELEBRATING, a sculpted gold 2, YEARS and “Together, we build what's next.” Scrolling controls both assembly and reversal. Keep the final statement legible long enough to read before moving onward.
 
-Use the existing campaign window: October 1, 2026 at 00:00 through November 1, 2026 at 00:00, exclusive end, in Africa/Lagos. After expiry, omit the anniversary chapter and connect adjacent permanent chapters smoothly. No empty scroll space, leftover badge, particles or anniversary copy may remain.
+Use the existing campaign window: October 1, 2026 at 00:00 through November 1, 2026 at 00:00, exclusive end, in Africa/Lagos. After expiry, omit the celebration decorations and replay. Keep every permanent room and its scroll range. No leftover badge, confetti or anniversary copy may remain.
 
-The permanent story is available on every visit. The existing once-per-day overlay is a legacy implementation to replace when the new landing page ships; it must not open on top of the same story.
+The permanent building story is available on every visit. The daily automatic overlay has been removed; explicit replay is the only way to open the separate celebration.
 
 ## Scroll and motion grammar
 
 - Use native document scrolling. Scroll position drives camera progress and chapter transitions. No automatic camera advance, scroll locking or mandatory participation.
-- Ambient movement can continue while scrolling is stopped: walking, traffic, birds and subtle office activity. Camera movement stops after a brief smoothing settle.
+- Ambient movement can continue while scrolling is stopped: walking visitors and subtle office activity. Camera movement stops after a brief smoothing settle.
 - Scrolling backwards reverses transitions and assembly. Avoid replay triggers tied only to entering a section.
-- Give each chapter an arrival, reading hold and departure. Start with approximately 20%, 60%, 20% of its scroll interval, then tune by reading length and device size.
+- Hold each room through the first 58% of its scroll interval. Between floors, approach the lift, close the doors, travel vertically, open the doors and settle into the next room. Between rooms on floor 01, use a horizontal walk instead. Tune travel distances after rendered inspection.
 - Keep readable content visible through a generous hold. Do not make visitors chase text moving with the camera.
 - UI fades and small translates typically use 200–350ms. Scene changes follow scroll distance rather than a forced duration.
 - Avoid abrupt field-of-view changes, camera roll, aggressive acceleration and large continuous rotations near text.
@@ -138,11 +136,11 @@ Avoid adding scene libraries until the existing Three.js setup has a demonstrate
 
 ## Implementation sequence
 
-1. Establish scene assets, camera framing and text compositions for city → studio → services.
-2. Verify that vertical slice on desktop and mobile, including reduced motion and static fallback.
-3. Extend the visual language through process, projects and contact chapters.
-4. Integrate the October interlude and verify the expiry transition.
-5. Replace the legacy welcome overlay, measure performance and verify all content/routes before release.
+1. Build the connected interior, reception furniture, people and elevator shaft.
+2. Map all seven content rooms to native scroll positions and existing controls.
+3. Add clickable exhibits and floor navigation with accessible HTML equivalents.
+4. Verify camera continuity, same-floor travel, lighting, reduced motion and production compilation.
+5. Inspect rendered desktop/mobile layouts and measure performance before visual acceptance.
 
 ## Acceptance criteria
 
