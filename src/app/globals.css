@@ -1,10 +1,10 @@
-@import url("https://fonts.cdnfonts.com/css/archia");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: "Archia", sans-serif !important;
+
 }
 
 html {
@@ -12,6 +12,7 @@ html {
 }
 
 body {
+  font-family: "DM Sans", sans-serif;
   overflow-x: hidden;
 }
 
@@ -34,24 +35,15 @@ img {
   display: block;
 }
 
-h1.MuiTypography-root,
-h2.MuiTypography-root,
-h3.MuiTypography-root,
-h4.MuiTypography-root,
-h5.MuiTypography-root,
-h6.MuiTypography-root {
-  font-weight: 600;
+a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
 }
 
-.MuiContainer-root {
-  max-width: 1280px !important;
-  margin: auto !important;
-}
+section[id] { scroll-margin-top: 160px; }
 
-.MuiButton-root {
-  text-transform: none !important;
-  font-weight: 700 !important;
-  border-radius: 12px !important;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 .Mui-selected {
@@ -366,3 +358,51 @@ body[data-anniversary-reveal="true"] nav { animation: city-navigation-arrival 1.
 .city-scene-canvas::after { content: ""; position: absolute; inset: 0; background: #090e27; opacity: var(--portal-darkness, 0); pointer-events: none; }
 .city-universe-caption h2, .city-universe-caption > p:last-of-type { display: none; }
 .city-film .city-universe-caption { bottom: 88px; }
+
+/* Codmify brand atmosphere: contours, soft lighting and restrained motion. */
+.brand-section {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.brand-section > .MuiContainer-root { position: relative; z-index: 1; }
+.brand-backdrop { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.brand-backdrop::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(#121279 0.7px, transparent 0.7px);
+  background-size: 28px 28px; opacity: .055;
+  mask-image: linear-gradient(to right, transparent 25%, black);
+}
+.brand-backdrop::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, #008de5, #a9dfff, transparent); opacity: .45;
+}
+.brand-light { position: absolute; width: 620px; height: 620px; border-radius: 50%; }
+.brand-light-one { top: -240px; right: -180px; background: radial-gradient(circle, #008de522, transparent 68%); }
+.brand-light-two { bottom: -320px; left: -200px; background: radial-gradient(circle, #12127912, transparent 68%); }
+.brand-contours { position: absolute; right: -10%; top: 0; width: 85%; height: 100%; stroke: #121279; stroke-width: 1; opacity: .075; }
+.brand-backdrop-dark::before { background-image: radial-gradient(#a9dfff 0.8px, transparent 0.8px); opacity: .13; }
+.brand-backdrop-dark .brand-contours { stroke: #a9dfff; opacity: .13; }
+.brand-backdrop-dark .brand-light-one { background: radial-gradient(circle, #008de552, transparent 68%); }
+.brand-backdrop-dark .brand-light-two { background: radial-gradient(circle, #6658ec38, transparent 68%); }
+.brand-orbits { position: absolute; right: -150px; top: 10%; width: 650px; height: 650px; border: 1px solid #a9dfff22; border-radius: 50%; animation: brand-orbit-turn 70s linear infinite; }
+.brand-orbits i { position: absolute; inset: 65px; border: 1px solid #a9dfff22; border-radius: 50%; }
+.brand-orbits i:nth-child(2) { inset: 130px; }
+.brand-orbits i:nth-child(3) { inset: 195px; }
+.brand-orbit-node { position: absolute; left: 88px; top: 88px; width: 10px; height: 10px; border-radius: 50%; background: #a9dfff; box-shadow: 0 0 20px #51c4ff; opacity: .65; }
+.brand-card { transition: border-color 200ms ease, box-shadow 200ms ease; }
+.brand-card:hover { border-color: #008de577; box-shadow: 0 12px 32px #1212790d; }
+.brand-project img { transition: transform 350ms ease; }
+@media (hover: hover) {
+  .brand-project:hover img { transform: scale(1.035); }
+}
+@keyframes brand-orbit-turn { to { transform: rotate(360deg); } }
+@media (max-width: 600px) {
+  .brand-orbits { right: -400px; opacity: .65; }
+  .brand-contours { right: -40%; width: 140%; opacity: .05; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-orbits { animation: none; }
+  .brand-card, .brand-project img { transition: none; }
+  .brand-project:hover img { transform: none; }
+}

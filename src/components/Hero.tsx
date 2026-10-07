@@ -1,184 +1,27 @@
 "use client";
 
-import { Box, Button, Container, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { motion, useReducedMotion } from "framer-motion";
-import dynamic from "next/dynamic";
-import Image from "next/image";
+import Reveal from "./motion/Reveal";
+import BrandBackdrop from "./BrandBackdrop";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useAnniversary } from "./Anniversary";
-import HeroGlow from "./HeroGlow";
+import { FiArrowRight } from "react-icons/fi";
 
-const HeroScene3D = dynamic(() => import("./HeroScene3D"), { ssr: false });
-
-const Hero = () => {
-  const anniversary = useAnniversary();
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <Box sx={styles.wrapper}>
-      {isDesktop ? <HeroScene3D /> : <HeroGlow />}
-      <Container maxWidth="lg" sx={styles.container}>
-        <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.2 }}>
-          <Box sx={styles.iconWrap}>
-            <Image
-              src={"/web-dev.svg"}
-              alt="web-dev"
-              objectFit="contain"
-              fill
-            />
-          </Box>
-          <Typography sx={styles.tagText}>Web development</Typography>
-        </Box>
-        <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.3 }}>
-          <Box sx={styles.iconWrap}>
-            <Image src={"/UI.svg"} alt="web-dev" objectFit="contain" fill />
-          </Box>
-          <Typography sx={styles.tagText}>UI/UX Design</Typography>
-        </Box>
-        <Stack component={motion.div} sx={styles.stackWrap} initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: shouldReduceMotion ? 0 : 0.7, delay: shouldReduceMotion ? 0 : 0.1, ease: [0.22, 1, 0.36, 1] }}>
-          <Box>
-            {anniversary && <p className="anniversary-hero-label">✦ CELEBRATING 2 YEARS OF CODMIFY ✦</p>}
-            <Typography sx={styles.title}>
-              {anniversary ? "Two years of ideas brought to life." : "Get a Website That Works as Hard as You Do"}
-            </Typography>
-            <Typography sx={styles.desc}>
-              {anniversary ? "Celebrating the clients, people and partnerships behind our journey—and everything we’ll build next." : "Mobile-ready, WhatsApp-integrated, and built to be found on Google, delivered by a team that ships in days, not months."}
-            </Typography>
-          </Box>
-          <Box sx={styles.btnWrap}>
-            <Link href={"/pricing"}>
-              <Button sx={styles.startBtn} size="large">
-                Start Your Website
-              </Button>
-            </Link>
-            {anniversary && <Link className="anniversary-hero-link" href="/about-us#our-journey">Our journey ↗</Link>}
-          </Box>
+export default function Hero() {
+  return <Box component="section" className="brand-section" sx={{ bgcolor: "primary.main", color: "white", pt: { xs: 20, md: 24 }, pb: { xs: 8, md: 12 } }}>
+    <BrandBackdrop dark={true} orbit={true} />
+    <Container maxWidth="lg"><Grid container spacing={{ xs: 5, md: 8 }} sx={{ alignItems: "center" }}>
+      <Grid size={{ xs: 12, md: 8 }}><Reveal><Stack spacing={3}>
+        <Typography sx={{ color: "#A9DFFF", fontSize: ".8125rem", fontWeight: 700, letterSpacing: 1.5 }}>YOUR DIGITAL SOLUTIONS PARTNER</Typography>
+        <Typography component="h1" variant="h1" sx={{ maxWidth: 780 }}>Build your next stage of business.</Typography>
+        <Typography sx={{ color: "rgba(255,255,255,.82)", fontSize: { xs: "1.125rem", md: "1.25rem" }, lineHeight: 1.65, maxWidth: "55ch" }}>Codmify brings strategy, design and technology together to build websites, digital products and systems that help your business move forward.</Typography>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ alignItems: { xs: "stretch", sm: "flex-start" }, pt: 1 }}>
+          <Button component={Link} href="/hire-us" variant="contained" color="secondary" endIcon={<FiArrowRight />}>Discuss your project</Button>
+          <Button component={Link} href="/our-projects" variant="outlined" sx={{ color: "white", borderColor: "rgba(255,255,255,.6)", "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,.08)" } }}>Explore our work</Button>
         </Stack>
-        <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.4 }}>
-          <Box sx={styles.iconWrap}>
-            <Image
-              src={"/marketing.svg"}
-              alt="web-dev"
-              objectFit="contain"
-              fill
-            />
-          </Box>
-          <Typography sx={styles.tagText}>Marketing</Typography>
-        </Box>
-        <Box component={motion.div} sx={styles.tagWrap} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.5 }}>
-          <Box sx={styles.iconWrap}>
-            <Image src={"/PM.svg"} alt="web-dev" objectFit="contain" fill />
-          </Box>
-          <Typography sx={styles.tagText}>Project Management</Typography>
-        </Box>
-      </Container>
-    </Box>
-  );
-};
-
-export default Hero;
-
-const styles = {
-  wrapper: {
-    backgroundColor: "#121279",
-    paddingTop: { lg: "130px", md: "120px", sm: "80px" },
-    position: "relative",
-    overflow: "hidden",
-  },
-  container: {
-    minHeight: 600,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: {
-      lg: "flex-start",
-      md: "flex-start",
-      sm: "flex-start",
-      xs: "center",
-    },
-    position: "relative",
-    paddingTop: "8em",
-    backgroundImage: "url('/grid.png')",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  },
-  title: {
-    textAlign: "center",
-    fontSize: { lg: "56px", md: "56px", sm: "45px", xs: "32px" },
-    fontWeight: 700,
-    color: "#FAFAFA",
-  },
-  desc: {
-    color: "#FAFAFA",
-    fontSize: "18px",
-    fontWeight: 400,
-    textAlign: "center",
-    marginTop: "15px",
-  },
-  stackWrap: {
-    width: { lg: "760px", md: "760px", sm: "100%", xs: "100%" },
-    gap: "30px",
-  },
-  btnWrap: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  startBtn: {
-    color: "#FAFAFA",
-    border: "2px solid #AAB9C5",
-    backgroundColor: "#121279",
-    borderRadius: "10px",
-    px: "30px",
-    fontSize: "18px",
-    fontWeight: 700,
-  },
-  tagWrap: {
-    border: "2px solid #FFFFFF36",
-    display: { lg: "flex", md: "flex", xs: "none" },
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "auto",
-    padding: "10px",
-    backgroundColor: "#FAFAFA",
-    gap: "5px",
-    borderTopLeftRadius: "25px",
-    borderTopRightRadius: "25px",
-    borderBottomRightRadius: "25px",
-    position: "absolute",
-    top: { lg: "100px", md: "35px", sm: "30px", xs: "30px" },
-    left: "30px",
-    transform: "rotate(21deg)",
-    "&:nth-of-type(2)": {
-      top: "auto",
-      bottom: { lg: "20%", md: "210px", sm: "200px", xs: "200px" },
-      transform: "rotate(342deg)",
-      left: "40px",
-    },
-    "&:nth-of-type(4)": {
-      top: { lg: "100px", md: "45px", sm: "40px", xs: "40px" },
-      transform: "rotate(342deg)",
-      right: "35px",
-      left: "auto",
-    },
-    "&:nth-of-type(5)": {
-      top: "auto",
-      transform: "rotate(23deg)",
-      right: "35px",
-      left: "auto",
-      bottom: { lg: "20%", md: "200px", sm: "200px", xs: "200px" },
-    },
-  },
-  iconWrap: {
-    width: "17px",
-    height: "17px",
-    position: "relative",
-  },
-  tagText: {
-    fontSize: "12px",
-    fontWeight: 600,
-    color: "#323F49",
-    textWrap: "nowrap",
-  },
-};
+      </Stack></Reveal></Grid>
+      <Grid size={{ xs: 12, md: 4 }}><Reveal delay={0.15}><Stack sx={{ borderLeft: "1px solid rgba(255,255,255,.3)", pl: 3 }} spacing={3}>
+        {[["01", "A stronger digital presence", "Websites and experiences built around your audience."], ["02", "Products with a purpose", "Useful platforms and apps for everyday needs."], ["03", "Smarter ways to work", "Automation and systems that support your operations."]].map(([n,t,d]) => <Box key={n}><Typography sx={{ color: "#A9DFFF", fontSize: ".75rem", mb: 1 }}>{n}</Typography><Typography component="h2" sx={{ fontSize: "1.125rem", fontWeight: 700, mb: 1 }}>{t}</Typography><Typography sx={{ fontSize: ".875rem", color: "rgba(255,255,255,.82)" }}>{d}</Typography></Box>)}
+      </Stack></Reveal></Grid>
+    </Grid></Container>
+  </Box>;
+}

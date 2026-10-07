@@ -134,6 +134,7 @@ export default function Footer() {
             variant="caption"
             color={"white"}
             sx={{
+              color: "#FFFFFF",
               textAlign: "center",
               display: "block"
             }}>

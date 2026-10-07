@@ -29,11 +29,10 @@ export default function ProjectCard({
   return (
     <Box
       sx={{
-        p: { xs: 2, md: 3.5 },
+        p: { xs: 3, md: 4 },
         border: "1px solid #E0E8EF",
-        borderRadius: { xs: 3, md: 4 },
-        bgcolor: "white",
-        boxShadow: "0 12px 30px rgba(18,18,121,.06)"
+        borderRadius: "12px",
+        bgcolor: "white"
       }}>
       <Grid
         container
@@ -47,7 +46,7 @@ export default function ProjectCard({
           size={{
             lg: 7,
             md: 7,
-            sm: 7,
+            sm: 12,
             xs: 12
           }}>
           <Box sx={styles.cardImg}>
@@ -59,6 +58,7 @@ export default function ProjectCard({
                       src={image}
                       alt={`${title} app preview ${index + 1}`}
                       fill
+                      sizes="(max-width: 900px) 45vw, 30vw"
                       style={{ objectFit: "contain" }}
                     />
                   </Box>
@@ -69,6 +69,7 @@ export default function ProjectCard({
                 src={img}
                 alt={title}
                 fill
+                sizes="(max-width: 900px) 100vw, 60vw"
                 style={{ objectFit: "cover" }}
               />
             )}
@@ -78,7 +79,7 @@ export default function ProjectCard({
           size={{
             lg: 5,
             md: 5,
-            sm: 5,
+            sm: 12,
             xs: 12
           }}>
           <Stack spacing={2}>
@@ -93,7 +94,7 @@ export default function ProjectCard({
             <Typography
               component="h3"
               sx={{
-                fontSize: { xs: 28, md: 35 },
+                fontSize: { xs: "1.5rem", md: "2rem" },
                 lineHeight: 1.1,
                 color: "#121279",
                 fontWeight: 700
@@ -164,7 +165,7 @@ const styles = {
     width: "100%",
     height: { lg: 360, md: 330, sm: 300, xs: 280 },
     position: "relative",
-    borderRadius: "16px",
+    borderRadius: "12px",
     overflow: "hidden",
     background: "#EAF3FA",
   },

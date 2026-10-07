@@ -12,20 +12,12 @@ export const metadata: Metadata = {
     "Software Development, React, Next.js, Web Development, Scalable Web Applications, Codmify Hub, Mobile Development, UIUX",
   ],
   icons: { icon: "/brand/favicon.png", apple: "/brand/favicon.png" },
-  description: `Codmify is a platform which seamlessly
-        connects businesses with top-tier developers, designers, and a network
-        of skilled professionals ready to bring your projects to life. From
-        software development to digital marketing, we have the expertise to
-        drive your success.`,
+  description: `Codmify is a digital solutions company bringing strategy, design and technology together to build websites, digital products and systems for businesses.`,
   openGraph: {
     type: "website",
     url: "https://www.codmify.com",
     title: "Codmify Hub",
-    description: `Codmify is a platform which seamlessly
-        connects businesses with top-tier developers, designers, and a network
-        of skilled professionals ready to bring your projects to life. From
-        software development to digital marketing, we have the expertise to
-        drive your success.`,
+    description: `Codmify is a digital solutions company bringing strategy, design and technology together to build websites, digital products and systems for businesses.`,
     images: [
       {
         url: "https://www.codmify.com/og-image.png",
@@ -41,11 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@codmify",
     title: "Codmify Hub",
-    description: `Codmify is a platform which seamlessly
-        connects businesses with top-tier developers, designers, and a network
-        of skilled professionals ready to bring your projects to life. From
-        software development to digital marketing, we have the expertise to
-        drive your success.`,
+    description: `Codmify is a digital solutions company bringing strategy, design and technology together to build websites, digital products and systems for businesses.`,
     images: "https://www.codmify.com/og-image.png",
   },
   robots: "index, follow",
