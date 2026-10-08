@@ -1,173 +1,33 @@
 "use client";
 import { AnniversaryBanner, AnniversaryBadge } from "./Anniversary";
-import { MenuIcon } from "@/lib/icons";
 import { navLinks } from "@/utils/nav-menus";
-import {
-  Backdrop,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Drawer, IconButton, Stack } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
 
 export default function Navbar() {
   const pathname = usePathname();
-
-  const [isSideOpen, setIsSideOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const controlNavbar = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY < 10) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", controlNavbar, { passive: true });
-    return () => window.removeEventListener("scroll", controlNavbar);
-  }, [lastScrollY]);
-
-  return (
-    <>
-      <Box
-        component={"nav"}
-        sx={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100dvw",
-          zIndex: 100,
-          transform: isVisible ? "translateY(0)" : "translateY(-150%)",
-          transition: "transform 0.3s ease-in-out"
-        }}>
-      <AnniversaryBanner />
-      <Container
-        sx={{
-          bgcolor: "white",
-          borderRadius: { lg: "0 0 10px 10px" },
-          p: { xs: 1, md: 3 },
-          boxShadow: "2px 2px 20px 1px rgba(0, 0, 0, 0.05)",
-        }}
-      >
-        <Stack
-          direction={"row"}
-          sx={{
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 2
-          }}>
-          <Link href={"/"} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-            <Image
-              alt="codmify-brand"
-              src="/brand/logo-2.png"
-              width={146}
-              height={28}
-            />
-            <AnniversaryBadge />
-          </Link>
-          <Stack
-            direction={{ md: "row" }}
-            sx={{
-              alignItems: { md: "center" },
-              gap: { xs: 2, xl: 3 },
-              position: { xs: "fixed", md: "static" },
-              top: 0,
-              right: 0,
-              width: { xs: 250, md: "auto" },
-              height: { xs: "100dvh", md: "auto" },
-              bgcolor: "white",
-              zIndex: 99,
-              px: { xs: 2, md: 0 },
-              pt: { xs: 6, md: 0 },
-              pb: { xs: 4, md: 0 },
-
-              transform: {
-                xs: `translateX(${isSideOpen ? 0 : 200}%)`,
-                md: "translateX(0%)",
-              },
-
-              transition: "all .5s",
-
-              ".active .MuiTypography-root": {
-                fontWeight: "bold !important",
-                textDecoration: "underline",
-              }
-            }}>
-            {navLinks.map((menu) => (
-              <Link key={menu.url} href={menu.url}>
-                <Typography
-                  color={
-                    pathname.split("/")[1] === menu.url.split("/")[1]
-                      ? "#121279"
-                      : "#323F49"
-                  }
-                  sx={{
-                    fontWeight: pathname.split("/")[1] === menu.url.split("/")[1]
-                      ? 700
-                      : 600
-                  }}
-                >
-                  {menu.label}
-                </Typography>
-              </Link>
-            ))}
-            <Link href={"/hire-us"}>
-              <Button
-                size="large"
-                variant="contained"
-                sx={{ display: { xs: "inline-flex", md: "none" }, mt: 4 }}
-              >
-                Get Started
-              </Button>
-            </Link>
-          </Stack>
-          <Stack
-            direction={"row"}
-            sx={{
-              alignItems: "center",
-              justifyContent: "center",
-              gap: { md: 2 }
-            }}>
-            <IconButton
-              sx={{ display: { xs: "inline-flex", md: "none" } }}
-              onClick={() => setIsSideOpen(!isSideOpen)}
-            >
-              <MenuIcon style={{ height: 45, color: "#121279" }} />
-            </IconButton>
-            <Stack
-              component={Link}
-              href={"/hire-us"}
-              sx={{ display: { xs: "none", md: "inline-flex" } }}
-            >
-              <Button size="large" variant="contained">
-                Get Started
-              </Button>
-            </Stack>
-          </Stack>
-        </Stack>
-      </Container>
-
-      <Backdrop
-        open={isSideOpen}
-        sx={{ zIndex: 97 }}
-        onClick={() => setIsSideOpen(false)}
-      />
-      </Box>
-    </>
-  );
+  const [open, setOpen] = useState(false);
+  const links = navLinks.filter(item => item.url !== "/hire-us");
+  return <Box component="nav" aria-label="Main navigation" sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1200, bgcolor: "white", borderBottom: "1px solid #E0E8EF" }}>
+    <AnniversaryBanner />
+    <Container maxWidth="lg"><Stack direction="row" sx={{ minHeight: { xs: 80, md: 96 }, gap: 3, alignItems: "center", justifyContent: "space-between" }}>
+      <Link href="/" aria-label="Codmify home" style={{ display: "flex", alignItems: "center", gap: 12 }}><Image alt="Codmify" src="/brand/logo-2.png" width={146} height={28} /><Box sx={{ display: { xs: "none", sm: "block" } }}><AnniversaryBadge /></Box></Link>
+      <Stack direction="row" spacing={3} sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
+        {links.map(item => <Box component={Link} key={item.url} href={item.url} aria-current={pathname === item.url ? "page" : undefined} sx={{ minHeight: 48, display: "flex", alignItems: "center", fontSize: ".875rem", fontWeight: pathname === item.url ? 700 : 500, color: "primary.main", borderBottom: pathname === item.url ? "2px solid #121279" : "2px solid transparent" }}>{item.label}</Box>)}
+        <Button component={Link} href="/hire-us" variant="contained">Discuss a project</Button>
+      </Stack>
+      <IconButton aria-label="Open navigation menu" aria-expanded={open} aria-controls={open ? "mobile-navigation" : undefined} onClick={() => setOpen(true)} sx={{ display: { md: "none" }, width: 48, height: 48, color: "primary.main" }}><FiMenu /></IconButton>
+    </Stack></Container>
+    <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
+      <Stack id="mobile-navigation" spacing={2} sx={{ width: "min(320px, 100vw)", p: 3 }}>
+        <IconButton aria-label="Close navigation menu" onClick={() => setOpen(false)} sx={{ alignSelf: "flex-end", width: 48, height: 48 }}><FiX /></IconButton>
+        {links.map(item => <Button component={Link} key={item.url} href={item.url} onClick={() => setOpen(false)} aria-current={pathname === item.url ? "page" : undefined} sx={{ justifyContent: "flex-start", bgcolor: pathname === item.url ? "#EDF2F7" : undefined }}>{item.label}</Button>)}
+        <Button component={Link} href="/hire-us" onClick={() => setOpen(false)} variant="contained">Discuss a project</Button>
+      </Stack>
+    </Drawer>
+  </Box>;
 }

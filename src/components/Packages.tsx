@@ -19,23 +19,23 @@ export default function Packages({ compact = false }: PackagesProps) {
       sx={{
         py: { xs: 7, md: 10 },
         backgroundColor: compact ? "#F4F7FA" : "#FAFCFF",
-        backgroundImage: "radial-gradient(circle at 8% 25%, rgba(0, 141, 229, .10), transparent 23rem), radial-gradient(circle at 93% 75%, rgba(18, 18, 121, .08), transparent 22rem)"
+
       }}>
       <Container maxWidth="lg">
         <Reveal>
         <Stack
           spacing={1.5}
           sx={{
-            alignItems: "center",
-            textAlign: "center",
+            alignItems: "flex-start",
+            textAlign: "left",
             mb: { xs: 4, md: 6 }
           }}>
           <Typography
-            variant="h3"
+            component="h2" variant="h2"
             sx={{
               fontWeight: 700,
               color: "#121279",
-              fontSize: { xs: 30, md: 42 }
+              fontSize: { xs: "2rem", md: "2.75rem" }
             }}>
             Smart websites from {getLowestStartingPrice(currency)}
           </Typography>
@@ -72,7 +72,7 @@ export default function Packages({ compact = false }: PackagesProps) {
                     p: 3,
                     border: "1px solid",
                     borderColor: pkg.featured ? "#121279" : "#D7E0E7",
-                    borderRadius: 4,
+                    borderRadius: "12px",
                     bgcolor: "white",
                     position: "relative",
                     overflow: "hidden",

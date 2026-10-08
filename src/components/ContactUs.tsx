@@ -5,35 +5,23 @@ import {
   Container,
   Grid,
   Typography,
-  Checkbox,
   TextField,
   Stack,
-  FormControlLabel,
   Button,
   CircularProgress,
 } from "@mui/material";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { GoArrowRight } from "react-icons/go";
 import { IoMailSharp } from "react-icons/io5";
-import Testimonials from "./Testimonials";
-import { ChangeEvent, FormEvent, useState } from "react";
-import Link from "next/link";
+// import Testimonials from "./Testimonials";
+import { ChangeEvent, FormEvent, useState, useEffect, useRef } from "react";
 import SnackbarComp, { useToast } from "./Toast";
 import { socials } from "@/utils/nav-menus";
 import Reveal from "./motion/Reveal";
-
-const CustomLabel = () => {
-  return (
-    <Typography sx={styles.customLabel}>
-      I agree to Codmify’s{" "}
-      <Link href={"/terms-and-conditions"}>
-        <Typography sx={styles.subLabel} component={"span"}>
-          terms and conditions
-        </Typography>
-      </Link>
-    </Typography>
-  );
-};
+import ConsentField from "./ConsentField";
+import PhoneField from "./PhoneField";
+import usePhoneCountry from "./usePhoneCountry";
+import { validateContact, type ContactErrors } from "@/lib/contact-validation";
 
 // Define types for form data
 interface FormData {
@@ -54,42 +42,61 @@ const ContactUs = () => {
   const { handleMessage, handleSnack, snackBarOpen, setSnackBarOpen } =
     useToast();
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const { country, setCountry, markCountryTouched } = usePhoneCountry();
+  const [consent, setConsent] = useState(false);
+  const [errors, setErrors] = useState<ContactErrors>({});
+  const [website, setWebsite] = useState("");
+  const [cooldown, setCooldown] = useState(0);
+  const submitting = useRef(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+
+  useEffect(() => {
+    if (!cooldown) return;
+    const timer = setTimeout(() => setCooldown(value => Math.max(0, value - 1)), 1000);
+    return () => clearTimeout(timer);
+  }, [cooldown]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "phone") markCountryTouched();
+    setFormData(previous => ({ ...previous, [name]: value }));
+    setErrors(previous => ({ ...previous, [name]: undefined }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitting.current || cooldown > 0) return;
+    const checked = validateContact({ ...formData, country, consent });
+    setErrors(checked.errors);
+    if (!checked.valid) {
+      const first = Object.keys(checked.errors)[0];
+      formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      return;
+    }
+    submitting.current = true;
     setLoading(true);
-
     try {
       const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...checked.data, website }),
       });
-
       const result = await response.json();
       if (response.ok) {
         handleMessage("success", result.message);
-        setFormData({
-          name: "",
-          email: "",
-          message: "",
-          phone: "",
-        });
+        setFormData({ name: "", email: "", message: "", phone: "" });
+        setConsent(false);
+        setCooldown(30);
       } else {
-        handleMessage("error", `Error: ${result.message}`);
+        if (result.errors) setErrors(result.errors);
+        if (response.status === 429) setCooldown(Math.min(600, Math.max(30, Number(response.headers.get("Retry-After")) || 60)));
+        handleMessage("error", result.message || "Unable to send your message. Please try again.");
       }
-    } catch (error) {
-      console.error(error);
-      handleMessage("error", "Failed to send email. Please try again later.");
+    } catch {
+      handleMessage("error", "We couldn’t confirm delivery. Your message is saved here; please wait before trying again.");
+      setCooldown(30);
     } finally {
+      submitting.current = false;
       setLoading(false);
     }
   };
@@ -157,14 +164,21 @@ const ContactUs = () => {
               sm: 6,
               xs: 12
             }}>
-            <Box sx={styles.cForm} component={"form"} onSubmit={handleSubmit}>
+            <Box sx={styles.cForm} component={"form"} ref={formRef} noValidate onSubmit={handleSubmit} aria-busy={loading}>
+              <Box sx={{ position: "absolute", top: 0, left: 0, width: "1px", height: "1px", overflow: "hidden", clipPath: "inset(50%)", pointerEvents: "none" }} aria-hidden="true">
+                <input name="website" aria-label="Leave this field empty" value={website} onChange={e => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" />
+              </Box>
               <Box sx={{
                 width: "100%"
               }}>
-                <Typography>Name</Typography>
+
                 <TextField
                   disabled={loading}
                   name="name"
+                  label="Name"
+                  error={Boolean(errors.name)}
+                  helperText={errors.name}
+                  slotProps={{ htmlInput: { maxLength: 100, autoComplete: "name" } }}
                   size="medium"
                   onChange={handleChange}
                   value={formData.name}
@@ -176,10 +190,14 @@ const ContactUs = () => {
               <Box sx={{
                 width: "100%"
               }}>
-                <Typography>Email*</Typography>
+
                 <TextField
                   disabled={loading}
                   name="email"
+                  label="Email"
+                  error={Boolean(errors.email)}
+                  helperText={errors.email}
+                  slotProps={{ htmlInput: { maxLength: 254, autoComplete: "email" } }}
                   size="medium"
                   type="email"
                   onChange={handleChange}
@@ -192,26 +210,21 @@ const ContactUs = () => {
               <Box sx={{
                 width: "100%"
               }}>
-                <Typography>Phone number</Typography>
-                <TextField
-                  disabled={loading}
-                  name="phone"
-                  size="medium"
-                  type="tel"
-                  onChange={handleChange}
-                  value={formData.phone}
-                  placeholder="E.g 090xxxx5666xx"
-                  fullWidth
-                  required
-                />
+                <PhoneField country={country} disabled={loading} value={formData.phone} error={errors.phone} countryError={errors.country}
+                  onCountryChange={value => { markCountryTouched(); setCountry(value); setErrors(previous => ({ ...previous, phone: undefined, country: undefined })); }}
+                  onChange={value => { markCountryTouched(); setFormData(previous => ({ ...previous, phone: value })); setErrors(previous => ({ ...previous, phone: undefined })); }} />
               </Box>
               <Box sx={{
                 width: "100%"
               }}>
-                <Typography>Message*</Typography>
+
                 <TextField
                   disabled={loading}
                   name="message"
+                  label="Message"
+                  error={Boolean(errors.message)}
+                  helperText={errors.message}
+                  slotProps={{ htmlInput: { maxLength: 5000 } }}
                   size="medium"
                   onChange={handleChange}
                   value={formData.message}
@@ -225,17 +238,13 @@ const ContactUs = () => {
               <Box sx={{
                 width: "100%"
               }}>
-                <FormControlLabel
-                  required
-                  control={<Checkbox disabled={loading} required />}
-                  label={<CustomLabel />}
-                />
+                <ConsentField checked={consent} disabled={loading} error={errors.consent} onChange={value => { setConsent(value); setErrors(previous => ({ ...previous, consent: undefined })); }} />
               </Box>
               <Box sx={{
                 width: "100%"
               }}>
                 <Button
-                  disabled={loading}
+                  disabled={loading || cooldown > 0}
                   variant="contained"
                   type="submit"
                   endIcon={
@@ -248,14 +257,14 @@ const ContactUs = () => {
                   sx={{ mt: 2 }}
                   fullWidth
                 >
-                  Submit
+                  {loading ? "Sending…" : cooldown > 0 ? `Please wait ${cooldown}s` : "Send message"}
                 </Button>
               </Box>
             </Box>
           </Grid>
         </Grid>
         </Reveal>
-        <Testimonials />
+        {/* <Testimonials /> */}
       </Container>
 
       <SnackbarComp
@@ -308,6 +317,7 @@ const styles = {
     marginTop: "15px",
   },
   cForm: {
+    position: "relative",
     backgroundColor: "#E7EBEF",
     px: { lg: "40px", md: "40px", sm: "40px", xs: "20px" },
     py: { lg: "30px", md: "30px", sm: "30px", xs: "20px" },

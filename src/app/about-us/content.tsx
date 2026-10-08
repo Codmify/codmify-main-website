@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FiArrowRight, FiCheckCircle, FiCompass, FiHeart, FiZap } from "react-icons/fi";
 
 const values = [
-  { title: "Built around outcomes", description: "We focus on the business result first, then choose the right technology and design to achieve it.", icon: FiCompass, color: "#008DE5" },
+  { title: "Built around outcomes", description: "We focus on the business result first, then choose the right technology and design to achieve it.", icon: FiCompass, color: "#121279" },
   { title: "Clear, collaborative delivery", description: "You get a thoughtful partner, practical advice and visibility from first conversation to launch.", icon: FiHeart, color: "#E15C8E" },
   { title: "Quality that keeps moving", description: "We build useful digital products that are fast, maintainable and ready for what comes next.", icon: FiZap, color: "#00A990" },
 ];
@@ -14,21 +14,21 @@ export default function Content() {
       <Box
         sx={{
           py: { xs: 7, md: 11 },
-          backgroundImage: "radial-gradient(circle at 5% 25%, rgba(0,141,229,.09), transparent 22rem)"
+          bgcolor: "white"
         }}>
         <Container maxWidth="lg"><Stack spacing={2} sx={{
           maxWidth: 760
         }}>
           <Typography
             sx={{
-              color: "#008DE5",
+              color: "#121279",
               fontWeight: 700,
               letterSpacing: 1.2
             }}>WHO WE ARE</Typography>
           <Typography
             component="h2"
             sx={{
-              fontSize: { xs: 31, md: 44 },
+              fontSize: { xs: "2rem", md: "2.75rem" },
               lineHeight: 1.12,
               color: "#121279",
               fontWeight: 700
@@ -55,7 +55,7 @@ export default function Content() {
               alignItems: "center",
               p: 2,
               border: "1px solid #E0E8EF",
-              borderRadius: 3,
+              borderRadius: "12px",
               bgcolor: "white"
             }}><FiCheckCircle color="#008DE5" /><Typography
             sx={{
@@ -73,7 +73,7 @@ export default function Content() {
         <Container maxWidth="lg">
         <Typography
           sx={{
-            color: "#008DE5",
+            color: "#121279",
             fontWeight: 700,
             letterSpacing: 1.2
           }}>WHAT GUIDES US</Typography>
@@ -81,7 +81,7 @@ export default function Content() {
           component="h2"
           sx={{
             color: "#121279",
-            fontSize: { xs: 29, md: 40 },
+            fontSize: { xs: "2rem", md: "2.75rem" },
             fontWeight: 700,
             mt: 1
           }}>The way we work matters.</Typography>
@@ -99,7 +99,7 @@ export default function Content() {
                 height: "100%",
                 p: 3,
                 bgcolor: "white",
-                borderRadius: 4,
+                borderRadius: "12px",
                 border: "1px solid #E0E8EF"
               }}><Box
               sx={{
@@ -107,7 +107,7 @@ export default function Content() {
                 height: 48,
                 display: "grid",
                 placeItems: "center",
-                borderRadius: 3,
+                borderRadius: "12px",
                 bgcolor: `${value.color}15`,
                 color: value.color
               }}><Icon size={24} /></Box><Typography
@@ -133,14 +133,14 @@ export default function Content() {
           md: 7
         }}><Typography
         sx={{
-          color: "#008DE5",
+          color: "#121279",
           fontWeight: 700,
           letterSpacing: 1.2
         }}>OUR PROMISE</Typography><Typography
         component="h2"
         sx={{
           color: "#121279",
-          fontSize: { xs: 30, md: 42 },
+          fontSize: { xs: "2rem", md: "2.75rem" },
           lineHeight: 1.15,
           fontWeight: 700,
           mt: 1
@@ -157,7 +157,7 @@ export default function Content() {
         spacing={2}
         sx={{
           p: { xs: 3, md: 4 },
-          borderRadius: 4,
+          borderRadius: "12px",
           bgcolor: "#121279",
           color: "white"
         }}><Typography

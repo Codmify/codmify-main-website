@@ -1,7 +1,9 @@
+import PageIntro from "@/components/PageIntro";
+import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
 import { ourProjects } from "@/constants/data";
 import LandingPage from "@/wrappers/LandingPage";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Our Projects" };
@@ -9,54 +11,12 @@ export const metadata: Metadata = { title: "Our Projects" };
 export default function OurProjects() {
   return (
     <LandingPage>
-      <Box
-        sx={{
-          pt: { xs: 28, md: 19 },
-          pb: { xs: 8, md: 11 },
-          background: "#121279 url('/bg-dashed.png')",
-          color: "white"
-        }}><Container maxWidth="lg"><Stack
-        spacing={2.5}
-        sx={{
-          maxWidth: 800,
-          mx: "auto",
-          alignItems: "center",
-          textAlign: "center"
-        }}><Typography
-        sx={{
-          color: "#51C4FF",
-          fontWeight: 700,
-          letterSpacing: 1.2
-        }}>OUR WORK</Typography><Typography
-        component="h1"
-        sx={{
-          fontSize: { xs: 39, md: 62 },
-          lineHeight: 1.05,
-          fontWeight: 700
-        }}>Digital products made to create real momentum.</Typography><Typography
-        sx={{
-          color: "rgba(255,255,255,.82)",
-          fontSize: { xs: 17, md: 19 },
-          maxWidth: 650
-        }}>A selection of websites, platforms and mobile experiences we’ve helped bring to life.</Typography></Stack></Container></Box>
+      <PageIntro label="OUR WORK" title="Ideas brought into everyday use." description="A selection of websites, platforms and mobile experiences from our portfolio." />
       <Box
         sx={{
           py: { xs: 7, md: 11 },
-          backgroundImage: "radial-gradient(circle at 7% 12%, rgba(0,141,229,.10), transparent 25rem), radial-gradient(circle at 94% 55%, rgba(18,18,121,.07), transparent 25rem)"
-        }}><Container maxWidth="lg"><Stack spacing={1.5} sx={{
-        mb: { xs: 4, md: 6 }
-      }}><Typography
-        sx={{
-          color: "#008DE5",
-          fontWeight: 700,
-          letterSpacing: 1.2
-        }}>SELECTED PROJECTS</Typography><Typography
-        component="h2"
-        sx={{
-          color: "#121279",
-          fontSize: { xs: 30, md: 42 },
-          fontWeight: 700
-        }}>Designed for people. Built for growth.</Typography></Stack><Stack spacing={{ xs: 3, md: 4 }}>{ourProjects.map((item, index) => <ProjectCard key={item.title} title={item.title} additionDesc={item.additionalDesc} desc={item.desc} img={item.image} url={item.url} reverse={index % 2 === 0 ? "row" : "row-reverse"} images={item.images} links={item.links} />)}</Stack></Container></Box>
+          bgcolor: "#EDF2F7"
+        }}><Container maxWidth="lg"><SectionHeading label="SELECTED PROJECTS" title="Built around people and their needs." /><Stack spacing={{ xs: 3, md: 4 }}>{ourProjects.map((item, index) => <ProjectCard key={item.title} title={item.title} additionDesc={item.additionalDesc} desc={item.desc} img={item.image} url={item.url} reverse={index % 2 === 0 ? "row" : "row-reverse"} images={item.images} links={item.links} />)}</Stack></Container></Box>
     </LandingPage>
   );
 }

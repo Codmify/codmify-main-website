@@ -38,7 +38,7 @@ export default function FAQ() {
             alignItems: "center",
             textAlign: "center"
           }}>
-          <Typography variant="h3" sx={{
+          <Typography component="h2" variant="h2" sx={{
             fontWeight: 700
           }}>
             Frequently Asked Questions

@@ -1,4 +1,5 @@
-import { AnniversaryStory } from "@/components/Anniversary";
+import DeliveryProcess from "@/components/DeliveryProcess";
+import OurTeam from "@/components/our-team";
 import ContactUs from "@/components/ContactUs";
 import FAQ from "@/components/FAQ";
 import Hero from "@/components/Hero";
@@ -11,9 +12,10 @@ export default function Home() {
   return (
     <LandingPage>
       <Hero />
-      <AnniversaryStory />
       <Services />
       <Projects />
+      <DeliveryProcess />
+      <OurTeam />
       <Packages compact />
       <FAQ />
       <ContactUs />

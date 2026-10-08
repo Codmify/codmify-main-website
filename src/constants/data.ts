@@ -111,7 +111,7 @@ export const ourProjects: PortfolioProject[] = [
 //   },
   {
     title: "750hrs Tracker",
-    desc: "750hrsTracker is a complete time tracking and property management solution designed specifically for real estate professionals. The platform enables users to manage properties, track time spent on tasks, analyze team performance, and grow their business. With powerful features including advanced analytics, team collaboration tools, smart scheduling with AI-powered insights, goal setting, and performance metrics, 750hrsTracker helps professionals increase productivity by up to 40% through real-time tracking and data-driven insights.",
+    desc: "750hrsTracker brings time tracking and property management together for real estate professionals, with tools for task tracking, team collaboration, scheduling and reporting.",
     additionalDesc: "",
     image: "/projects/750hrstracker.png",
     url: "https://750hrstracker.com/",
