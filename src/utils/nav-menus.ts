@@ -8,10 +8,6 @@ export const navLinks = [
     label: "Services",
   },
   {
-    url: "/pricing",
-    label: "Packages",
-  },
-  {
     url: "/our-projects",
     label: "Our Projects",
   },
