@@ -93,7 +93,7 @@ export const ourProjects: PortfolioProject[] = [
     desc: "Ekawe is a premium academic marketplace that connects creators and readers with verified educational resources. The platform helps creators publish their work while giving learners and institutions a trusted place to discover academic materials.",
     additionalDesc: "",
     image: "/projects/ekawe.jpg",
-    url: "https://ekawe.app/",
+    url: "https://ekawe.codmify.com/",
   },
 //   {
 //     title: "Favvii",

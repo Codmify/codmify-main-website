@@ -4,7 +4,7 @@ import ContactUs from "@/components/ContactUs";
 import FAQ from "@/components/FAQ";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
-import Packages from "@/components/Packages";
+import ProjectCTA from "@/components/ProjectCTA";
 import Services from "@/components/Services";
 import LandingPage from "@/wrappers/LandingPage";
 
@@ -16,7 +16,7 @@ export default function Home() {
       <Projects />
       <DeliveryProcess />
       <OurTeam />
-      <Packages compact />
+      <ProjectCTA />
       <FAQ />
       <ContactUs />
     </LandingPage>
